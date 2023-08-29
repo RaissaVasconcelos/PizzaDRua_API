@@ -17,8 +17,6 @@ release (bug fixes before merging into production)
 ```
 </details>
 
-<br />
-
 <details>
   <summary>Project in commits</summary>
   <br />
