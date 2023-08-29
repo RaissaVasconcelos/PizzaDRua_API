@@ -1,19 +1,48 @@
 ### Padrôes de Projeto
 <details>
-  <summary>Branches do projeto</summary>
+  <summary>Project in Branches</summary>
   <br />
 
 ```
-feature (novas funcionalides)
+feature (new feature)
 ```
 ```
-fix (correção de bugs)
+fix (bug fix)
 ```
 ```
-hotflix (correção de bugs na produção)
+hotflix (bug fix in production)
 ```
 ```
-release (ajustes finais, correção de bugs antes de mesclar na produção)
+release (bug fixes before merging into production)
 ```
 </details>
+
+<br />
+
+<details>
+  <summary>Project in commits</summary>
+  <br />
+
+```
+feat (new feature)
+```
+```
+fix (a bug fix)
+```
+```
+style (changes styles)
+```
+```
+refactor (fixes bugs in features)
+```
+```
+test (added test)
+```
+```
+chore (install tools and configs)
+```
+</details>
+
+<br />
+
 
