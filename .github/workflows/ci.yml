@@ -3,10 +3,7 @@
 
 name: ci-node-worlflows
 
-on: 
-  pull-request:
-    branches: 
-      - develop 
+on: [pull_request] 
 
 jobs:
   check-app-application:
