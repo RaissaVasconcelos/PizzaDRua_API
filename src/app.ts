@@ -5,6 +5,8 @@ import { env } from "./env";
 
 export const app = fastify();
 
+console.log(app)
+
 app.setErrorHandler((error, _, reply) => {
     if (error instanceof ZodError) {
        return  reply.status(400).send({message: 'Validation error', issues: fromZodError(error)})
