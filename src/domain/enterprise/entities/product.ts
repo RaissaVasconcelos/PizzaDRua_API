@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto"
 import { Entity } from "../../../core/entities/entity"
 import { Optional } from "../../../core/types/optional"
 
+
 export interface IProductProps {
     id: string
     imageUrl: string    
