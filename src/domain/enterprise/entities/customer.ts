@@ -1,8 +1,10 @@
+import { randomUUID } from "crypto"
 import { Entity } from "../../../core/entities/entity"
 import { UniqueEntityId } from "../../../core/entities/unique-entity-id"
 import { Optional } from "../../../core/types/optional"
 
 export interface ICustomersProps {
+  id: string
   username: string
   email: string
   phone: string
@@ -12,6 +14,11 @@ export interface ICustomersProps {
 }
 
 export class Customer extends Entity<ICustomersProps> {
+
+  get Id(){
+    return this.props.id
+  }
+
   get Username(){
     return this.props.username
   }
@@ -60,11 +67,12 @@ export class Customer extends Entity<ICustomersProps> {
     this.touch()
   }
 
-  static create(props: Optional<ICustomersProps, "createdAt">, id?:UniqueEntityId) {
+  static create(props: Optional<ICustomersProps, "createdAt"| "id">) {
     const customer = new Customer({
       ...props,
+      id: props.id ?? randomUUID(),
       createdAt: props.createdAt ?? new Date(),
-    }, id)
+    })
 
     return customer
   }
