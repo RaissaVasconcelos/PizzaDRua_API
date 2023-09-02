@@ -4,6 +4,7 @@ import { Optional } from "../../../core/types/optional"
 
 export interface IProductProps {
     id: string
+    imageUrl: string    
     name: string
     description: string
     createdAt: Date
@@ -11,29 +12,39 @@ export interface IProductProps {
 }
 
 export class Product extends Entity<IProductProps> {
-    get Id(){
+    get id(){
         return this.props.id
     }
 
-    get Name(){
+    get imageUrl(){
+        return this.props.imageUrl
+    }
+
+    get name(){
         return this.props.name
     }
 
-    get Description(){
+    get description(){
         return this.props.description
     }
 
-    get CreateAt(){
+    get createAt(){
         return this.props.createdAt
     }
 
-    get UpdatedAt(){
+    get updatedAt(){
         return this.props.updatedAt
     }
 
     private touch() {
         this.props.updatedAt = new Date()
     }
+
+    changeImageUrl(imageUrl: string) {
+        this.props.imageUrl = imageUrl
+        this.touch()
+    }
+
 
     changeName(name: string) {
         this.props.name = name
@@ -45,7 +56,7 @@ export class Product extends Entity<IProductProps> {
         this.touch()
     }
 
-    create(props: Optional<IProductProps, "createdAt"| "id">) {
+    static create(props: Optional<IProductProps, "createdAt"| "id">) {
         const product = new Product({
             ...props,
             id: props.id ?? randomUUID(),
