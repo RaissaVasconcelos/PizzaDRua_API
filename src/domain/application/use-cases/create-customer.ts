@@ -4,6 +4,7 @@ import { Customer } from "../../enterprise/entities/customer"
 import { CustomerRepository } from "../repositories/customer-repository"
 
 interface CustomerUseCasesRequest {
+  id: string
   username: string
   email: string
   phone: string
@@ -14,14 +15,14 @@ type CustomerUseCasesResponse = Either<CustomerAlreadyExistsError, { customer: C
 export class CreateCustomer{
   constructor(private customerRepository: CustomerRepository) {}
 
-  async execute({ email, phone, username }: CustomerUseCasesRequest): Promise<CustomerUseCasesResponse> {
+  async execute({ id, email, phone, username }: CustomerUseCasesRequest): Promise<CustomerUseCasesResponse> {
     const customerAlreadyExistsError = await this.customerRepository.findByEmail(email)
 
     if (customerAlreadyExistsError) {
       return left(new CustomerAlreadyExistsError())
     }
     
-    const NewCustomer = Customer.create({ email, phone, username })
+    const NewCustomer = Customer.create({ id, email, phone, username })
     
     const customer = await this.customerRepository.create(NewCustomer)
 

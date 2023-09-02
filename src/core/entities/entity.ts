@@ -1,15 +1,15 @@
-import { UniqueEntityId } from "./unique-entity-id"
+// import { UniqueEntityId } from "./unique-entity-id"
 
 export class Entity <Props> {
-  private _id: UniqueEntityId
+  // private _id: UniqueEntityId
   protected props: Props
 
-  constructor(props: Props, id?: UniqueEntityId) {
+  constructor(props: Props) {
     this.props = props
-    this._id = id ?? new UniqueEntityId() 
+    
   }
 
-  get id() {
-    return this._id 
-  }
+  // get id() {
+  //   return this._id 
+  // }
 }
