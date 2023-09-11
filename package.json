@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "tsx watch src/server.ts",
+    "start:pix": "tsx watch src/test.pix.ts",
     "start:": "node build/server.js",
     "build": "tsup src --out-dir build",
     "lint": "eslint src --ext .ts",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
     "@types/node": "^20.5.7",
+    "@types/node-forge": "^1.3.4",
     "eslint": "^8.48.0",
     "tsup": "^7.2.0",
     "tsx": "^3.12.7",
@@ -34,8 +36,12 @@
     "vitest": "^0.34.3"
   },
   "dependencies": {
+    "axios": "^1.5.0",
     "dotenv": "^16.3.1",
     "fastify": "^4.22.0",
+    "node-forge": "^1.3.1",
+    "randexp": "^0.5.3",
+    "sdk-typescript-apis-efi": "^1.0.1",
     "zod": "^3.22.2",
     "zod-validation-error": "^1.5.0"
   }

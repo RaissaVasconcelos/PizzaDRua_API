@@ -10,7 +10,7 @@ interface CustomerUseCasesRequest {
   phone: string
 }
 
-type CustomerUseCasesResponse = Either<CustomerAlreadyExistsError, { customer: Customer }>
+type CustomerUseCasesResponse = Either<CustomerAlreadyExistsError, {}>
 
 export class CreateCustomer{
   constructor(private customerRepository: CustomerRepository) {}
@@ -24,8 +24,8 @@ export class CreateCustomer{
     
     const NewCustomer = Customer.create({ id, email, phone, username })
     
-    const customer = await this.customerRepository.create(NewCustomer)
+    await this.customerRepository.create(NewCustomer)
 
-    return right({customer})
+    return right({})
   }
 }
