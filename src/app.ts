@@ -5,7 +5,6 @@ import { env } from "./env";
 
 export const app = fastify();
 
-console.log(app)
 
 app.setErrorHandler((error, _, reply) => {
     if (error instanceof ZodError) {

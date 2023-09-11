@@ -1,6 +1,7 @@
 import { Customer } from "../../enterprise/entities/customer";
 
 export interface CustomerRepository {
-  create(customer: Customer): Promise<Customer>
-  findByEmail(email: string): Promise<Customer> 
+  create(customer: Customer): Promise<void>
+  findByEmail(email: string): Promise<Customer | null>
+  findById(id: string): Promise<Customer | null>
 }
