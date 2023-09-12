@@ -1,4 +1,6 @@
+import { randomUUID } from "crypto"
 import { Entity } from "../../../core/entities/entity"
+import { Optional } from "../../../core/types/optional"
 
 export interface IOrderProps {
   id: string
@@ -9,8 +11,9 @@ export interface IOrderProps {
   idDrink: string
   quantityDrink: string
   totalPrice: string
-  dateTime: string
-  status: string 
+  status: string
+  createdAt: Date
+  updatedAt?: Date 
 }
 
 export class Order extends Entity<IOrderProps> {
@@ -46,11 +49,49 @@ export class Order extends Entity<IOrderProps> {
     return this.props.totalPrice
   }
 
-  get dateTime() {
-    return this.props.dateTime
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
   }
 
   get status() {
     return this.props.status
   }
+
+  private touch() {
+    this.props.updatedAt = new Date()
+  }
+
+  changeQuantityPizza(quantity: string) {
+    this.props.quantityPizza = quantity
+    this.touch()
+  }
+
+  changeQuantityDrink(quantity: string) {
+    this.props.quantityDrink = quantity
+    this.touch()
+  }
+
+  changeTotalPrice(totalPrice: string) {
+    this.props.totalPrice = totalPrice
+    this.touch()
+  }
+
+  changeStatus(status: string) {
+    this.props.status = status
+    this.touch()
+  }
+
+  static create(props: Optional<IOrderProps, "createdAt" | "id">) {
+    const order = new Order({
+      ...props,
+      id: props.id ?? randomUUID(),
+      createdAt: props.createdAt ?? new Date()
+    })
+
+    return order
+  } 
 }
