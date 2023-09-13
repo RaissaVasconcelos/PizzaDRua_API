@@ -1,0 +1,6 @@
+export * from '../in-memory/in-memory-address-repository'
+export * from '../in-memory/in-memory-customer-repository'
+export * from '../in-memory/in-memory-order-repository'
+export * from '../in-memory/in-memory-pizza-size-table-repository'
+export * from '../in-memory/in-memory-pizza-type-repository'
+export * from '../in-memory/in-memory-product-repository'
