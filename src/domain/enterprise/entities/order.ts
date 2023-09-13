@@ -4,7 +4,7 @@ import { Optional } from "../../../core/types/optional"
 
 export interface IOrderProps {
   id: string
-  idClient: string
+  idCustomer: string
   idPizza: string
   idSize: string
   quantityPizza: string
@@ -21,8 +21,8 @@ export class Order extends Entity<IOrderProps> {
     return this.props.id
   }
 
-  get idClient() {
-    return this.props.idClient
+  get idCustomer() {
+    return this.props.idCustomer
   }
 
   get idPizza() {

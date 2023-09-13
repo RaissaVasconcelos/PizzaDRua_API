@@ -37,6 +37,4 @@ export class CreateAddressUseCase {
 
     return right({})
   }
-
-
 }
