@@ -1,3 +1,3 @@
 export * from './make-customer'
 export * from './make-order'
-export * from './make-product'
+export * from './make-pizza'
