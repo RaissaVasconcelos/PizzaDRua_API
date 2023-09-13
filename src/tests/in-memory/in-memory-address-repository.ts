@@ -29,5 +29,5 @@ export class InMemoryAddressRepository implements AddressRepository {
       this.address[index] = address
     }
   }
-
+  
 }

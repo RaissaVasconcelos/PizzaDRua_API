@@ -4,8 +4,6 @@ import { InMemoryCustomerRepository } from "../../../tests/in-memory/in-memory-c
 import { makeCustomer } from "../../../tests/factory/make-customer"
 import { ResourceNotFoundError } from "../../../core/errors/resource-not-found-error"
 
-
-
 let inMemoryAddressRepository: InMemoryAddressRepository
 let inMemoryCustomerRepository: InMemoryCustomerRepository
 let sut: CreateAddressUseCase
@@ -22,7 +20,6 @@ describe("CreateAddressUseCase", () => {
 
     it('should be able to create a address', async () => {
         const customer = makeCustomer()
-        console.log(customer);
         
         await inMemoryCustomerRepository.create(customer)
         const result = await sut.execute({
@@ -58,4 +55,5 @@ describe("CreateAddressUseCase", () => {
         expect(result.isLeft()).toBeTruthy()
         expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     })
+
 })
