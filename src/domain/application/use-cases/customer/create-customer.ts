@@ -1,7 +1,7 @@
-import { CustomerAlreadyExistsError } from "../../../core/errors/customer-alreaty-exists"
-import { Either, left, right } from "../../../core/either"
-import { Customer } from "../../enterprise/entities/customer"
-import { CustomerRepository } from "../repositories/customer-repository"
+import { CustomerAlreadyExistsError } from "../../../../core/errors/customer-alreaty-exists"
+import { Either, left, right } from "../../../../core/either"
+import { Customer } from "../../../enterprise/entities/customer"
+import { CustomerRepository } from "../../repositories/customer-repository"
 
 interface CustomerUseCasesRequest {
   id: string
