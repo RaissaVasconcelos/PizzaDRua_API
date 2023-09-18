@@ -1,4 +1,3 @@
-import { CustomerAlreadyExistsError } from "../../../../core/errors/customer-alreaty-exists";
 import { Either, right } from "../../../../core/either";
 import { DrinkRepository } from "../../repositories/drink-repository";
 import { Drink } from "../../../enterprise/entities/drink";
@@ -10,7 +9,7 @@ interface DrinkUseCaseRequest {
   price: string
 }
 
-type DrinkUseCasesResponse = Either<CustomerAlreadyExistsError, {}>
+type DrinkUseCasesResponse = Either<null, {}>
 
 export class CreateDrink {
   constructor(
