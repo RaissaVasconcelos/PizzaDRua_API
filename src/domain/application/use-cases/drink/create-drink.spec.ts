@@ -16,19 +16,6 @@ describe('CreateUseCaseDrink', () => {
 
     const drink = await sut.execute(drinkFake)
 
-    
-    if(drink.isRight()) {
-      expect(drink.isRight).toBeTruthy()
-      expect(inMemoryDrinkRepository.drinks.length).toBe(1)
-    }
-  })
-
-  it('Should be not able create a drink', async () => {
-    const drinkFake = makeDrink()
-
-    const drink = await sut.execute(drinkFake)
-
-    
     if(drink.isRight()) {
       expect(drink.isRight).toBeTruthy()
       expect(inMemoryDrinkRepository.drinks.length).toBe(1)
