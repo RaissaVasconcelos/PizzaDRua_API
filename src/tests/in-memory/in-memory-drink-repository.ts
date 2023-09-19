@@ -7,7 +7,6 @@ export class InMemoryDrinkRepository implements DrinkRepository {
   
   async create(drink: Drink): Promise<void> {
     this.drinks.push(drink)
-    console.log('drinks', this.drinks)
   }
 
   async findById(id: string): Promise<Drink | null> {
@@ -33,8 +32,7 @@ export class InMemoryDrinkRepository implements DrinkRepository {
   }
 
   async delete(id: string): Promise<void> {
-    const drinkDeletd = this.drinks.filter(drink => drink.id === id)
-
+    const drinkDeletd = this.drinks.filter(drink => drink.id !== id)
     this.drinks = drinkDeletd
   }
 }

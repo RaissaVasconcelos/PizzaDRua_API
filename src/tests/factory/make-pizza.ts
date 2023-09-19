@@ -1,7 +1,7 @@
 import { IPizzaProps, Pizza } from "../../domain/enterprise/entities";
 
 
-export const makePizza = async (override: Partial<IPizzaProps> = {}): Promise<Pizza> => {
+export const makePizza = (override: Partial<IPizzaProps> = {}): Pizza => {
     const pizza =  Pizza.create({
         imageUrl: "imageUrl",
         name: "Pizza",

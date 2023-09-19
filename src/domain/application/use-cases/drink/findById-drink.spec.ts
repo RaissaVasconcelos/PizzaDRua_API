@@ -1,7 +1,7 @@
-import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
 import { InMemoryDrinkRepository } from "../../../../tests/in-memory/in-memory-drink-repository";
 import { FindByIdDrink } from "./findById-drink";
 import { makeDrink } from "../../../../tests/factory/make-drink";
+import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
 
 let inMemoryDrinkRepository: InMemoryDrinkRepository
 let sut: FindByIdDrink
@@ -14,10 +14,14 @@ describe('FindById Drink', () => {
 
   it('Should be find by id a drink', async () => {
     const drinkFake = makeDrink()
-    const drink = await sut.execute(drinkFake.id)
+    
+    await inMemoryDrinkRepository.create(drinkFake)
 
-    if(drink.isRight()){
-      expect(drink).toBe(drinkFake)
+    const result = await sut.execute(drinkFake.id)
+    
+    if(result.isRight()){
+      expect(result.isRight()).toBeTruthy()
+      expect(result.value.drink).toBe(drinkFake)
     }
   })
 
@@ -25,6 +29,7 @@ describe('FindById Drink', () => {
     const drink = await sut.execute('idFake')
 
     expect(drink.isLeft()).toBeTruthy()
+    // toBeInstanceOf
     expect(drink.value).toBeInstanceOf(ResourceNotFoundError)
   })
 })

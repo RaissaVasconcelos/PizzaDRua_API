@@ -1,5 +1,5 @@
 import { InMemoryDrinkRepository } from "../../../../tests/in-memory/in-memory-drink-repository";
-import { FindAllDrink } from "./findAll-drink";
+import { FindAllDrink } from "./findMany-drink";
 import { makeDrink } from "../../../../tests/factory/make-drink";
 
 let inMemoryDrinkRepository: InMemoryDrinkRepository

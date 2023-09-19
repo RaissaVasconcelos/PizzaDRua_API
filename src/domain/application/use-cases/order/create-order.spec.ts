@@ -1,17 +1,17 @@
 import { InMemoryOrderRepository, InMemoryCustomerRepository } from '../../../../tests/in-memory'
 import { makeCustomer } from '../../../../tests/factory'
-import { CreateOrderUseCase } from './create-order'
+import { CreateOrder } from './create-order'
 import { ResourceNotFoundError } from '../../../../core/errors/resource-not-found-error'
 
 let inMemoryOrderRepository: InMemoryOrderRepository
 let inMemoryCustomerRepository: InMemoryCustomerRepository
-let sut: CreateOrderUseCase
+let sut: CreateOrder
 
 describe('CreateOrderUseCase', () => {
   beforeEach(() => {
     inMemoryOrderRepository = new InMemoryOrderRepository()
     inMemoryCustomerRepository = new InMemoryCustomerRepository()
-    sut = new CreateOrderUseCase(
+    sut = new CreateOrder(
       inMemoryOrderRepository,
       inMemoryCustomerRepository,
     )

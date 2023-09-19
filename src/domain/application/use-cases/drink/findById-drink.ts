@@ -1,8 +1,9 @@
 import { Either, left, right } from "../../../../core/either";
 import { DrinkRepository } from "../../repositories/drink-repository";
+import { Drink } from "../../../enterprise/entities/drink";
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
 
-type DrinkUseCasesResponse = Either<ResourceNotFoundError, {}>
+type DrinkUseCasesResponse = Either<ResourceNotFoundError, { drink: Drink }>
 
 export class FindByIdDrink {
   constructor(
@@ -16,6 +17,6 @@ export class FindByIdDrink {
       return left(new ResourceNotFoundError())
     }
 
-    return right({})
+    return right({ drink })
   }
 }

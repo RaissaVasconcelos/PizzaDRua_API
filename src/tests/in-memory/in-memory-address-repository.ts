@@ -30,4 +30,7 @@ export class InMemoryAddressRepository implements AddressRepository {
     }
   }
   
+  async delete(id: string): Promise<void> {
+    this.address = this.address.filter(add => add.id !== id)
+  }
 }

@@ -18,7 +18,7 @@ interface CreateOrderUseCaseRequest {
 
 type CreateOrderUseCaseResponse = Either<ResourceNotFoundError, {}>
 
-export class CreateOrderUseCase {
+export class CreateOrder {
   constructor(
     private orderRepository: OrderRepository,
     private customeRepository: CustomerRepository 

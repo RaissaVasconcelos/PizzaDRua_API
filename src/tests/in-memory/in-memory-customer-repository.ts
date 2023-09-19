@@ -30,4 +30,8 @@ export class InMemoryCustomerRepository implements CustomerRepository {
         return customer
     }
 
+    async delete(id: string): Promise<void> {
+        const arrCustomers = this.customers.filter(customer => customer.Id !== id)
+        this.customers = arrCustomers
+    }
 }
