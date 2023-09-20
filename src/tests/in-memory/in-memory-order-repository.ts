@@ -4,7 +4,7 @@ import { Order } from '../../domain/enterprise/entities/order'
 export class InMemoryOrderRepository implements OrderRepository{
   public order:Order[] = []
 
-  async create(order: Order):Promise<void> {
+  async create(order: Order): Promise<void> {
     this.order.push(order)
   }
 
@@ -22,10 +22,10 @@ export class InMemoryOrderRepository implements OrderRepository{
     return this.order  
   }
 
-  async update(id: string, order: Order): Promise<void> {
-    const index = this.order.findIndex(order => order.id === id)
+  async update(orderUpdate: Order): Promise<void> {
+    const index = this.order.findIndex(order => order.id === orderUpdate.id)
     if (index >= 0) {
-      this.order[index] = order
+      this.order[index] = orderUpdate
     }
   }
 }

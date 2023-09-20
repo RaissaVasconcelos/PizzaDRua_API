@@ -1,7 +1,7 @@
 import { IOrderProps, Order } from '../../domain/enterprise/entities/order'
 
 
-export const makeOrder = async (override: Partial<IOrderProps> = {}) => {
+export const makeOrder = (override: Partial<IOrderProps> = {}) => {
   const order = Order.create({
     idCustomer: 'ANY12',
     idPizza: 'ANY32',

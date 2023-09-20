@@ -5,4 +5,5 @@ export interface AddressRepository {
     findById(id: string): Promise<Address | null>
     findMany(): Promise<Address[]>
     update(address: Address): Promise<void>
+    delete(id: string): Promise<void>
 }

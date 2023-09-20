@@ -3,12 +3,16 @@ import { Entity } from "../../../core/entities/entity"
 import { Optional } from "../../../core/types/optional"
 
 
+export interface typePizza {
+    type: "TRADITIONAL" | "SPECIAL",
+}
 export interface IPizzaProps {
     id: string
     imageUrl: string    
     name: string
-    type: "TRADITIONAL" | "SPECIAL"
+    type: typePizza
     description: string
+    price: string
     createdAt: Date
     updatedAt?: Date
 }
@@ -32,6 +36,10 @@ export class Pizza extends Entity<IPizzaProps> {
 
     get type(){
         return this.props.type
+    }
+
+    get price(){
+        return this.props.price
     }
 
     get createAt(){
@@ -59,6 +67,16 @@ export class Pizza extends Entity<IPizzaProps> {
 
     changeDescription(description: string) {
         this.props.description = description
+        this.touch()
+    }
+
+    changeType(type: typePizza) {
+        this.props.type = type
+        this.touch()
+    }
+
+    changePrice(price: string) {
+        this.props.price = price
         this.touch()
     }
 

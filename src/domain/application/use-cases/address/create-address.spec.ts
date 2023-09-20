@@ -1,18 +1,19 @@
 import { InMemoryAddressRepository } from "../../../../tests/in-memory/in-memory-address-repository"
-import { CreateAddressUseCase } from "./create-address"
+import { CreateAddress } from "./create-address"
 import { InMemoryCustomerRepository } from "../../../../tests/in-memory/in-memory-customer-repository"
 import { makeCustomer } from "../../../../tests/factory/make-customer"
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error"
 
+
 let inMemoryAddressRepository: InMemoryAddressRepository
 let inMemoryCustomerRepository: InMemoryCustomerRepository
-let sut: CreateAddressUseCase
+let sut: CreateAddress
 
-describe("CreateAddressUseCase", () => {
+describe("Create Address", () => {
     beforeEach(() => {   
         inMemoryAddressRepository = new InMemoryAddressRepository()
         inMemoryCustomerRepository = new InMemoryCustomerRepository()
-        sut = new CreateAddressUseCase(
+        sut = new CreateAddress(
            inMemoryAddressRepository,
            inMemoryCustomerRepository,
         )
@@ -22,13 +23,13 @@ describe("CreateAddressUseCase", () => {
         const customer = makeCustomer()
         
         await inMemoryCustomerRepository.create(customer)
+
         const result = await sut.execute({
             customerId: customer.Id,
             street: "Street",
-            number: 1,
-            complement: "Complement",
-            city: "City",
-            state: "State",
+            type: "HOME",
+            number: '1',
+            neighborhood: "neighborhood",
             zipCode: "ZipCode",
             phone: "Phone",
         })
@@ -43,13 +44,12 @@ describe("CreateAddressUseCase", () => {
     it('should not be able to create a address with a customer that does not exist', async () => {
         const result = await sut.execute({
             customerId: 'fakeId',
-            street: "Street",
-            number: 1,
-            complement: "Complement",
-            city: "City",
-            state: "State",
+            street: "Street12",
+            number: '121',
+            type: "HOME",
+            neighborhood: "neighborhood",
             zipCode: "ZipCode",
-            phone: "Phone",
+            phone: "Phonee",
         })
 
         expect(result.isLeft()).toBeTruthy()

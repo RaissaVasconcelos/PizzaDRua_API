@@ -2,14 +2,14 @@ import { randomUUID } from "crypto"
 import { Entity } from "../../../core/entities/entity"
 import { Optional } from "../../../core/types/optional"
 
+export type TypeAddress = "HOME" | "WORk" | "OTHER"
 export interface IAddressProps {
     id: string
     customerId: string
+    type: TypeAddress
     street: string
-    number: number
-    complement?: string
-    city: string
-    state: string
+    number: string
+    neighborhood: string
     zipCode: string
     phone: string
     createdAt: Date
@@ -26,6 +26,10 @@ export class Address extends Entity<IAddressProps> {
         return this.props.customerId
     }
 
+    get type(){
+        return this.props.type
+    }
+
     get street(){
         return this.props.street
     }
@@ -34,16 +38,8 @@ export class Address extends Entity<IAddressProps> {
         return this.props.number
     }
 
-    get complement(){
-        return this.props.complement
-    }
-
-    get city(){
-        return this.props.city
-    }
-
-    get state(){
-        return this.props.state
+    get neighborhood(){
+        return this.props.neighborhood
     }
 
     get zipCode(){
@@ -71,27 +67,21 @@ export class Address extends Entity<IAddressProps> {
         this.touch()
     }
 
-    changeNumber(number: number){
+    changeNumber(number: string){
         this.props.number = number
         this.touch()
     }
 
-
-    changeComplement(complement: string){
-        this.props.complement = complement
+    changeType(type: TypeAddress){
+        this.props.type = type
         this.touch()
     }
 
-    changeCity(city: string){
-        this.props.city = city
+
+    changeNeighborhood(neighborhood: string){
+        this.props.neighborhood = neighborhood
         this.touch()
     }
-
-    changeState(state: string){
-        this.props.state = state
-        this.touch()
-    }
-
 
     changeZipCode(zipCode: string){
         this.props.zipCode = zipCode

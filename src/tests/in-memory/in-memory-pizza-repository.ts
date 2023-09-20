@@ -32,11 +32,7 @@ export class InMemoryPizzaRepository implements PizzaRepository {
     }
 
     async delete(id: string): Promise<void> {
-        const pizzasUpdated = this.pizzas.find(pizza => pizza.id === id)
-
-        if (pizzasUpdated) {
-            this.pizzas = this.pizzas.filter(pizza => pizza.id === id)
-        }
+        this.pizzas = this.pizzas.filter(pizza => pizza.id !== id)
     }
 
 }
