@@ -1,4 +1,4 @@
 export interface BcryptService {
-  hashPassword(password: string, saltRounds: number): Promise<void>
-  comparePassword(password: string, hashPassword: number): Promise<void>
+  hashPassword(password: string, saltRounds: number): Promise<string>
+  comparePassword(password: string, hashPassword: string): Promise<boolean>
 }
