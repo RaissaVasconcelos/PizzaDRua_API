@@ -28,7 +28,6 @@ export class CreateCustomer{
     const passwordHash = await this.bcriptyService.hashPassword(password, 6)
     
     const NewCustomer = Customer.create({ email, phone, name, password: passwordHash })
-    
     await this.customerRepository.create(NewCustomer)
 
     return right({})
