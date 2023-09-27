@@ -1,6 +1,7 @@
 import { Either, right } from "../../../../core/either"
 import { Customer } from "../../../enterprise/entities/customer"
 import { CustomerRepository } from "../../repositories/customer-repository"
+import { BcryptService } from "../../service/bcrypt/bcript-service"
 
 export interface CustomerUseCasesRequest {
   name: string
@@ -12,7 +13,10 @@ export interface CustomerUseCasesRequest {
 type CustomerUseCasesResponse = Either<null, {}>
 
 export class CreateCustomer{
-  constructor(private customerRepository: CustomerRepository) {}
+  constructor(
+    private customerRepository: CustomerRepository,
+    private bcriptyService: BcryptService
+    ) {}
 
   async execute({ email, phone, name, password }: CustomerUseCasesRequest): Promise<CustomerUseCasesResponse> {
     const customerAlreadyExistsError = await this.customerRepository.findByEmail(email)
@@ -20,8 +24,10 @@ export class CreateCustomer{
     if (customerAlreadyExistsError) {
       return right({})
     }
+
+    const passwordHash = await this.bcriptyService.hashPassword(password, 6)
     
-    const NewCustomer = Customer.create({ email, phone, name, password })
+    const NewCustomer = Customer.create({ email, phone, name, password: passwordHash })
     
     await this.customerRepository.create(NewCustomer)
 
