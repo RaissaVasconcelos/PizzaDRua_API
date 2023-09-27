@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  name      String
+  phone     String?
+  password  String
+  Address   Address[]
+  Order     Order[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+}
+
+model Address {
+  id             String       @id @default(uuid())
+  customer       Customer     @relation(fields: [customerId], references: [id])
+  customerId     String
+  neighborhood   Neighborhood @relation(fields: [neighborhoodId], references: [id])
+  neighborhoodId String
+  type           String
+  street         String
+  number         String
+  zipCode        String
+  phone          String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?
+}
+
+model Neighborhood {
+  id        String    @id @default(uuid())
+  name      String
+  rate      String
+  Address   Address[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+}
+
+model Size {
+  id          String    @id @default(uuid())
+  size        String
+  multiFactor String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime?
+}
+
+model Pizza {
+  id          String    @id @default(uuid())
+  name        String
+  image       String
+  type        String
+  description String
+  price       String
+  Order       Order[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime?
+}
+
+model Drink {
+  id        String    @id @default(uuid())
+  name      String
+  size      String
+  price     String
+  Order     Order[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+}
+
+model Order {
+  id            String    @id @default(uuid())
+  customer      Customer  @relation(fields: [customerId], references: [id])
+  customerId    String
+  pizza         Pizza     @relation(fields: [pizzaId], references: [id])
+  pizzaId       String
+  quantityPizza String
+  drink         Drink     @relation(fields: [drinkId], references: [id])
+  drinkId       String
+  quantityDrink String
+  totalPrice    String
+  dateTime      String
+  status        String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime?
+}
