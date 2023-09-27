@@ -11,5 +11,3 @@ COPY . .
 EXPOSE 3001
 
 ENTRYPOINT [ "npm", "run", "start:dev" ]
-
-CMD [ "npm", "run", "migrate"]

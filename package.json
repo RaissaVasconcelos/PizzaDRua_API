@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start:prisma": "npx prisma migrate dev",
     "start:dev": "tsx watch src/server.ts",
-    "start:pix": "tsx watch src/test.pix.ts",
+    "start:migrate:dev": "npm run start:prisma && npm run start:dev",
     "start:": "node build/server.js",
     "build": "tsup src --out-dir build",
     "lint": "eslint src --ext .ts",

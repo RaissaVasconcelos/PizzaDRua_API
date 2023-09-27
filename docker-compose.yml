@@ -11,20 +11,21 @@ services:
       - POSTGRESQL_PASSWORD=pizzadrua
       - POSTGRESQL_DATABASE=pizzadrua-postgre
       
-   pizzadrua-api:
-    image: node:alpine
-    build: .
-    tty: true
-    stdin_open: true
-    container_name: pizzadrua-api
-    working_dir: /app
-    ports:
-      - 3001:3001
-    environment:
-      - NODE_ENV=dev
-      - JWT_SECRET=secret
-      - DATABASE_URL=postgresql://pizzadrua:pizzadrua@localhost:5432/pizzadrua-postgre?schema=public
-    volumes:
-      - ./:/app
-    depends_on:
-      - postgres 
+  #  pizzadrua-api:
+  #   image: node:alpine
+  #   restart: always
+  #   build: .
+  #   tty: true
+  #   stdin_open: true
+  #   container_name: pizzadrua-api
+  #   working_dir: /app
+  #   ports:
+  #     - 3001:3001
+  #   environment:
+  #     - NODE_ENV=dev
+  #     - JWT_SECRET=secret
+  #     - DATABASE_URL=postgresql://pizzadrua:pizzadrua@localhost:5432/pizzadrua-postgre?schema=public
+  #   volumes:
+  #     - ./:/app
+  #   depends_on:
+  #     - postgres 
