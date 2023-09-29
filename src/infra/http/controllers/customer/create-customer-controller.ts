@@ -12,7 +12,9 @@ export const CreateCustomerController = async (request: FastifyRequest, reply: F
   })
 
   const { name, email, password, phone } = createBodySchema.parse(request.body)
+  
   const customer = makeCustomerFactorie()
+
   const { value, isLeft } = await customer.execute({ name, email, password, phone})
 
   if(isLeft()) {
