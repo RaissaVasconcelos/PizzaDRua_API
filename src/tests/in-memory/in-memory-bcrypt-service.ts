@@ -5,11 +5,10 @@ export class InMemoryBcryptService implements BcryptService {
   public passwordErro = 'passwordInvalid'
   
   async hashPassword(password: string, saltRounds: number): Promise<string> {
-    return this.passwordHash
+    return Promise.resolve('hash-password')
   }
 
   async comparePassword(password: string, hashPassword: string): Promise<boolean> {
-    if (password === hashPassword) return true
-    return false
+    return Promise.resolve(true)
   }
 }

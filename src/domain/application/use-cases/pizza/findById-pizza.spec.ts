@@ -33,9 +33,7 @@ describe("CreatePizzaUseCase", () => {
 
     const result = await sut.execute('idFakePizza')
 
-    console.log(result.value)
     expect(result.isLeft()).toBeTruthy()
     expect(result.value).toBeInstanceOf(ResourceNotFoundError)
   })
-    
 })
