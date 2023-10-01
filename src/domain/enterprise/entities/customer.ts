@@ -1,14 +1,13 @@
 import { randomUUID } from "crypto"
 import { Entity } from "../../../core/entities/entity"
-import { UniqueEntityId } from "../../../core/entities/unique-entity-id"
 import { Optional } from "../../../core/types/optional"
 
 export interface ICustomersProps {
   id: string
-  username: string
+  name: string
   email: string
-  phone: string
-  password?: string
+  phone?: string
+  password: string
   createdAt: Date
   updatedAt?: Date
 }
@@ -19,8 +18,8 @@ export class Customer extends Entity<ICustomersProps> {
     return this.props.id
   }
 
-  get Username(){
-    return this.props.username
+  get Name(){
+    return this.props.name
   }
 
   get Email(){
@@ -47,8 +46,8 @@ export class Customer extends Entity<ICustomersProps> {
     this.props.updatedAt = new Date()
   }
 
-  changeUsername(userName: string) {
-    this.props.username = userName
+  changeName(name: string) {
+    this.props.name = name
     this.touch()
   }
 

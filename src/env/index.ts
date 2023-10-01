@@ -5,11 +5,11 @@ const envSchema = z.object({
     NODE_ENV: z.enum(['dev', 'test', 'prod']).default('dev'),
     PORT: z.coerce.number().default(3001),
     JWT_SECRET: z.string(),
-    CLIENT_ID: z.string(),
-    CLIENT_SECRET: z.string(),
+    DATABASE_URL: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)
+
 
 if (!_env.success) {
     console.error('Invalid environment variables', _env.error.format())
