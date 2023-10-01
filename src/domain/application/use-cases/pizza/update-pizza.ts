@@ -1,13 +1,13 @@
 import { PizzaRepository } from "../../repositories/pizza-repository";
 import { Either, left, right } from "../../../../core/either";
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
-import { Pizza, typePizza } from "../../../enterprise/entities";
+import { Pizza } from "../../../enterprise/entities";
 
 interface PizzaUseCaseRequest {
   id: string
   imageUrl: string
   name: string
-  type: typePizza
+  type: "TRADITIONAL" | "SPECIAL"
   price: string
   description: string
 }

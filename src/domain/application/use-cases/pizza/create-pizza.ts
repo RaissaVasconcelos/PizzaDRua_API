@@ -1,12 +1,12 @@
 import { Either, right } from "../../../../core/either";
-import { Pizza, typePizza } from "../../../enterprise/entities";
+import { Pizza } from "../../../enterprise/entities";
 import { PizzaRepository } from "../../repositories/pizza-repository";
 
 
 interface PizzaUseCaseRequest {
     imageUrl: string
     name: string
-    type: typePizza
+    type: "TRADITIONAL" | "SPECIAL"
     description: string
     price: string
 }

@@ -58,8 +58,8 @@ model Size {
 model Pizza {
   id          String    @id @default(uuid())
   name        String
-  image       String
-  type        String
+  imageUrl    String?
+  type        TYPEPIZZA @default(TRADITIONAL)
   description String
   price       String
   Order       Order[]
@@ -92,4 +92,9 @@ model Order {
   status        String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime?
+}
+
+enum TYPEPIZZA {
+  TRADITIONAL
+  SPECIAL
 }

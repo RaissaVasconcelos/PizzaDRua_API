@@ -6,15 +6,14 @@ import { Optional } from "../../../core/types/optional"
 export interface typePizza {
     type: "TRADITIONAL" | "SPECIAL",
 }
-export interface IPizzaProps {
+export interface IPizzaProps extends typePizza {
     id: string
-    imageUrl: string    
+    imageUrl?: string | null 
     name: string
-    type: typePizza
     description: string
     price: string
     createdAt: Date
-    updatedAt?: Date
+    updatedAt?: Date | null
 }
 
 export class Pizza extends Entity<IPizzaProps> {
@@ -42,11 +41,11 @@ export class Pizza extends Entity<IPizzaProps> {
         return this.props.price
     }
 
-    get createAt(){
+    get createdAt(){
         return this.props.createdAt
     }
 
-    get updatedAt(){
+    get updateddAt(){
         return this.props.updatedAt
     }
 
@@ -70,7 +69,7 @@ export class Pizza extends Entity<IPizzaProps> {
         this.touch()
     }
 
-    changeType(type: typePizza) {
+    changeType(type: "TRADITIONAL" | "SPECIAL") {
         this.props.type = type
         this.touch()
     }
