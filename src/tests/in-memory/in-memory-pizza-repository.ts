@@ -1,4 +1,4 @@
-import { PizzaRepository } from "../../domain/application/repositories/pizza-repository";
+import { PizzaRepository } from "../../domain/application/repositories/product-repository";
 import { Pizza } from "../../domain/enterprise/entities";
 
 

@@ -99,5 +99,4 @@ export class Product extends Entity<IProductProps> {
 
         return product
     }
-
 }

@@ -1,7 +1,7 @@
 import { Either, right, left } from "../../../../core/either";
 import { ResourceAlreadyExists } from "../../../../core/errors/resource-already-exists";
 import { Pizza } from "../../../enterprise/entities";
-import { PizzaRepository } from "../../repositories/pizza-repository";
+import { PizzaRepository } from "../../repositories/product-repository";
 
 
 interface PizzaUseCaseRequest {
