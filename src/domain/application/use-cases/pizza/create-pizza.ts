@@ -1,4 +1,5 @@
-import { Either, right } from "../../../../core/either";
+import { Either, right, left } from "../../../../core/either";
+import { ResourceAlreadyExists } from "../../../../core/errors/resource-already-exists";
 import { Pizza } from "../../../enterprise/entities";
 import { PizzaRepository } from "../../repositories/pizza-repository";
 
@@ -11,7 +12,7 @@ interface PizzaUseCaseRequest {
     price: string
 }
 
-type PizzaUseCaseResponse = Either<null, {}>
+type PizzaUseCaseResponse = Either<ResourceAlreadyExists, {}>
 
 export class CreatePizza {
     constructor(
@@ -19,6 +20,13 @@ export class CreatePizza {
     ) {}
 
     async execute({ imageUrl ,description, name, type, price}: PizzaUseCaseRequest): Promise<PizzaUseCaseResponse> {
+        const namePizza = name.toLocaleLowerCase()
+        const pizzaExists = await this.pizzaRepository.findByName(namePizza)
+
+        if(pizzaExists) {
+            return left(new ResourceAlreadyExists())
+        }
+
         const pizza = Pizza.create({
             imageUrl,
             name,

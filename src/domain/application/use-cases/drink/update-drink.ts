@@ -6,6 +6,7 @@ import { Drink } from "../../../enterprise/entities/drink";
 interface DrinkUseCaseRequest {
   id: string,
   name: string,
+  imageUrl: string
   size: string,
   price: string,
 }

@@ -21,5 +21,5 @@ export const DeletePizzaController = async (request: FastifyRequest, reply: Fast
     }
   }
 
-  return reply.code(200).send()
+  return reply.code(204).send()
 }

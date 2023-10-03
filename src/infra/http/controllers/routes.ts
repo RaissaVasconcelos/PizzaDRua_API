@@ -9,6 +9,12 @@ import {
   FindManyPizzaController, 
   UpdatePizzaController,
   DeletePizzaController } from './pizza'
+import {
+  CreateDrinkController,
+  FindByIdDrinkController,
+  FindManyDrinkController,
+  UpdateDrinkController,
+  DeleteDrinkController } from './drink'
 
 export const Routes = async (app: FastifyInstance) => {
  /* Routes Customer */
@@ -21,4 +27,11 @@ export const Routes = async (app: FastifyInstance) => {
  app.post('/pizza', CreatePizzaController)
  app.put('/pizza', UpdatePizzaController)
  app.delete('/pizza/:id', DeletePizzaController)
+ 
+ /* Routes Drinks */
+ app.get('/drink/:id', FindByIdDrinkController)
+ app.get('/drink', FindManyDrinkController)
+ app.post('/drink', CreateDrinkController)
+ app.put('/drink', UpdateDrinkController)
+ app.delete('/drink/:id', DeleteDrinkController)
 }

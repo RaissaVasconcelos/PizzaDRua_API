@@ -6,7 +6,7 @@ export class PrismaPizzaRepository implements PizzaRepository {
   async create(product: Pizza): Promise<void> {
     await prisma.pizza.create({
       data: { 
-        name: product.name,
+        name: product.name.toLowerCase(),
         imageUrl: product.imageUrl,
         price: product.price,
         description: product.description,
@@ -23,6 +23,16 @@ export class PrismaPizzaRepository implements PizzaRepository {
     if(!pizza) return null
 
     return new Pizza(pizza)
+  }
+
+  async findByName(name: string): Promise<Pizza | null> {
+    const pizzaExist = await prisma.pizza.findFirst({
+      where: { name }
+    })
+
+    if(!pizzaExist) return null
+
+    return new Pizza(pizzaExist)
   }
 
   async findMany(): Promise<Pizza[]> {
