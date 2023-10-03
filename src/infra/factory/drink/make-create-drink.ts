@@ -1,5 +1,5 @@
 import { PrismaDrinkRepository } from "../../repository/prisma/prisma-drink";
-import { CreateDrink } from "../../../domain/application/use-cases/drink/create-drink";
+import { CreateDrink } from "../../../domain/application/use-cases/product/create-product";
 
 export const MakeCreateDrink = () => {
   const prismaDrinkRepository = new PrismaDrinkRepository()

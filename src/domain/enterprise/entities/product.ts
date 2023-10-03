@@ -6,7 +6,7 @@ export interface IProductProps {
     id: string
     idCategory: string
     name: string
-    type: "TRADITIONAL" | "SPECIAL"
+    type?: "TRADITIONAL" | "SPECIAL" | null
     imageUrl?: string | null 
     size: string
     description: string
