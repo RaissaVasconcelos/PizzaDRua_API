@@ -1,5 +1,0 @@
-export * from './create-drink-controller'
-export * from './findById-drink-controller'
-export * from './findMany-drink-controler'
-export * from './update-drink-controller'
-export * from './delete-drink-controller'

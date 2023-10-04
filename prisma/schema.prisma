@@ -47,18 +47,20 @@ model Neighborhood {
   updatedAt DateTime?
 }
 
-
 model Category {
-  id      String    @id @default(uuid())
-  name    String
-  Product Product[]
+  id        String    @id @default(uuid())
+  name      String
+  Product   Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
 }
+
 model Product {
   id           String         @id @default(uuid())
   category     Category       @relation(fields: [categoryId], references: [id])
   categoryId   String
   name         String
-  image        String
+  image        String?
   type         TYPEPIZZA?     @default(TRADITIONAL)
   size         String
   description  String

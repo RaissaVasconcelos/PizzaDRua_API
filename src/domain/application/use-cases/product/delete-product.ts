@@ -8,6 +8,7 @@ export class DeleteProduct {
   constructor(private productRepository: ProductRepository){}
 
   async execute(id: string): Promise<productUseCaseResponse> {
+    console.log(id)
     const productId = await this.productRepository.findById(id)
 
     if (!productId) {

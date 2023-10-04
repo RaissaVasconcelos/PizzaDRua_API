@@ -6,7 +6,7 @@ export interface ICategoryProps {
   id: string
   name: string
   createdAt: Date
-  updatedAt: Date | null
+  updatedAt?: Date | null
 }
 
 export class Category extends Entity<ICategoryProps> {
@@ -16,6 +16,14 @@ export class Category extends Entity<ICategoryProps> {
 
   get name() {
     return this.props.name
+  }
+
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
   }
 
   private touch() {

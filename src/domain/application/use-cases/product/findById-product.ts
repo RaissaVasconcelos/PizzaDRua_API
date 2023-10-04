@@ -17,6 +17,8 @@ export class FindByIdProduct {
       return left(new ResourceNotFoundError())
     }
 
+    console.log('product', product)
+
     return right({ product })
   }
 }

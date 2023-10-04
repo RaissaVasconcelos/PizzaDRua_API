@@ -4,10 +4,10 @@ import { Optional } from "../../../core/types/optional"
 
 export interface IProductProps {
     id: string
-    idCategory: string
+    categoryId: string
     name: string
     type?: "TRADITIONAL" | "SPECIAL" | null
-    imageUrl?: string | null 
+    image?: string | null 
     size: string
     description: string
     price: string
@@ -20,16 +20,16 @@ export class Product extends Entity<IProductProps> {
         return this.props.id
     }
 
-    get idCategory(){
-        return this.props.idCategory
+    get categoryId(){
+        return this.props.categoryId
     }
 
     get name(){
         return this.props.name
     }
 
-    get imageUrl(){
-        return this.props.imageUrl
+    get image(){
+        return this.props.image
     }
 
     get description(){
@@ -65,8 +65,8 @@ export class Product extends Entity<IProductProps> {
         this.touch()
     }
 
-    changeImageUrl(imageUrl: string) {
-        this.props.imageUrl = imageUrl
+    changeImageUrl(image: string) {
+        this.props.image = image
         this.touch()
     }
 
