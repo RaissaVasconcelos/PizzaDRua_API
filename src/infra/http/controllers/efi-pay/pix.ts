@@ -1,11 +1,11 @@
 /* eslint-disable new-cap */
 import fs from 'fs'
-import path from 'path'
 import https from 'https'
 import axios from "axios"
 import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 import { env } from '../../../../env'
+import path from 'path'
 
 const credentials = {
   client_id: env.CLIENT_ID,
@@ -31,7 +31,9 @@ const billingBodySchema = z.object({
   solicitacaoPagador: z.string(),
 })
 
-const certification = fs.readFileSync(path.resolve(__dirname, `../../../../../certs/${env.EFIPAY_CERT}`))
+const certification = fs.readFileSync(
+  path.resolve(__dirname, `../../../../../certs/${env.EFIPAY_CERT}`)
+  )
 
 const data = JSON.stringify({ grant_type: 'client_credentials' })
 

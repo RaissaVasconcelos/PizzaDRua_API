@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import * as z from 'zod'
-import { makeCustomerFactorie } from "../../../factory/make-customer";
+import { makeCustomerFactorie } from "../../../factory/customer/make-customer";
 import { CustomerAlreadyExistsError } from "../../../../core/errors/customer-alreaty-exists";
 
 export const CreateCustomerController = async (request: FastifyRequest, reply: FastifyReply) => {

@@ -2,10 +2,11 @@ version: '3'
 
 services:
    postgres:
+    container_name: pizzadrua-postgre
     image: bitnami/postgresql
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRESQL_USERNAME=pizzadrua
       - POSTGRESQL_PASSWORD=pizzadrua
@@ -20,7 +21,11 @@ services:
     container_name: pizzadrua-api
     working_dir: /app
     ports:
+<<<<<<< HEAD
       - 3001:3001
+=======
+      - "3001:3001"
+>>>>>>> 7324a40db7bd1b82b428699d73f349d67fdaaa59
     environment:
       - NODE_ENV=dev
       - JWT_SECRET=secret
@@ -28,4 +33,11 @@ services:
     volumes:
       - ./:/app
     depends_on:
+<<<<<<< HEAD
       - postgres 
+=======
+      - postgres
+
+
+  
+>>>>>>> 7324a40db7bd1b82b428699d73f349d67fdaaa59
