@@ -5,9 +5,11 @@ import { ZodError } from 'zod'
 import {fromZodError} from 'zod-validation-error'
 import { env } from "./env";
 import { customerRoutes } from "./infra/http/controllers/customer/routes";
+import { pixRoutes } from "./infra/http/controllers/efi-pay/router";
 export const app = fastify();
 
 app.register(customerRoutes)
+app.register(pixRoutes)
 app.register(fastifyExpress)
 app.register(fastifyJwt, {
     secret: 'secret',
