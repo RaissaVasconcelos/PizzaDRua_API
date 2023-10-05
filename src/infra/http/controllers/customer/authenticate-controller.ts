@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { makeFactorieAuthenticate } from "../../../factory/make-authenticate";
+import { makeFactorieAuthenticate } from "../../../factory/customer/make-authenticate";
 import * as z from 'zod'
 import { InvalidCredentialsError } from "../../../../core/errors/invalid-credencial-error";
 
