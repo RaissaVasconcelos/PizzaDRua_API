@@ -4,7 +4,7 @@ import { Product } from "../../../enterprise/entities/product";
 import { CategoryRepository } from "../../repositories/category-repository";
 import { CategoryNotFoundError } from "../../../../core/errors/category-not-found-error";
 
-interface ProductUseCaseRequest {
+export interface ProductUseCaseRequest {
   name: string
   category: string
   type?: "TRADITIONAL" | "SPECIAL" | null
@@ -24,7 +24,6 @@ export class Createproduct {
 
   async execute({ name, description, category, price, size, image, type }: ProductUseCaseRequest): Promise<ProductUseCasesResponse> {
     const categoryProduct = await this.categoryRepository.findByName(category)
-    console.log(categoryProduct)
 
     if(categoryProduct) {
       const newProduct = Product.create({

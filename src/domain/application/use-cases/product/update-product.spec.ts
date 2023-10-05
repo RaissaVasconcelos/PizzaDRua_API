@@ -1,15 +1,18 @@
 import { makeProduct } from "../../../../tests/factory/make-product";
 import { InMemoryProductRepository } from "../../../../tests/in-memory/in-memory-product-repository";
-import { UpdateProduct } from "./update-product";
+import { InMemoryCategoryRepository } from "../../../../tests/in-memory/in-memory-category-repository";
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
+import { UpdateProduct } from "./update-product";
 
 let inMemoryProductRepository: InMemoryProductRepository
+let inMemoryCategoryRepository: InMemoryCategoryRepository
 let sut: UpdateProduct
 
 describe('Update Product', () => {
   beforeEach(() => {
     inMemoryProductRepository = new InMemoryProductRepository()
-    sut = new UpdateProduct(inMemoryProductRepository)
+    inMemoryCategoryRepository = new InMemoryCategoryRepository()
+    sut = new UpdateProduct(inMemoryProductRepository, inMemoryCategoryRepository)
   })
 
   it('Should be update in Product', async () => {
@@ -17,7 +20,15 @@ describe('Update Product', () => {
 
     await inMemoryProductRepository.create(ProductFake)
 
-    const result = await sut.execute(ProductFake)
+    const result = await sut.execute({
+      id: ProductFake.id,
+      name: ProductFake.name,
+      category: "pizzas",
+      description: ProductFake.description,
+      price: ProductFake.price,
+      size: ProductFake.size,
+      image: ProductFake.image,
+    })
 
     if (result.isRight()) {
       expect(result.isRight()).toBeTruthy()
@@ -31,7 +42,7 @@ describe('Update Product', () => {
 
     const result = await sut.execute({
       id: 'idFake',
-      idCategory: '2',
+      category: 'bebidas',
       name: 'Coca-cola',
       description: 'gelada',
       size: '600ml',

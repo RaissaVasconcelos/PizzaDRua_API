@@ -1,7 +1,6 @@
 import { ProductRepository } from "../../domain/application/repositories/product-repository";
 import { Product } from "../../domain/enterprise/entities";
 
-
 export class InMemoryProductRepository implements ProductRepository {
     public products: Product[] = []
 
@@ -25,7 +24,7 @@ export class InMemoryProductRepository implements ProductRepository {
         return nameProduct
     }
 
-    async findMany(): Promise<Product[]> {
+    async findMany(): Promise<any[]> {
         return this.products
     }
 

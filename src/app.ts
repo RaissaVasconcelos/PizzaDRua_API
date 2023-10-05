@@ -19,6 +19,8 @@ app.setErrorHandler((error, _, reply) => {
     }
     if (env.NODE_ENV !== 'prod') {
         console.error(error)
+    } else {
+        // implemetar logs em ferramentas externas datadog/newRelic/Sentry para validação de erros
     }
     return reply.status(500).send({ message: 'Internal server error.' })
 })
