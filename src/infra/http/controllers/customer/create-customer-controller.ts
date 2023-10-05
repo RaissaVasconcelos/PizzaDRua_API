@@ -18,9 +18,9 @@ export const CreateCustomerController = async (request: FastifyRequest, reply: F
   const { value, isLeft } = await customer.execute({ name, email, password, phone})
 
   if(isLeft()) {
-    const erro = value
-    if(erro instanceof CustomerAlreadyExistsError) {
-      return reply.status(400).send({ message: erro.message })
+    const error = value
+    if(error instanceof CustomerAlreadyExistsError) {
+      return reply.status(400).send({ message: error.message })
     }
   }
 
