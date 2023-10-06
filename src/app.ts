@@ -4,18 +4,14 @@ import fastifyJwt from "@fastify/jwt";
 import { ZodError } from 'zod'
 import {fromZodError} from 'zod-validation-error'
 import { env } from "./env";
-<<<<<<< HEAD
-import { customerRoutes } from "./infra/http/controllers/customer/routes";
+
 import { pixRoutes } from "./infra/http/controllers/efi-pay/router";
-export const app = fastify();
-
-app.register(customerRoutes)
-app.register(pixRoutes)
-=======
 import { Routes } from "./infra/http/controllers/routes";
+
 export const app = fastify();
 
->>>>>>> 7324a40db7bd1b82b428699d73f349d67fdaaa59
+app.register(pixRoutes)
+
 app.register(fastifyExpress)
 app.register(Routes)
 app.register(fastifyJwt, {

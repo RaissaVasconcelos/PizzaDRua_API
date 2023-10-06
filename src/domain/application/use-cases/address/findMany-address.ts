@@ -2,16 +2,29 @@ import { Either, left, right } from "../../../../core/either";
 import { AddressRepository } from "../../repositories/address-repository";
 import { Address } from "../../../enterprise/entities";
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
+import { CustomerRepository } from "../../repositories/customer-repository";
+
+
+interface FindManyAddressRequest {
+  customerId: string
+}
 
 type AddressUseCasesResponse = Either<ResourceNotFoundError, { address: Address[] }>
 
 export class FindManyAddress {
   constructor(
-    private addressRepository: AddressRepository
+    private addressRepository: AddressRepository,
+    private customerRepository: CustomerRepository
   ) {}
 
-  async execute(): Promise<AddressUseCasesResponse> {
-    const address = await this.addressRepository.findMany()
+  async execute({customerId}: FindManyAddressRequest): Promise<AddressUseCasesResponse> {
+
+    const customer = await this.customerRepository.findById(customerId)
+
+    if (!customer) {
+      return left(new ResourceNotFoundError())
+    }
+    const address = await this.addressRepository.findMany(customerId)
 
     if (!address) {
       return left(new ResourceNotFoundError())
