@@ -1,20 +1,18 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { makeFindByIdProduct } from "../../../factory/product/make-findById-product";
-import * as z from 'zod'
+import { makeFindByIdOrder } from "../../../factory/order/make-findById-order";
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
+import * as z from 'zod'
 
-export const FindByIdProductController = async (request: FastifyRequest, reply: FastifyReply) => {
+export const FindByIdOrderController = async (request: FastifyRequest, reply: FastifyReply) => {
   const schemaFindByIdProduct = z.object({
     id: z.string().uuid()
   })
 
-  
   const { id } = schemaFindByIdProduct.parse(request.params)
-  console.log(id)
-  
-  const findByIdProduct = makeFindByIdProduct()
 
-  const result = await findByIdProduct.execute(id)
+  const findByIdOrder = makeFindByIdOrder()
+
+  const result = await findByIdOrder.execute(id)
 
   if(result.isLeft()) {
     const erro = result.value

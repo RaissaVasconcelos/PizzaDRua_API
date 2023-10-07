@@ -24,8 +24,9 @@ export class Createproduct {
 
   async execute({ name, description, category, price, size, image, type }: ProductUseCaseRequest): Promise<ProductUseCasesResponse> {
     const categoryProduct = await this.categoryRepository.findByName(category)
-
+    console.log(categoryProduct)
     if(categoryProduct) {
+      console.log('category exists')
       const newProduct = Product.create({
         name,
         description,

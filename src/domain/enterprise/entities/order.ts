@@ -4,16 +4,13 @@ import { Optional } from "../../../core/types/optional"
 
 export interface IOrderProps {
   id: string
-  idCustomer: string
-  idPizza: string
-  idSize: string
-  quantityPizza: string
-  idDrink: string
-  quantityDrink: string
+  customerId: string
+  extendedOrdersData: any
+  payment: string
   totalPrice: string
-  status: string
+  status: any
   createdAt: Date
-  updatedAt?: Date 
+  updatedAt?: Date | null
 }
 
 export class Order extends Entity<IOrderProps> {
@@ -21,32 +18,24 @@ export class Order extends Entity<IOrderProps> {
     return this.props.id
   }
 
-  get idCustomer() {
-    return this.props.idCustomer
+  get customerId() {
+    return this.props.customerId
   }
-
-  get idPizza() {
-    return this.props.idPizza
+  
+  get status() {
+    return this.props.status
   }
-
-  get idSize() {
-    return this.props.idSize
-  }
-
-  get quantityPizza() {
-    return this.props.quantityPizza
-  }
-
-  get idDrink() {
-    return this.props.idDrink
-  }
-
-  get quantityDrink() {
-    return this.props.quantityDrink
-  }
-
+  
   get totalPrice() {
     return this.props.totalPrice
+  }
+
+  get payment() {
+    return this.props.payment
+  }
+
+  get extendedOrdersData() {
+    return this.props.extendedOrdersData
   }
 
   get createdAt() {
@@ -57,27 +46,8 @@ export class Order extends Entity<IOrderProps> {
     return this.props.updatedAt
   }
 
-  get status() {
-    return this.props.status
-  }
-
   private touch() {
     this.props.updatedAt = new Date()
-  }
-
-  changeQuantityPizza(quantity: string) {
-    this.props.quantityPizza = quantity
-    this.touch()
-  }
-
-  changeQuantityDrink(quantity: string) {
-    this.props.quantityDrink = quantity
-    this.touch()
-  }
-
-  changeTotalPrice(totalPrice: string) {
-    this.props.totalPrice = totalPrice
-    this.touch()
   }
 
   changeStatus(status: string) {
@@ -89,7 +59,7 @@ export class Order extends Entity<IOrderProps> {
     const order = new Order({
       ...props,
       id: props.id ?? randomUUID(),
-      createdAt: props.createdAt ?? new Date()
+      createdAt: props.createdAt ?? new Date(),
     })
 
     return order

@@ -14,7 +14,7 @@ export const CreateProductController = async (request: FastifyRequest, reply: Fa
   })
 
   const { category, name, price, description, image, type, size } = schemaPizza.parse(request.body)
-
+  console.log(category)
   const product = makeCreateProduct()
 
   await product.execute({ category, name, price, description, image, type, size })

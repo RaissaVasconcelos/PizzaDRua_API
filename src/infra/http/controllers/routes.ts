@@ -1,5 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { verifyJWT } from "../../middlewares/verify-jwt";
+import { OAuthEfi } from "./efi-pay/pix";
 import {
   CreateCustomerController,
   AuthenticateController } from "./customer";
@@ -16,7 +17,14 @@ import {
   DeleteCategoryController,
   FindByIdCategoryController,
   FindManyCategoryController,
-  UpdateCategoryController } from './category' 
+  UpdateCategoryController } from './category'
+  
+import {
+  CreateOrderController,
+  FindByIdOrderController, 
+  FindManyOrderController,
+  UpdateOrderController
+} from './order'
 
 export const Routes = async (app: FastifyInstance) => {
  /* Routes Customer */
@@ -36,4 +44,15 @@ export const Routes = async (app: FastifyInstance) => {
  app.post('/category', CreateCategoryController)
  app.put('/category', UpdateCategoryController)
  app.delete('/category/:id', DeleteCategoryController)
+
+ /** Route pix */
+ app.post('/pix', OAuthEfi)
+
+ /** Route Order */
+ app.post('/order', CreateOrderController)
+ app.get('/order/:id', FindByIdOrderController)
+ app.get('/order', FindManyOrderController)
+ app.put('/order', UpdateOrderController)
+
+/** Route checkin */
 }
