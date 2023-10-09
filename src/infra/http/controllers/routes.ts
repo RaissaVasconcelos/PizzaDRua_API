@@ -1,5 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { verifyJWT } from "../../middlewares/verify-jwt";
+import { OAuthEfi } from "./efi-pay/pix";
 import {
   CreateCustomerController,
   AuthenticateController
@@ -18,12 +19,25 @@ import {
   DeleteCategoryController,
   FindByIdCategoryController,
   FindManyCategoryController,
-  UpdateCategoryController
-} from './category'
-import { FindManyNeighborhoodController } from "./neighborhood/find-many-neighborhood-controller";
-import { CreateNeighborhoodController } from "./neighborhood/create-neighborhood-controller";
-import { CreateAddressController } from "./address/create-address-controller";
-import { FindManyAddressController } from "./address/find-many-address-controller";
+  UpdateCategoryController } from './category'
+  
+import {
+  CreateOrderController,
+  FindByIdOrderController, 
+  FindManyOrderController,
+  UpdateOrderController
+} from './order'
+
+import {
+  CreateNeighborhoodController,
+  FindManyNeighborhoodController,
+} from './neighborhood'
+
+import {
+  CreateAddressController,
+  FindManyAddressController,
+} from './address'
+
 
 export const Routes = async (app: FastifyInstance) => {
 
@@ -39,19 +53,26 @@ export const Routes = async (app: FastifyInstance) => {
   app.delete('/product/:id', DeleteProductController)
 
   /* Routes Category */
-  app.get('/category/:id', FindByIdCategoryController)
-  app.get('/category', FindManyCategoryController)
-  app.post('/category', CreateCategoryController)
-  app.put('/category', UpdateCategoryController)
-  app.delete('/category/:id', DeleteCategoryController)
+ app.get('/category/:id', FindByIdCategoryController)
+ app.get('/category', FindManyCategoryController)
+ app.post('/category', CreateCategoryController)
+ app.put('/category', UpdateCategoryController)
+ app.delete('/category/:id', DeleteCategoryController)
 
-  // Routes Neighborhood
-  app.get('/neighborhood', FindManyNeighborhoodController)
-  app.post('/neighborhood', CreateNeighborhoodController)
+ /** Route pix */
+ app.post('/pix', OAuthEfi)
 
-  // Routes Address
-  app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)
-  app.get('/address', {onRequest: [verifyJWT]}, FindManyAddressController)
+ /** Route Order */
+ app.post('/order', CreateOrderController)
+ app.get('/order/:id', FindByIdOrderController)
+ app.get('/order', FindManyOrderController)
+ app.put('/order', UpdateOrderController)
+
+// Routes Neighborhood
+app.get('/neighborhood', FindManyNeighborhoodController)
+app.post('/neighborhood', CreateNeighborhoodController)
+
+// Routes Address
+app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)
+app.get('/address', {onRequest: [verifyJWT]}, FindManyAddressController)  
 }
-
-

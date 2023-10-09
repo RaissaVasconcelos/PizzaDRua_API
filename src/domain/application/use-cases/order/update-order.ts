@@ -5,14 +5,11 @@ import { ResourceNotFoundError } from "../../../../core/errors/resource-not-foun
 
 interface UpdatedOrderUseCaseRequest {
   id: string
-  idCustomer: string
-  idPizza: string
-  idSize: string
-  quantityPizza: string
-  idDrink: string
-  quantityDrink: string
+  customerId: string
+  payment: string
   totalPrice: string
   status: string
+  extendedOrdersData: any
 }
 
 type UpdatedOrderUseCaseResponse = Either<ResourceNotFoundError, {}>

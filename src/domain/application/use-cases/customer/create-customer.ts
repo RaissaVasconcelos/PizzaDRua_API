@@ -20,16 +20,16 @@ export class CreateCustomer{
     ) {}
 
   async execute({ email, phone, name, password }: CustomerUseCasesRequest): Promise<CustomerUseCasesResponse> {
-    const customerAlreadyExistsError = await this.customerRepository.findByEmail(email)
-
-    if (customerAlreadyExistsError) {
-      return left(new CustomerAlreadyExistsError())
+    const customerAlreadyExists = await this.customerRepository.findByEmail(email)
+    
+    if (customerAlreadyExists) {
+      return left(new CustomerAlreadyExistsError)
     }
 
     const passwordHash = await this.bcriptyService.hashPassword(password, 6)
     
-
     const NewCustomer = Customer.create({ email, phone, name, password: passwordHash })
+    
     await this.customerRepository.create(NewCustomer)
 
     return right({})

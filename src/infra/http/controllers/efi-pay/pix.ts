@@ -102,6 +102,7 @@ export async function OAuthEfi(request: FastifyRequest, reply: FastifyReply) {
       httpsAgent: agent,
     };
     const responseQrCode = await axios(configQrCode);
+    console.log('responseQrCode', responseQrCode)
 
     return reply.status(200).send(responseQrCode.data)
 
