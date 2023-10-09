@@ -1,24 +1,31 @@
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
-import { makeOrder } from "../../../../tests/factory";
+import { makeOrder, makeCustomer } from "../../../../tests/factory";
 import { InMemoryOrderRepository } from "../../../../tests/in-memory";
 import { UpdateOrder } from "./update-order";
 
 let inMemoryOrderRepository: InMemoryOrderRepository
 let sut: UpdateOrder
 
-describe('Update Drink', () => {
+describe('Update Order', () => {
   beforeEach(() => {
     inMemoryOrderRepository = new InMemoryOrderRepository()
     sut = new UpdateOrder(inMemoryOrderRepository) 
   })
 
-  it('Should be in update Order', async () => {
+  it('Should be in Update Order', async () => {
     const order = makeOrder()
 
     await inMemoryOrderRepository.create(order)
 
-    const result = await sut.execute(order)
-    console.log(result.value)
+    const result = await sut.execute({
+      id: order.id,
+      customerId: order.customerId,
+      payment: order.payment,
+      status: "FINISHED",
+      totalPrice: order.totalPrice,
+      itensOrder: order.itensOrder,
+    })
+
     if(result.isRight()) {
       expect(result.isRight()).toBeTruthy()
     }
@@ -31,14 +38,11 @@ describe('Update Drink', () => {
 
     const result = await sut.execute({
       id: 'idFake',
-      idCustomer: 'idCustomer',
-      idPizza: 'idPizza',
-      idSize: 'idSize',
-      quantityPizza: '3',
-      idDrink: 'idDrink',
-      quantityDrink: '2',
-      totalPrice: '20',
-      status: 'completed'
+      customerId: order.customerId,
+      payment: order.payment,
+      status: "FINISHED",
+      totalPrice: order.totalPrice,
+      itensOrder: order.itensOrder,
     })
 
     expect(result.isLeft()).toBeTruthy()
