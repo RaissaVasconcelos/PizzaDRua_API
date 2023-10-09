@@ -17,6 +17,7 @@ export class FindByIdNeighborhood {
     if(!neighborhood) {
       left(new ResourceNotFoundError())
     }
+    
     return right({ neighborhood })
   }
 }
