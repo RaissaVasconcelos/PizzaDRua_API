@@ -49,7 +49,7 @@ export class PrismaProductRepository implements ProductRepository {
             name: true,
           }
         },
-        categoryId: true,
+        categoryId: false,
         description: true,
         image: true,
         price: true,

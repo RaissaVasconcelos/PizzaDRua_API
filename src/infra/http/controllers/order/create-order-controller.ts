@@ -10,29 +10,29 @@ export const CreateOrderController = async (request: FastifyRequest, reply: Fast
     totalPrice: z.string(),
     payment: z.string(),
     status: z.string(),
-    extendedOrdersData: z.array(
+    itensOrder: z.array(
       z.object({
-        category: z.string(),
+        mode: z.enum(["MIXED", "SIMPLE"]),
         product: z.string().array(),
         size: z.string(),
         quantity: z.string(),
     })),
   })
 
-  const { customerId, extendedOrdersData, payment, totalPrice, status } = schemaOrder.parse(request.body)
+  const { customerId, itensOrder, payment, totalPrice, status } = schemaOrder.parse(request.body)
 
   const order = makeCreateOrder()
 
   const result = await order.execute(
     { customerId,
-      extendedOrdersData,
+      itensOrder,
       payment,
       totalPrice,
       status })
   
   if(result.isLeft()) {
     const erro = result.value
-    console.log(erro)
+
     if(erro instanceof CustomerAlreadyExistsError){
       return reply.code(400).send({ message: erro.message })
     }
@@ -40,8 +40,6 @@ export const CreateOrderController = async (request: FastifyRequest, reply: Fast
       return reply.code(400).send({ message: erro.message })
     }  
   }
-  
-  console.log(result)
 
   return reply.code(201).send()
 }

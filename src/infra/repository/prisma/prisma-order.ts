@@ -3,12 +3,12 @@ import { OrderRepository } from "../../../domain/application/repositories/order-
 import { Order } from "../../../domain/enterprise/entities";
 
 export class PrismaOrderRepository implements OrderRepository {
-  async create({ customerId, totalPrice, extendedOrdersData, payment, status}: Order): Promise<void> {    
+  async create({ customerId, totalPrice, itensOrder, payment, status}: Order): Promise<void> {    
     console.log(status)
     await prisma.order.create({
       data: { 
         customerId,
-        extendedOrdersData,
+        itensOrder,
         status,
         payment,
         totalPrice,

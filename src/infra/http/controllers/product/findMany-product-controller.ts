@@ -5,6 +5,6 @@ export const FindManyProductController = async (_request: FastifyRequest, reply:
   const products = MakeFindManyProduct()
 
   const result = await products.execute()
-  console.log(result)
-  return reply.code(200).send({ data: result.value })
+  
+  return reply.code(200).send({ data: result.value, meta: {} })
 }

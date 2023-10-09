@@ -5,7 +5,7 @@ import { Optional } from "../../../core/types/optional"
 export interface IOrderProps {
   id: string
   customerId: string
-  extendedOrdersData: any
+  itensOrder: any
   payment: string
   totalPrice: string
   status: any
@@ -34,8 +34,8 @@ export class Order extends Entity<IOrderProps> {
     return this.props.payment
   }
 
-  get extendedOrdersData() {
-    return this.props.extendedOrdersData
+  get itensOrder() {
+    return this.props.itensOrder
   }
 
   get createdAt() {

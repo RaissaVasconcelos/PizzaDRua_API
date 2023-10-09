@@ -8,7 +8,7 @@ import { CreatedOrderError } from "../../../../core/errors/created-order-error";
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
 
 interface dataProduct {
-  category: string
+  mode: "MIXED" | "SIMPLE" 
   product: string[]
   size: string
   quantity: string
@@ -18,7 +18,7 @@ interface CreateOrderUseCaseRequest {
   payment: string
   totalPrice: string
   status: string
-  extendedOrdersData: dataProduct[]
+  itensOrder: dataProduct[]
 }
 
 type CreateOrderUseCaseResponse = Either<
@@ -35,7 +35,7 @@ export class CreateOrder {
       this.acumulador = 0
     }
 
-    async execute({ customerId, extendedOrdersData, payment, status, totalPrice }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
+    async execute({ customerId, itensOrder, payment, status, totalPrice }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
       const customer = await this.customeRepository.findById(customerId)
 
       if (!customer) {
@@ -43,57 +43,46 @@ export class CreateOrder {
       }
 
       // array com os produtos
-      await Promise.all(extendedOrdersData.map(async (product) => {
-        if(product.category === 'pizzas') {
+      await Promise.all(itensOrder.map(async (product) => {
+        console.log(product)
+        // se a pizza obtiver mais sabores
+        if(product.mode === 'MIXED') {
           const prices = await Promise.all(product.product.map(async (productName) => {
             const product = await this.productRepository.findByName(productName)
             return Number(product?.price)
           }))
 
           const maxValue = Math.max(...prices)
-
-          if(product.size === 'meia') {
-            this.acumulador += maxValue / 2
-            return 
-          }
           
-          // pizza inteira
-          this.acumulador += (maxValue * Number(product.quantity))
+          this.acumulador += ((product.size === 'meia' ? ( maxValue / 2 ) : maxValue) * Number(product.quantity));
           return
         }
 
-        const priceProduct = await this.productRepository.findByName(product.product[0])
-        this.acumulador += (Number(priceProduct?.price) * Number(product.quantity)) 
-        
+        const response = await this.productRepository.findByName(product.product[0])
+        const priceProduct = Number(response?.price) 
+        this.acumulador += ((product.size === 'meia' ? ( priceProduct / 2 ) : priceProduct) * Number(product.quantity));
       }));
 
       console.log('Valor total da compra', this.acumulador.toFixed(2))
 
       const value = Number(this.acumulador.toFixed(2))
-      console.log(totalPrice)
-      console.log('value total', value)
       const valueMin = Number(totalPrice) - 0.5
       const valueMax = Number(totalPrice) + 0.5
 
       // min <= totalPrice < max
       if(value >= valueMin && value < valueMax) {
-        console.log('created order')
         const newOrder = Order.create({
           customerId,
-          extendedOrdersData,
+          itensOrder,
           payment,
           status,
           totalPrice: value.toString(),
         })
   
-        console.log('newOrder', newOrder)
-  
         this.orderRepository.create(newOrder)
         return right({})
       }
       
-
-
       return left(new CreatedOrderError())
     }
 }

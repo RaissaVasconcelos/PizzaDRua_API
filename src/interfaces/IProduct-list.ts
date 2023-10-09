@@ -5,7 +5,6 @@ export interface IProductList {
     id: string
     name: string
   }
-  categoryId: string
   description: string
   image: string | null
   price: string

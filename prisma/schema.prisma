@@ -70,15 +70,15 @@ model Product {
 }
 
 model Order {
-  id                 String    @id @default(uuid())
-  customer           Customer  @relation(fields: [customerId], references: [id])
-  customerId         String
-  status             STATUS    @default(WAITING)
-  payment            String
-  totalPrice         String
-  extendedOrdersData Json
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime?
+  id         String    @id @default(uuid())
+  customer   Customer  @relation(fields: [customerId], references: [id])
+  customerId String
+  status     STATUS    @default(WAITING)
+  payment    String
+  totalPrice String
+  itensOrder Json
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime?
 }
 
 enum STATUS {
