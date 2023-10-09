@@ -11,7 +11,6 @@ export class FindManyProduct {
 
   async execute(): Promise<ProductResponse> {
     const products = await this.productRepository.findMany()
-    console.log('products execute', products)
     return right({ products })
   }
 }

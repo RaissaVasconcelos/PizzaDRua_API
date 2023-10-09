@@ -19,7 +19,6 @@ describe('CreateUseCaseproduct', () => {
 
   it('Should be able create a product', async () => {
     const productFake = makeProduct()
-    // const idCategory = await inMemoryCategoryRepository.findByName()
 
     const product = await sut.execute({
       name: productFake.name,
@@ -29,6 +28,7 @@ describe('CreateUseCaseproduct', () => {
       size: productFake.size,
       image: productFake.image,
       type: productFake.type,
+      status: productFake.status,
     })
 
     if(product.isRight()) {

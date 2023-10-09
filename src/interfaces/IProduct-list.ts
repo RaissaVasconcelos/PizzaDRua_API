@@ -10,6 +10,7 @@ export interface IProductList {
   price: string
   size: string
   type?: "TRADITIONAL" | "SPECIAL" | null
+  status: "ACTIVE" | "DISABLE"
   createdAt: Date 
   updatedAt?: Date | null
 }

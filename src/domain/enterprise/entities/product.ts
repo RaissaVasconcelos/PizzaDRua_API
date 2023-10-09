@@ -11,6 +11,7 @@ export interface IProductProps {
     size: string
     description: string
     price: string
+    status: "ACTIVE" | "DISABLE"
     createdAt: Date
     updatedAt?: Date | null
 }
@@ -48,6 +49,10 @@ export class Product extends Entity<IProductProps> {
         return this.props.price
     }
 
+    get status(){
+        return this.props.status
+    }
+
     get createdAt(){
         return this.props.createdAt
     }
@@ -82,6 +87,11 @@ export class Product extends Entity<IProductProps> {
 
     changeType(type: "TRADITIONAL" | "SPECIAL") {
         this.props.type = type
+        this.touch()
+    }
+
+    changeStatus(status: "ACTIVE" | "DISABLE") {
+        this.props.status = status
         this.touch()
     }
 

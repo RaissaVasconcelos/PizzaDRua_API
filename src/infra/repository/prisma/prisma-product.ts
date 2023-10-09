@@ -4,7 +4,7 @@ import { Product } from "../../../domain/enterprise/entities";
 import { IProductList } from "../../../interfaces/IProduct-list";
 
 export class PrismaProductRepository implements ProductRepository {
-  async create({ name, categoryId, price, size, type, description, image }: Product): Promise<void> {    
+  async create({ name, categoryId, price, size, type, description, image, status }: Product): Promise<void> {    
     await prisma.product.create({
       data: { 
         name,
@@ -14,6 +14,7 @@ export class PrismaProductRepository implements ProductRepository {
         price,
         size,
         type,
+        status,
       }
     })
   }
@@ -55,6 +56,7 @@ export class PrismaProductRepository implements ProductRepository {
         price: true,
         size: true,
         type: true,
+        status: true,
         createdAt: true,
         updatedAt: true,
       }
@@ -63,7 +65,7 @@ export class PrismaProductRepository implements ProductRepository {
     return product
   }
 
-  async update({ id, categoryId, name, price, type, size, description, image }: Product): Promise<void> {
+  async update({ id, categoryId, name, price, type, size, description, image, status }: Product): Promise<void> {
     await prisma.product.update({
       where: { id },
       data: {
@@ -74,7 +76,8 @@ export class PrismaProductRepository implements ProductRepository {
         size,
         description,
         image,
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        status,
       }
     })
   }

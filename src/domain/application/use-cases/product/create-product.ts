@@ -12,6 +12,7 @@ export interface ProductUseCaseRequest {
   size: string
   description: string
   price: string
+  status: "ACTIVE" | "DISABLE"
 }
 
 type ProductUseCasesResponse = Either<CategoryNotFoundError, {}>
@@ -22,9 +23,8 @@ export class Createproduct {
     private categoryRepository: CategoryRepository,
   ) {}
 
-  async execute({ name, description, category, price, size, image, type }: ProductUseCaseRequest): Promise<ProductUseCasesResponse> {
+  async execute({ name, description, category, price, size, image, type, status }: ProductUseCaseRequest): Promise<ProductUseCasesResponse> {
     const categoryProduct = await this.categoryRepository.findByName(category)
-    console.log(categoryProduct)
     
     if(!categoryProduct) {
       return left(new CategoryNotFoundError())
@@ -38,6 +38,7 @@ export class Createproduct {
       size,
       image,
       type,
+      status,
     })
     
     await this.productRepository.create(newProduct)

@@ -13,6 +13,7 @@ interface productUseCaseRequest {
   size: string
   description: string
   price: string
+  status: "ACTIVE" | "DISABLE"
 }
 
 type ProductUseCasesResponse = Either<ResourceNotFoundError, {}>
@@ -23,7 +24,7 @@ export class UpdateProduct {
     private categoryRepository: CategoryRepository,
   ) {}
 
-  async execute({ id, category, name, description, price, size, image, type }: productUseCaseRequest): Promise<ProductUseCasesResponse> {
+  async execute({ id, category, name, description, price, size, image, type, status }: productUseCaseRequest): Promise<ProductUseCasesResponse> {
     const idProduct = await this.productRepository.findById(id)
     const categoryProduct = await this.categoryRepository.findByName(category)
 
@@ -37,6 +38,7 @@ export class UpdateProduct {
         size, 
         image,
         type,
+        status,
       })
   
       await this.productRepository.update(updateProduct)
