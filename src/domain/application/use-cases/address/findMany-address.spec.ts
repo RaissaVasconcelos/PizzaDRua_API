@@ -1,15 +1,18 @@
+import { InMemoryCustomerRepository } from './../../../../tests/in-memory/in-memory-customer-repository';
 import { InMemoryAddressRepository } from "../../../../tests/in-memory";
 import { FindManyAddress } from "./findMany-address";
 import { makeCustomer } from "../../../../tests/factory";
 import { makeAddress } from "../../../../tests/factory/make-address";
 
 let inMemoryAddressRepository: InMemoryAddressRepository
+let inMemoryCustomerRepository: InMemoryCustomerRepository
 let sut: FindManyAddress
 
 describe('FindMany Address', () => {
   beforeEach(() => {
     inMemoryAddressRepository = new InMemoryAddressRepository()
-    sut = new FindManyAddress(inMemoryAddressRepository)
+    inMemoryCustomerRepository = new InMemoryCustomerRepository()
+    sut = new FindManyAddress(inMemoryAddressRepository, inMemoryCustomerRepository)
   })
 
   it('Should be findMany a Address', async () => {
@@ -18,7 +21,7 @@ describe('FindMany Address', () => {
 
     inMemoryAddressRepository.create(address)
 
-    const result = await sut.execute()
+    const result = await sut.execute({customerId: customer.Id})
     
     if(result.isRight()){
       expect(result.isRight()).toBeTruthy()

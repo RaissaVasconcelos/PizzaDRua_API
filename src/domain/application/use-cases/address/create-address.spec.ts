@@ -1,3 +1,4 @@
+import { InMemoryNeighborhoodRepository } from './../../../../tests/in-memory/in-memory-neighborhood-repository';
 import { InMemoryAddressRepository } from "../../../../tests/in-memory/in-memory-address-repository"
 import { CreateAddress } from "./create-address"
 import { InMemoryCustomerRepository } from "../../../../tests/in-memory/in-memory-customer-repository"
@@ -7,15 +8,18 @@ import { ResourceNotFoundError } from "../../../../core/errors/resource-not-foun
 
 let inMemoryAddressRepository: InMemoryAddressRepository
 let inMemoryCustomerRepository: InMemoryCustomerRepository
+let inMemoryNeighborhoodRepository: InMemoryNeighborhoodRepository
 let sut: CreateAddress
 
 describe("Create Address", () => {
     beforeEach(() => {   
         inMemoryAddressRepository = new InMemoryAddressRepository()
         inMemoryCustomerRepository = new InMemoryCustomerRepository()
+        inMemoryNeighborhoodRepository = new InMemoryNeighborhoodRepository()
         sut = new CreateAddress(
            inMemoryAddressRepository,
            inMemoryCustomerRepository,
+           inMemoryNeighborhoodRepository 
         )
     })
 

@@ -5,8 +5,9 @@ import { Address } from "../../domain/enterprise/entities/address";
 export class InMemoryAddressRepository implements AddressRepository {
   public address: Address[] = []
 
-  async create(address: Address): Promise<void> {
+  async create(address: Address): Promise<Address> {
     this.address.push(address)
+    return address
   }
 
   async findById(id: string): Promise<Address | null> {
