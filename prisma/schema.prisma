@@ -29,9 +29,9 @@ model Address {
   customerId     String
   neighborhood   Neighborhood @relation(fields: [neighborhoodId], references: [id])
   neighborhoodId String
-  type           TYPEADDRESS @default(HOME)
+  type           TYPEADDRESS  @default(HOME)
   street         String
-  standard       Boolean @default(true)
+  standard       Boolean      @default(true)
   number         String
   zipCode        String
   phone          String
@@ -42,7 +42,7 @@ model Address {
 model Neighborhood {
   id        String    @id @default(uuid())
   name      String    @unique
-  tax      String
+  tax       String
   Address   Address[]
   createdAt DateTime  @default(now())
   updatedAt DateTime?
@@ -57,16 +57,17 @@ model Category {
 }
 
 model Product {
-  id          String     @id @default(uuid())
+  id          String      @id @default(uuid())
   name        String
-  category    Category   @relation(fields: [categoryId], references: [id])
+  category    Category    @relation(fields: [categoryId], references: [id])
   categoryId  String
   description String
   image       String?
   price       String
   size        String
-  type        TYPEPIZZA? @default(TRADITIONAL)
-  createdAt   DateTime   @default(now())
+  type        TYPEPIZZA?  @default(TRADITIONAL)
+  status      TYPEPRODUCT @default(ACTIVE)
+  createdAt   DateTime    @default(now())
   updatedAt   DateTime?
 }
 
@@ -99,4 +100,9 @@ enum TYPEADDRESS {
   HOME
   WORK
   OTHER
+}
+
+enum TYPEPRODUCT {
+  ACTIVE
+  DISABLE
 }
