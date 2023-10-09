@@ -4,8 +4,8 @@ import { Optional } from "../../../core/types/optional"
 
 export interface IProductOrderProps {
     id: string
-    idOrder: string
-    idProduct: string
+    orderId: string
+    productId: string
     quantity: string
 }
 
@@ -14,12 +14,12 @@ export class ProductOrder extends Entity<IProductOrderProps> {
         return this.props.id
     }
 
-    get idOrder(){
-        return this.props.idOrder
+    get orderId(){
+        return this.props.orderId
     }
 
-    get idproduct(){
-        return this.props.idProduct
+    get productId(){
+        return this.props.productId
     }
 
     get quantity(){

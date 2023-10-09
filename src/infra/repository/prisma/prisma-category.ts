@@ -18,12 +18,12 @@ export class PrismaCategoryRepository implements CategoryRepository {
   }
 
   async findByName(name: string): Promise<Category | null> {
+    const categoryLower = name.toLocaleLowerCase()
     const category = await prisma.category.findFirst({
-      where: { name }
+      where: { name: categoryLower }
     })
 
     if(!category) return null
-
     return new Category(category)
   }
 

@@ -8,8 +8,10 @@ export const FindByIdProductController = async (request: FastifyRequest, reply: 
     id: z.string().uuid()
   })
 
+  
   const { id } = schemaFindByIdProduct.parse(request.params)
-
+  console.log(id)
+  
   const findByIdProduct = makeFindByIdProduct()
 
   const result = await findByIdProduct.execute(id)

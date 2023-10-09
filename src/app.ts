@@ -4,13 +4,9 @@ import fastifyJwt from "@fastify/jwt";
 import { ZodError } from 'zod'
 import {fromZodError} from 'zod-validation-error'
 import { env } from "./env";
-
-import { pixRoutes } from "./infra/http/controllers/efi-pay/router";
 import { Routes } from "./infra/http/controllers/routes";
 
 export const app = fastify();
-
-app.register(pixRoutes)
 
 app.register(fastifyExpress)
 app.register(Routes)

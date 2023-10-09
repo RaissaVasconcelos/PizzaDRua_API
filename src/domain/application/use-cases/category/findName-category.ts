@@ -13,7 +13,7 @@ export class FindNameCategory {
   async execute(name: string): Promise<categoryUseCasesResponse> {
     const nameLower = name.toLocaleLowerCase() 
     const category = await this.categoryRepository.findByName(nameLower)
-
+    console.log('category no execute', category)
     if (!category) {
       return left(new ResourceNotFoundError())
     }
