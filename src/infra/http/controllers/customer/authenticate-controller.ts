@@ -24,7 +24,7 @@ export const AuthenticateController = async (request: FastifyRequest, reply: Fas
 
   if(result.isRight()){
     const customerId = result.value.customer.Id
-    const token = await reply.jwtSign({ sign: { sub: { customerId } } })
+    const token = await reply.jwtSign({ sign: { sub: customerId } })
     return reply.code(200).send({ token })
   }
   

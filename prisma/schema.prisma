@@ -29,8 +29,9 @@ model Address {
   customerId     String
   neighborhood   Neighborhood @relation(fields: [neighborhoodId], references: [id])
   neighborhoodId String
-  type           String
+  type           TYPEADDRESS @default(HOME)
   street         String
+  standard       Boolean @default(true)
   number         String
   zipCode        String
   phone          String
@@ -40,8 +41,8 @@ model Address {
 
 model Neighborhood {
   id        String    @id @default(uuid())
-  name      String
-  rate      String
+  name      String    @unique
+  tax      String
   Address   Address[]
   createdAt DateTime  @default(now())
   updatedAt DateTime?
@@ -92,4 +93,10 @@ enum STATUS {
 enum TYPEPIZZA {
   TRADITIONAL
   SPECIAL
+}
+
+enum TYPEADDRESS {
+  HOME
+  WORK
+  OTHER
 }

@@ -3,14 +3,16 @@ import { verifyJWT } from "../../middlewares/verify-jwt";
 import { OAuthEfi } from "./efi-pay/pix";
 import {
   CreateCustomerController,
-  AuthenticateController } from "./customer";
-  
+  AuthenticateController
+} from "./customer";
+
 import {
   CreateProductController,
   FindByIdProductController,
-  FindManyProductController, 
+  FindManyProductController,
   UpdateProductController,
-  DeleteProductController } from './product'
+  DeleteProductController
+} from './product'
 
 import {
   CreateCategoryController,
@@ -26,18 +28,30 @@ import {
   UpdateOrderController
 } from './order'
 
-export const Routes = async (app: FastifyInstance) => {
- /* Routes Customer */
- app.post('/sessions',{ onRequest: [verifyJWT] }, AuthenticateController)
- app.post('/customer', CreateCustomerController)
+import {
+  CreateNeighborhoodController,
+  FindManyNeighborhoodController,
+} from './neighborhood'
 
- /* Routes Product */
- app.get('/product/:id', FindByIdProductController)
- app.get('/product', FindManyProductController)
- app.post('/product', CreateProductController)
- app.put('/product', UpdateProductController)
- app.delete('/product/:id', DeleteProductController)
- 
+import {
+  CreateAddressController,
+  FindManyAddressController,
+} from './address'
+
+
+export const Routes = async (app: FastifyInstance) => {
+
+  /* Routes Customer */
+  app.post('/sessions', AuthenticateController)
+  app.post('/customer', CreateCustomerController)
+
+  /* Routes Product */
+  app.get('/product/:id', FindByIdProductController)
+  app.get('/product', FindManyProductController)
+  app.post('/product', CreateProductController)
+  app.put('/product', UpdateProductController)
+  app.delete('/product/:id', DeleteProductController)
+
   /* Routes Category */
  app.get('/category/:id', FindByIdCategoryController)
  app.get('/category', FindManyCategoryController)
@@ -54,5 +68,11 @@ export const Routes = async (app: FastifyInstance) => {
  app.get('/order', FindManyOrderController)
  app.put('/order', UpdateOrderController)
 
-/** Route checkin */
+// Routes Neighborhood
+app.get('/neighborhood', FindManyNeighborhoodController)
+app.post('/neighborhood', CreateNeighborhoodController)
+
+// Routes Address
+app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)
+app.get('/address', {onRequest: [verifyJWT]}, FindManyAddressController)  
 }

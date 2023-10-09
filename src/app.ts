@@ -5,6 +5,7 @@ import { ZodError } from 'zod'
 import {fromZodError} from 'zod-validation-error'
 import { env } from "./env";
 import { Routes } from "./infra/http/controllers/routes";
+
 export const app = fastify();
 
 app.register(fastifyExpress)
