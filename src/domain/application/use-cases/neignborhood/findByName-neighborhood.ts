@@ -4,16 +4,15 @@ import { NeighborhoodRepository } from "../../repositories/neighborhood-reposito
 import { ResourceNotFoundError } from '../../../../core/errors/resource-not-found-error';
 
 
-type FindByIdNeighborhoodResponse = Either<ResourceNotFoundError, { neighborhood: Neighborhood }>
+type FindByNameNeighborhoodResponse = Either<ResourceNotFoundError, { neighborhood: Neighborhood }>
 
-export class FindByIdNeighborhood {
+export class FindByNameNeighborhood {
   constructor(
     private neighborhoodRepository: NeighborhoodRepository,
   ) { }
 
-  async execute(id: string): Promise<FindByIdNeighborhoodResponse> {
+  async execute(id: string): Promise<FindByNameNeighborhoodResponse> {
     const neighborhood = await this.neighborhoodRepository.findById(id)
-    console.log('function', neighborhood)
 
     if(!neighborhood) {
       return left(new ResourceNotFoundError())

@@ -33,6 +33,9 @@ import {
 import {
   CreateNeighborhoodController,
   FindManyNeighborhoodController,
+  DeleteNeighborhoodController,
+  FindByIdNeighborhoodController,
+  UpdateNeighborhoodController,
 } from './neighborhood'
 
 import {
@@ -80,9 +83,12 @@ export const Routes = async (app: FastifyInstance) => {
   app.get('/order', FindManyOrderController)
   app.put('/order', UpdateOrderController)
 
-  // Routes Neighborhood
-  app.get('/neighborhood', FindManyNeighborhoodController)
-  app.post('/neighborhood', CreateNeighborhoodController)
+// Routes Neighborhood
+app.get('/neighborhood', FindManyNeighborhoodController)
+app.post('/neighborhood', CreateNeighborhoodController)
+app.get('/neighborhood/:id', FindByIdNeighborhoodController)
+app.delete('/neighborhood/:id', DeleteNeighborhoodController)
+app.put('/neighborhood', UpdateNeighborhoodController)
 
   // Routes Address
   app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)

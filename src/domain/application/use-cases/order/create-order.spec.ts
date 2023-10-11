@@ -73,8 +73,6 @@ describe('CreateOrderUseCase', () => {
       itensOrder: orderFake.itensOrder,
     })
 
-    console.log(resultOrder)
-
     expect(resultOrder.isLeft()).toBeTruthy()
     expect(resultOrder.value).toBeInstanceOf(CreatedOrderError)
   })

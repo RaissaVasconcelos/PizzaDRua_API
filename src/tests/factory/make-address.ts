@@ -6,7 +6,7 @@ export function makeAddress(override: Partial<IAddressProps> = {}) {
     type: 'HOME',
     street: 'street',
     number: '23',
-    neighborhood: 'neighborhood',
+    neighborhoodId: 'neighborhoodId',
     zipCode: 'zipCode',
     phone: 'phone',
     ...override,

@@ -2,10 +2,8 @@ import { AddressRepository } from "../../../domain/application/repositories/addr
 import { Address } from "../../../domain/enterprise/entities"
 import { prisma } from "../../../lib/prisma"
 
-export class PrismaAddressRepository {
+export class PrismaAddressRepository implements AddressRepository {
   async create(address: Address): Promise<Address> {
-    console.log(address, "customer01");
-
     const newAddress = await prisma.address.create({
       data: {
         number: address.number,
@@ -46,4 +44,27 @@ export class PrismaAddressRepository {
     return addresses.map(address => new Address(address))
   }
 
+  async update(address: Address): Promise<void> {
+    await prisma.address.update({
+      where: { id: address.id },
+      data: {
+        ...address,
+        updatedAt: new Date()
+      }
+    })
+  }
+
+  async findById(id: string): Promise<Address | null> {
+    const address = await prisma.address.findUnique({
+      where: { id }
+    })
+
+    if(!address) return null
+
+    return new Address(address)
+  }
+
+  async delete(id: string): Promise<void> {
+    await prisma.address.delete({ where: { id } })
+  }
 } 
