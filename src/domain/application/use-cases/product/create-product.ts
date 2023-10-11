@@ -8,8 +8,8 @@ export interface ProductUseCaseRequest {
   name: string
   category: string
   type?: "TRADITIONAL" | "SPECIAL" | null
-  image?: string | null 
   size: string
+  imageUrl: string
   description: string
   price: string
   status: "ACTIVE" | "DISABLE"
@@ -23,7 +23,7 @@ export class Createproduct {
     private categoryRepository: CategoryRepository,
   ) {}
 
-  async execute({ name, description, category, price, size, image, type, status }: ProductUseCaseRequest): Promise<ProductUseCasesResponse> {
+  async execute({ name, description, category,imageUrl, price, size, type, status }: ProductUseCaseRequest): Promise<ProductUseCasesResponse> {
     const categoryProduct = await this.categoryRepository.findByName(category)
     
     if(!categoryProduct) {
@@ -35,8 +35,8 @@ export class Createproduct {
       description,
       categoryId: categoryProduct.id,
       price,
+      imageUrl,
       size,
-      image,
       type,
       status,
     })
