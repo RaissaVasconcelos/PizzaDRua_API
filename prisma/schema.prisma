@@ -62,11 +62,19 @@ model Product {
   category    Category    @relation(fields: [categoryId], references: [id])
   categoryId  String
   description String
-  image       String?
+  imageUrl    String
   price       String
   size        String
   type        TYPEPIZZA?  @default(TRADITIONAL)
   status      TYPEPRODUCT @default(ACTIVE)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime?
+  
+}
+
+model ImageProduct {
+  id String  @id @default(uuid())
+  pathImage  String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime?
 }

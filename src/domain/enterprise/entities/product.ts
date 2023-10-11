@@ -7,8 +7,8 @@ export interface IProductProps {
     categoryId: string
     name: string
     type?: "TRADITIONAL" | "SPECIAL" | null
-    image?: string | null 
     size: string
+    imageUrl : string
     description: string
     price: string
     status: "ACTIVE" | "DISABLE"
@@ -29,9 +29,10 @@ export class Product extends Entity<IProductProps> {
         return this.props.name
     }
 
-    get image(){
-        return this.props.image
+    get imageUrl(){
+        return this.props.imageUrl
     }
+   
 
     get description(){
         return this.props.description
@@ -70,10 +71,7 @@ export class Product extends Entity<IProductProps> {
         this.touch()
     }
 
-    changeImageUrl(image: string) {
-        this.props.image = image
-        this.touch()
-    }
+  
 
     changeDescription(description: string) {
         this.props.description = description
@@ -84,6 +82,11 @@ export class Product extends Entity<IProductProps> {
         this.props.size = size
         this.touch()
     }
+
+    changeImageUrl(imageUrl: string) {
+        this.props.imageUrl = imageUrl
+        this.touch()
+    }    
 
     changeType(type: "TRADITIONAL" | "SPECIAL") {
         this.props.type = type
