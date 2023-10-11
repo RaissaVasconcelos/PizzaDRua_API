@@ -19,10 +19,26 @@ export class PrismaAddressRepository implements AddressRepository {
     return new Address(newAddress)
   }
 
-  async findMany(customerId: string): Promise<Address[]> {
+  async findMany(customerId: string): Promise<any[]> {
     const addresses = await prisma.address.findMany({
       where: {
-        customerId
+        customerId,
+      },
+      select: {
+        id: true,
+        customerId: true,
+        number: true,
+        phone: true,
+        standard: true,
+        street: true,
+        zipCode: true,
+        neighborhood: {
+          select: {
+            id: true,
+            name: true,
+            tax: true              
+          }
+        }
       }
     })
     return addresses.map(address => new Address(address))

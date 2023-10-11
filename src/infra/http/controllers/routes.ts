@@ -3,7 +3,8 @@ import { verifyJWT } from "../../middlewares/verify-jwt";
 import { OAuthEfi } from "./efi-pay/pix";
 import {
   CreateCustomerController,
-  AuthenticateController
+  AuthenticateController,
+  RefreshTokenController
 } from "./customer";
 
 import {
@@ -19,11 +20,12 @@ import {
   DeleteCategoryController,
   FindByIdCategoryController,
   FindManyCategoryController,
-  UpdateCategoryController } from './category'
-  
+  UpdateCategoryController
+} from './category'
+
 import {
   CreateOrderController,
-  FindByIdOrderController, 
+  FindByIdOrderController,
   FindManyOrderController,
   UpdateOrderController
 } from './order'
@@ -47,6 +49,8 @@ export const Routes = async (app: FastifyInstance) => {
   /* Routes Customer */
   app.post('/sessions', AuthenticateController)
   app.post('/customer', CreateCustomerController)
+  app.patch('/token/refresh', RefreshTokenController)  
+
 
   /* Routes Product */
   app.get('/product/:id', FindByIdProductController)
@@ -56,20 +60,20 @@ export const Routes = async (app: FastifyInstance) => {
   app.delete('/product/:id', DeleteProductController)
 
   /* Routes Category */
- app.get('/category/:id', FindByIdCategoryController)
- app.get('/category', FindManyCategoryController)
- app.post('/category', CreateCategoryController)
- app.put('/category', UpdateCategoryController)
- app.delete('/category/:id', DeleteCategoryController)
+  app.get('/category/:id', FindByIdCategoryController)
+  app.get('/category', FindManyCategoryController)
+  app.post('/category', CreateCategoryController)
+  app.put('/category', UpdateCategoryController)
+  app.delete('/category/:id', DeleteCategoryController)
 
- /** Route pix */
- app.post('/pix', OAuthEfi)
+  /** Route pix */
+  app.post('/pix', OAuthEfi)
 
- /** Route Order */
- app.post('/order', CreateOrderController)
- app.get('/order/:id', FindByIdOrderController)
- app.get('/order', FindManyOrderController)
- app.put('/order', UpdateOrderController)
+  /** Route Order */
+  app.post('/order', CreateOrderController)
+  app.get('/order/:id', FindByIdOrderController)
+  app.get('/order', FindManyOrderController)
+  app.put('/order', UpdateOrderController)
 
 // Routes Neighborhood
 app.get('/neighborhood', FindManyNeighborhoodController)
@@ -78,7 +82,7 @@ app.get('/neighborhood/:id', FindByIdNeighborhoodController)
 app.delete('/neighborhood/:id', DeleteNeighborhoodController)
 app.put('/neighborhood', UpdateNeighborhoodController)
 
-// Routes Address
-app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)
-app.get('/address', {onRequest: [verifyJWT]}, FindManyAddressController)  
+  // Routes Address
+  app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)
+  app.get('/address', { onRequest: [verifyJWT] }, FindManyAddressController)
 }
