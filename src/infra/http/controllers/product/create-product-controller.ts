@@ -8,18 +8,18 @@ export const CreateProductController = async (request: FastifyRequest, reply: Fa
       name: z.string(),
       category: z.string(),
       description: z.string(),
-      image: z.string(),
       price: z.string(),
+      imageUrl: z.string(),
       size: z.string(),
       type: z.enum(["TRADITIONAL", "SPECIAL"]).optional(),
       status: z.enum(["ACTIVE", "DISABLE"]),
   })
 
-  const { category, name, price, description, image, type, size, status } = schemaPizza.parse(request.body)
+  const { category, name, price,imageUrl, description, type, size, status } = schemaPizza.parse(request.body)
   
   const product = makeCreateProduct()
 
-  const result = await product.execute({ category, name, price, description, image, type, size, status })
+  const result = await product.execute({ category, name,imageUrl, price, description, type, size, status })
 
   if(result.isLeft()){
     const erro = result.value
