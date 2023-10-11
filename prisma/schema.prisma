@@ -29,8 +29,9 @@ model Address {
   customerId     String
   neighborhood   Neighborhood @relation(fields: [neighborhoodId], references: [id])
   neighborhoodId String
-  type           String
+  type           TYPEADDRESS  @default(HOME)
   street         String
+  standard       Boolean      @default(true)
   number         String
   zipCode        String
   phone          String
@@ -40,8 +41,8 @@ model Address {
 
 model Neighborhood {
   id        String    @id @default(uuid())
-  name      String
-  rate      String
+  name      String    @unique
+  tax       String
   Address   Address[]
   createdAt DateTime  @default(now())
   updatedAt DateTime?
@@ -56,44 +57,52 @@ model Category {
 }
 
 model Product {
-  id           String         @id @default(uuid())
-  category     Category       @relation(fields: [categoryId], references: [id])
-  categoryId   String
-  name         String
-  image        String?
-  type         TYPEPIZZA?     @default(TRADITIONAL)
-  size         String
-  description  String
-  price        String
-  Order        Order[]
-  ProductOrder ProductOrder[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime?
-}
-
-model ProductOrder {
-  id        String  @id @default(uuid())
-  order     Order   @relation(fields: [orderId], references: [id])
-  orderId   String
-  product   Product @relation(fields: [productId], references: [id])
-  productId String
-  quantity  String
+  id          String      @id @default(uuid())
+  name        String
+  category    Category    @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  description String
+  image       String?
+  price       String
+  size        String
+  type        TYPEPIZZA?  @default(TRADITIONAL)
+  status      TYPEPRODUCT @default(ACTIVE)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime?
 }
 
 model Order {
-  id           String         @id @default(uuid())
-  customer     Customer       @relation(fields: [customerId], references: [id])
-  customerId   String
-  status       String
-  total        String?
-  ProductOrder ProductOrder[]
-  Product      Product?       @relation(fields: [productId], references: [id])
-  productId    String?
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime?
+  id         String    @id @default(uuid())
+  customer   Customer  @relation(fields: [customerId], references: [id])
+  customerId String
+  status     STATUS    @default(WAITING)
+  payment    String
+  totalPrice String
+  itensOrder Json
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime?
+}
+
+enum STATUS {
+  WAITING
+  ACCEPTED
+  PREPARING
+  DELIVERY
+  FINISHED
 }
 
 enum TYPEPIZZA {
   TRADITIONAL
   SPECIAL
+}
+
+enum TYPEADDRESS {
+  HOME
+  WORK
+  OTHER
+}
+
+enum TYPEPRODUCT {
+  ACTIVE
+  DISABLE
 }

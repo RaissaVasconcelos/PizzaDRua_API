@@ -1,36 +1,38 @@
-import { InMemoryOrderRepository, InMemoryCustomerRepository } from '../../../../tests/in-memory'
-import { makeCustomer } from '../../../../tests/factory'
+import { InMemoryOrderRepository, InMemoryCustomerRepository, InMemoryProductRepository } from '../../../../tests/in-memory'
+import { makeCustomer, makeOrder } from '../../../../tests/factory'
 import { CreateOrder } from './create-order'
-import { ResourceNotFoundError } from '../../../../core/errors/resource-not-found-error'
+import { CustomerAlreadyExistsError } from '../../../../core/errors/customer-alreaty-exists'
+import { CreatedOrderError } from '../../../../core/errors/created-order-error'
 
 let inMemoryOrderRepository: InMemoryOrderRepository
 let inMemoryCustomerRepository: InMemoryCustomerRepository
+let inMemoryProductRepository: InMemoryProductRepository
 let sut: CreateOrder
 
 describe('CreateOrderUseCase', () => {
   beforeEach(() => {
     inMemoryOrderRepository = new InMemoryOrderRepository()
     inMemoryCustomerRepository = new InMemoryCustomerRepository()
+    inMemoryProductRepository = new InMemoryProductRepository()
     sut = new CreateOrder(
       inMemoryOrderRepository,
       inMemoryCustomerRepository,
+      inMemoryProductRepository,
     )
   })
   
   it('should be able to create a order', async () => {
     const customer = makeCustomer()
+    const orderFake = makeOrder()
 
     await inMemoryCustomerRepository.create(customer)
 
     const resultOrder = await sut.execute({
-      idCustomer: customer.Id,
-      idPizza: 'ANY32',
-      idSize: 'ANY98',
-      quantityPizza: '2',
-      idDrink: 'ANY767',
-      quantityDrink: '2',
-      totalPrice: '20,0',
-      status: 'completed',
+      customerId: customer.Id,
+      payment: orderFake.payment,
+      totalPrice: orderFake.totalPrice,
+      status: orderFake.status,
+      itensOrder: orderFake.itensOrder,
     })
 
     if(resultOrder.isRight()){
@@ -40,19 +42,41 @@ describe('CreateOrderUseCase', () => {
   }) 
 
   it('should not be able to create in order with is customer that does not exists', async () => {
+    const customer = makeCustomer()
+    const orderFake = makeOrder()
+
+    await inMemoryCustomerRepository.create(customer)
+
     const resultOrder = await sut.execute({
-      idCustomer: 'fakeId',
-      idPizza: 'ANY32',
-      idSize: 'ANY98',
-      quantityPizza: '2',
-      idDrink: 'ANY767',
-      quantityDrink: '2',
-      totalPrice: '20,0',
-      status: 'completed',
+      customerId: 'idFake',
+      payment: orderFake.payment,
+      totalPrice: orderFake.totalPrice,
+      status: orderFake.status,
+      itensOrder: orderFake.itensOrder,
     })
 
     expect(resultOrder.isLeft()).toBeTruthy()
-    expect(resultOrder.value).toBeInstanceOf(ResourceNotFoundError)
+    expect(resultOrder.value).toBeInstanceOf(CustomerAlreadyExistsError)
+  })
+
+  it('Should not be able to create in order with totalPrice wrong', async () => {
+    const customer = makeCustomer()
+    const orderFake = makeOrder()
+
+    await inMemoryCustomerRepository.create(customer)
+
+    const resultOrder = await sut.execute({
+      customerId: customer.Id,
+      payment: '50.00',
+      totalPrice: orderFake.totalPrice,
+      status: orderFake.status,
+      itensOrder: orderFake.itensOrder,
+    })
+
+    console.log(resultOrder)
+
+    expect(resultOrder.isLeft()).toBeTruthy()
+    expect(resultOrder.value).toBeInstanceOf(CreatedOrderError)
   })
 })
 

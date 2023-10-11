@@ -28,6 +28,7 @@ describe('Update Product', () => {
       price: ProductFake.price,
       size: ProductFake.size,
       image: ProductFake.image,
+      status: ProductFake.status,
     })
 
     if (result.isRight()) {
@@ -41,12 +42,13 @@ describe('Update Product', () => {
     await inMemoryProductRepository.create(ProductFake)
 
     const result = await sut.execute({
-      id: 'idFake',
+      id: 'idProductFake',
       category: 'bebidas',
       name: 'Coca-cola',
       description: 'gelada',
       size: '600ml',
       price: '6.0',
+      status: 'ACTIVE',
     })
 
     expect(result.isLeft()).toBeTruthy()

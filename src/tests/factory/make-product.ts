@@ -10,6 +10,7 @@ export const makeProduct = (override: Partial<IProductProps> = {}): Product => {
         type: 'TRADITIONAL',
         image: "imageUrl",
         description: "Any description",
+        status: "ACTIVE",
         ...override
     })
 

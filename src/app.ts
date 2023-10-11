@@ -6,7 +6,8 @@ import { ZodError } from 'zod'
 import { fromZodError } from 'zod-validation-error'
 import { env } from "./env";
 import { Routes } from "./infra/http/controllers/routes";
-import { pixRoutes } from "./infra/http/controllers/efi-pay/router";
+import cors from '@fastify/cors'
+
 export const app = fastify();
 
 app.register(fastifyJwt, {
@@ -20,13 +21,11 @@ app.register(fastifyJwt, {
   }
 })
 
-app.register(pixRoutes)
+app.register(cors)
 app.register(fastifyCookie)
 app.register(fastifyExpress)
 app.register(Routes)
-app.register(fastifyJwt, {
-  secret: 'secret',
-})
+
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {

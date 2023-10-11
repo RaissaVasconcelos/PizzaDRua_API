@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { makeCreateProduct } from "../../../factory/product/make-create-product";
 import * as z from 'zod'
+import { CategoryNotFoundError } from "../../../../core/errors/category-not-found-error";
 
 export const CreateProductController = async (request: FastifyRequest, reply: FastifyReply) => {
   const schemaPizza = z.object({
@@ -11,13 +12,21 @@ export const CreateProductController = async (request: FastifyRequest, reply: Fa
       price: z.string(),
       size: z.string(),
       type: z.enum(["TRADITIONAL", "SPECIAL"]).optional(),
+      status: z.enum(["ACTIVE", "DISABLE"]),
   })
 
-  const { category, name, price, description, image, type, size } = schemaPizza.parse(request.body)
-
+  const { category, name, price, description, image, type, size, status } = schemaPizza.parse(request.body)
+  
   const product = makeCreateProduct()
 
-  await product.execute({ category, name, price, description, image, type, size })
+  const result = await product.execute({ category, name, price, description, image, type, size, status })
+
+  if(result.isLeft()){
+    const erro = result.value
+    if(erro instanceof CategoryNotFoundError){
+      return reply.code(404).send({ message: erro.message })
+    }
+  }
 
   return reply.code(201).send()
 }

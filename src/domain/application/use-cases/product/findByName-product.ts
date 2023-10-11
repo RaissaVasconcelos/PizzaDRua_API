@@ -14,6 +14,7 @@ export class FindByNameProduct {
     const product = await this.productRepository.findByName(name)
 
     if (!product) {
+      console.log('product n exixts')
       return left(new ResourceNotFoundError())
     }
 

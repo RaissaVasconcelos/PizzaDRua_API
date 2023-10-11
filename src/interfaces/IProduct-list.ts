@@ -5,12 +5,12 @@ export interface IProductList {
     id: string
     name: string
   }
-  categoryId: string
   description: string
   image: string | null
   price: string
   size: string
   type?: "TRADITIONAL" | "SPECIAL" | null
+  status: "ACTIVE" | "DISABLE"
   createdAt: Date 
   updatedAt?: Date | null
 }
