@@ -6,7 +6,6 @@ export interface IProductList {
     name: string
   }
   description: string
-  image: string | null
   price: string
   size: string
   type?: "TRADITIONAL" | "SPECIAL" | null

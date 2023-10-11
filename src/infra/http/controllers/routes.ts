@@ -42,6 +42,7 @@ import {
   CreateAddressController,
   FindManyAddressController,
 } from './address'
+import { UploadImageProductController } from "./image-product/upload-image-product-controller";
 
 
 export const Routes = async (app: FastifyInstance) => {
@@ -52,12 +53,19 @@ export const Routes = async (app: FastifyInstance) => {
   app.patch('/token/refresh', RefreshTokenController)  
 
 
+
+
   /* Routes Product */
   app.get('/product/:id', FindByIdProductController)
   app.get('/product', FindManyProductController)
   app.post('/product', CreateProductController)
   app.put('/product', UpdateProductController)
   app.delete('/product/:id', DeleteProductController)
+
+
+  /* Routes Upload Image Product */
+  app.post('/upload', UploadImageProductController)
+
 
   /* Routes Category */
   app.get('/category/:id', FindByIdCategoryController)

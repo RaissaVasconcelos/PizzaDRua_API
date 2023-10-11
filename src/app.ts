@@ -2,11 +2,14 @@ import fastify from "fastify";
 import fastifyExpress from '@fastify/express'
 import fastifyJwt from "@fastify/jwt";
 import fastifyCookie from '@fastify/cookie'
+import multipart from '@fastify/multipart'
+import fastifyStatic from '@fastify/static'  
 import { ZodError } from 'zod'
 import { fromZodError } from 'zod-validation-error'
 import { env } from "./env";
 import { Routes } from "./infra/http/controllers/routes";
 import cors from '@fastify/cors'
+import { resolve } from "path";
 
 export const app = fastify();
 
@@ -21,6 +24,12 @@ app.register(fastifyJwt, {
   }
 })
 
+app.register((fastifyStatic), {
+  root: resolve(__dirname, '../uploads'),
+  prefix: '/uploads'  
+})
+
+app.register(multipart)
 app.register(cors)
 app.register(fastifyCookie)
 app.register(fastifyExpress)
