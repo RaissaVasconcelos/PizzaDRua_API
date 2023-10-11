@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for domain/enterprise/entities/customer.ts</title>
+    <title>Code coverage report for domain/enterprise/entities/neighborhood.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">domain/enterprise/entities</a> customer.ts</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">domain/enterprise/entities</a> neighborhood.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.84% </span>
+                <span class="strong">57.37% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>42/78</span>
+                <span class='fraction'>35/61</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.84% </span>
+                <span class="strong">57.37% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>42/78</span>
+                <span class='fraction'>35/61</span>
             </div>
         
             
@@ -123,26 +123,7 @@
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -182,13 +163,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -200,15 +174,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -218,48 +183,38 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { randomUUID } from "crypto"
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { randomUUID } from "crypto"
 import { Entity } from "../../../core/entities/entity"
 import { Optional } from "../../../core/types/optional"
 &nbsp;
-export interface ICustomersProps {
+&nbsp;
+export interface INeighborhoodProps {
   id: string
   name: string
-  email: string
-  phone?: string | null
-  password: string
+  tax: string
   createdAt: Date
   updatedAt?: Date | null
 }
 &nbsp;
-export class Customer extends Entity&lt;ICustomersProps&gt; {
+export class Neighborhood extends Entity&lt;INeighborhoodProps&gt; {
 &nbsp;
-<span class="fstat-no" title="function not covered" >  get Id(){</span>
+<span class="fstat-no" title="function not covered" >  get id() {</span>
 <span class="cstat-no" title="statement not covered" >    return this.props.id</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  get Name(){</span>
+<span class="fstat-no" title="function not covered" >  get name () {</span>
 <span class="cstat-no" title="statement not covered" >    return this.props.name</span>
+<span class="cstat-no" title="statement not covered" >  } </span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >  get tax () {</span>
+<span class="cstat-no" title="statement not covered" >    return this.props.tax</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  get Email(){</span>
-<span class="cstat-no" title="statement not covered" >    return this.props.email</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-&nbsp;
-<span class="fstat-no" title="function not covered" >  get Phone(){</span>
-<span class="cstat-no" title="statement not covered" >    return this.props.phone</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-&nbsp;
-<span class="fstat-no" title="function not covered" >  get Password(){</span>
-<span class="cstat-no" title="statement not covered" >    return this.props.password</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-&nbsp;
-<span class="fstat-no" title="function not covered" >  get CreateAt(){</span>
+<span class="fstat-no" title="function not covered" >  get createdAt() {</span>
 <span class="cstat-no" title="statement not covered" >    return this.props.createdAt</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  get UpdatedAt(){</span>
+<span class="fstat-no" title="function not covered" >  get updatedAt() {</span>
 <span class="cstat-no" title="statement not covered" >    return this.props.updatedAt</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
@@ -267,37 +222,28 @@ export class Customer extends Entity&lt;ICustomersProps&gt; {
 <span class="cstat-no" title="statement not covered" >    this.props.updatedAt = new Date()</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
+&nbsp;
 <span class="fstat-no" title="function not covered" >  changeName(name: string) {</span>
 <span class="cstat-no" title="statement not covered" >    this.props.name = name</span>
 <span class="cstat-no" title="statement not covered" >    this.touch()</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  }  </span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  changeEmail(email: string) {</span>
-<span class="cstat-no" title="statement not covered" >    this.props.email = email</span>
+<span class="fstat-no" title="function not covered" >  changeTax(tax: string) {</span>
+<span class="cstat-no" title="statement not covered" >    this.props.tax = tax</span>
 <span class="cstat-no" title="statement not covered" >    this.touch()</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  changePhone(phone: string) {</span>
-<span class="cstat-no" title="statement not covered" >    this.props.phone = phone</span>
-<span class="cstat-no" title="statement not covered" >    this.touch()</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  changePassword(password: string) {</span>
-<span class="cstat-no" title="statement not covered" >    this.props.password = password</span>
-<span class="cstat-no" title="statement not covered" >    this.touch()</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-&nbsp;
-  static <span class="fstat-no" title="function not covered" >create(props: Optional&lt;ICustomersProps, "createdAt"| "id"&gt;) {</span>
-<span class="cstat-no" title="statement not covered" >    const customer = new Customer({</span>
+  static <span class="fstat-no" title="function not covered" >create(props: Optional&lt;INeighborhoodProps, "createdAt" | "id"&gt;) {</span>
+<span class="cstat-no" title="statement not covered" >    const neighborhood = new Neighborhood({</span>
 <span class="cstat-no" title="statement not covered" >      ...props,</span>
 <span class="cstat-no" title="statement not covered" >      id: props.id ?? randomUUID(),</span>
 <span class="cstat-no" title="statement not covered" >      createdAt: props.createdAt ?? new Date(),</span>
 <span class="cstat-no" title="statement not covered" >    })</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    return customer</span>
+<span class="cstat-no" title="statement not covered" >    return neighborhood</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-}
-&nbsp;</pre></td></tr></table></pre>
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

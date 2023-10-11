@@ -10,7 +10,7 @@ interface UpdateNeighborhoodUseCaseRequest {
   tax:string
 }
 
-type UpdateNeighborhoodResponse = Either<null, {}>
+type UpdateNeighborhoodResponse = Either<ResourceNotFoundError, {}>
 
 export class UpdateNeighborhood {
   constructor(
@@ -18,10 +18,10 @@ export class UpdateNeighborhood {
   ) { }
 
   async execute({ id, name, tax }: UpdateNeighborhoodUseCaseRequest): Promise<UpdateNeighborhoodResponse> {
-    const updated = this.neighborhoodRepository.findById(id)
+    const updated = await this.neighborhoodRepository.findById(id)
 
     if(!updated) {
-      left( new ResourceNotFoundError())
+      return left(new ResourceNotFoundError())
     }
 
     const newNeighborhood = Neighborhood.create({ id, name, tax })

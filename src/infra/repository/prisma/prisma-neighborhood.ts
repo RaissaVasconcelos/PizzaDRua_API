@@ -28,4 +28,28 @@ export class PrismaNeighborhoodRepository implements NeighborhoodRepository {
     return new Neighborhood(neighborhood)
   }
 
+  async findById(id: string): Promise<Neighborhood | null> {
+    const neigborhood = await prisma.neighborhood.findUnique({
+      where: { id },
+    })
+
+    if(!neigborhood) return null
+
+    return new Neighborhood(neigborhood)
+  }
+
+  async delete(id: string): Promise<void> {
+    await prisma.neighborhood.delete({ where: { id }})
+  }
+
+  async update(neighborhood: Neighborhood): Promise<void> {
+    await prisma.neighborhood.update({
+      where: { id: neighborhood.id },
+      data: { 
+        name: neighborhood.name,
+        tax: neighborhood.tax,
+        updatedAt: new Date(),
+       }
+    })
+  }
 }

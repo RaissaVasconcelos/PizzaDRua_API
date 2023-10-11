@@ -15,7 +15,7 @@ export class FindByNameNeighborhood {
     const neighborhood = await this.neighborhoodRepository.findById(id)
 
     if(!neighborhood) {
-      left(new ResourceNotFoundError())
+      return left(new ResourceNotFoundError())
     }
     
     return right({ neighborhood })

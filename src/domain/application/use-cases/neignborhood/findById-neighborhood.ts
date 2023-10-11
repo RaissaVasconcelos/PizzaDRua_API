@@ -13,9 +13,10 @@ export class FindByIdNeighborhood {
 
   async execute(id: string): Promise<FindByIdNeighborhoodResponse> {
     const neighborhood = await this.neighborhoodRepository.findById(id)
+    console.log('function', neighborhood)
 
     if(!neighborhood) {
-      left(new ResourceNotFoundError())
+      return left(new ResourceNotFoundError())
     }
     
     return right({ neighborhood })

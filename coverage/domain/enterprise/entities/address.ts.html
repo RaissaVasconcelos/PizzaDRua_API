@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54.28% </span>
+                <span class="strong">54.95% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>57/105</span>
+                <span class='fraction'>61/111</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>0/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54.28% </span>
+                <span class="strong">54.95% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>57/105</span>
+                <span class='fraction'>61/111</span>
             </div>
         
             
@@ -167,7 +167,13 @@
 <a name='L102'></a><a href='#L102'>102</a>
 <a name='L103'></a><a href='#L103'>103</a>
 <a name='L104'></a><a href='#L104'>104</a>
-<a name='L105'></a><a href='#L105'>105</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -187,17 +193,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -234,6 +229,17 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -247,10 +253,16 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -275,18 +287,19 @@
 import { Entity } from "../../../core/entities/entity"
 import { Optional } from "../../../core/types/optional"
 &nbsp;
-export type TypeAddress = "HOME" | "WORk" | "OTHER"
+&nbsp;
 export interface IAddressProps {
     id: string
     customerId: string
-    type: TypeAddress
+    type: "HOME" | "WORK" | "OTHER"
     street: string
+    standard?: boolean,
     number: string
-    neighborhood: string
+    neighborhoodId: string
     zipCode: string
     phone: string
     createdAt: Date
-    updatedAt?: Date
+    updatedAt?: Date | null
 }
 &nbsp;
 export class Address extends Entity&lt;IAddressProps&gt; {
@@ -307,12 +320,16 @@ export class Address extends Entity&lt;IAddressProps&gt; {
 <span class="cstat-no" title="statement not covered" >        return this.props.street</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
+<span class="fstat-no" title="function not covered" >    get standard(){</span>
+<span class="cstat-no" title="statement not covered" >        return this.props.standard</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+&nbsp;
 <span class="fstat-no" title="function not covered" >    get number(){</span>
 <span class="cstat-no" title="statement not covered" >        return this.props.number</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >    get neighborhood(){</span>
-<span class="cstat-no" title="statement not covered" >        return this.props.neighborhood</span>
+<span class="fstat-no" title="function not covered" >    get neighborhoodId(){</span>
+<span class="cstat-no" title="statement not covered" >        return this.props.neighborhoodId</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
 <span class="fstat-no" title="function not covered" >    get zipCode(){</span>
@@ -340,21 +357,22 @@ export class Address extends Entity&lt;IAddressProps&gt; {
 <span class="cstat-no" title="statement not covered" >        this.touch()</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
+<span class="fstat-no" title="function not covered" >    changeStandard(standard: boolean){</span>
+<span class="cstat-no" title="statement not covered" >        this.props.standard = standard</span>
+<span class="cstat-no" title="statement not covered" >        this.touch()</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+&nbsp;
 <span class="fstat-no" title="function not covered" >    changeNumber(number: string){</span>
 <span class="cstat-no" title="statement not covered" >        this.props.number = number</span>
 <span class="cstat-no" title="statement not covered" >        this.touch()</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >    changeType(type: TypeAddress){</span>
+<span class="fstat-no" title="function not covered" >    changeType(type: 'HOME' | 'WORK' | 'OTHER'){</span>
 <span class="cstat-no" title="statement not covered" >        this.props.type = type</span>
 <span class="cstat-no" title="statement not covered" >        this.touch()</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
 &nbsp;
-<span class="fstat-no" title="function not covered" >    changeNeighborhood(neighborhood: string){</span>
-<span class="cstat-no" title="statement not covered" >        this.props.neighborhood = neighborhood</span>
-<span class="cstat-no" title="statement not covered" >        this.touch()</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
 <span class="fstat-no" title="function not covered" >    changeZipCode(zipCode: string){</span>
 <span class="cstat-no" title="statement not covered" >        this.props.zipCode = zipCode</span>
@@ -382,7 +400,7 @@ export class Address extends Entity&lt;IAddressProps&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-09T14:04:36.508Z
+                at 2023-10-10T20:49:04.210Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">65.9% </span>
+                <span class="strong">59.09% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>29/44</span>
+                <span class='fraction'>26/44</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/6</span>
+                <span class='fraction'>4/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/7</span>
+                <span class='fraction'>4/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">65.9% </span>
+                <span class="strong">59.09% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>29/44</span>
+                <span class='fraction'>26/44</span>
             </div>
         
             
@@ -110,24 +110,7 @@
 <a name='L45'></a><a href='#L45'>45</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -145,56 +128,73 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Error
 &nbsp;
-export class Left&lt;L, R&gt; {
-  readonly value: L
-  constructor(value: L) {
-    this.value = value
-  }
-&nbsp;
-  isRight(): this is Right&lt;L, R&gt; {
-    return false
-  }
-&nbsp;
-  isLeft(): this is Left&lt;L, R&gt; {
-    return true
-  }
-&nbsp;
-}
-&nbsp;
-// Success
-&nbsp;
-export <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >class Right&lt;L, R&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >  readonly value: R</span>
-<span class="cstat-no" title="statement not covered" >  constructor(value: R) {</span>
+export <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >class Left&lt;L, R&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >  readonly value: L</span>
+<span class="cstat-no" title="statement not covered" >  constructor(value: L) {</span>
 <span class="cstat-no" title="statement not covered" >    this.value = value</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  isRight(): this is Right&lt;L, R&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return true</span>
+<span class="cstat-no" title="statement not covered" >    return false</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  isLeft(): this is Left&lt;L, R&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return true</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >}</span>
+&nbsp;
+// Success
+&nbsp;
+export class Right&lt;L, R&gt; {
+  readonly value: R
+  constructor(value: R) {
+    this.value = value
+  }
+&nbsp;
+  isRight(): this is Right&lt;L, R&gt; {
+    return true
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  isLeft(): this is Left&lt;L, R&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return false</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+}
 &nbsp;
 export type Either&lt;L, R&gt; = Left&lt;L, R&gt; | Right&lt;L, R&gt;
 &nbsp;
-export const left = &lt;L, R&gt; (value:L): Either&lt;L, R&gt; =&gt; {
-  return new Left(value)
-}
-&nbsp;
-export const right = <span class="fstat-no" title="function not covered" >&lt;L, R&gt;(value:R): Either&lt;L, R&gt; =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  return new Right(value)</span>
+export const left = <span class="fstat-no" title="function not covered" >&lt;L, R&gt; (value:L): Either&lt;L, R&gt; =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  return new Left(value)</span>
 <span class="cstat-no" title="statement not covered" >}</span>
+&nbsp;
+export const right = &lt;L, R&gt;(value:R): Either&lt;L, R&gt; =&gt; {
+  return new Right(value)
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -202,7 +202,7 @@ export const right = <span class="fstat-no" title="function not covered" >&lt;L,
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-09T14:04:36.508Z
+                at 2023-10-10T20:49:04.210Z
             </div>
         <script src="../prettify.js"></script>
         <script>
