@@ -12,16 +12,16 @@ export const CreateCustomerController = async (request: FastifyRequest, reply: F
   })
 
   const { name, email, password, phone } = createBodySchema.parse(request.body)
-  console.log(name)  
+  
   const customer = makeCustomerFactorie()
 
-  const { value, isLeft } = await customer.execute({ name, email, password, phone})
-  console.log('value', value)
+  const result = await customer.execute({ name, email, password, phone})
 
-  if(isLeft()) {
-    const error = value
+
+  if(result.isLeft()) {
+    const error = result.value
     if(error instanceof CustomerAlreadyExistsError) {
-      return reply.status(409).send({ message: error.message })
+      return reply.status(400).send({ message: error.message })
     }
   }
 
