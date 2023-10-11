@@ -17,6 +17,7 @@ interface CreateOrderUseCaseRequest {
   customerId: string
   payment: string
   totalPrice: string
+  methodDelivery: string  // 'delivery' | 'pick'
   status: string
   itensOrder: dataProduct[]
 }
@@ -35,7 +36,7 @@ export class CreateOrder {
       this.acumulador = 0
     }
 
-    async execute({ customerId, itensOrder, payment, status, totalPrice }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
+    async execute({ customerId, itensOrder, payment, status, totalPrice, methodDelivery }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
       const customer = await this.customeRepository.findById(customerId)
 
       if (!customer) {
@@ -65,6 +66,8 @@ export class CreateOrder {
 
       console.log('Valor total da compra', this.acumulador.toFixed(2))
 
+
+
       const value = Number(this.acumulador.toFixed(2))
       const valueMin = Number(totalPrice) - 0.5
       const valueMax = Number(totalPrice) + 0.5
@@ -77,6 +80,7 @@ export class CreateOrder {
           payment,
           status,
           totalPrice: value.toString(),
+          methodDelivery,
         })
   
         this.orderRepository.create(newOrder)

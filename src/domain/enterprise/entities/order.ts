@@ -7,6 +7,7 @@ export interface IOrderProps {
   customerId: string
   itensOrder: any
   payment: string
+  methodDelivery: string
   totalPrice: string
   status: any
   createdAt: Date
@@ -31,6 +32,10 @@ export class Order extends Entity<IOrderProps> {
   }
 
   get payment() {
+    return this.props.payment
+  }
+
+  get methodDelivery() {
     return this.props.payment
   }
 
