@@ -7,6 +7,7 @@ interface UpdatedOrderUseCaseRequest {
   id: string
   customerId: string
   payment: string
+  methodDelivery: string  // 'delivery' | 'pick'
   totalPrice: string
   status: string
   itensOrder: any

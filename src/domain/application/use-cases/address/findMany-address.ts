@@ -3,13 +3,13 @@ import { AddressRepository } from "../../repositories/address-repository";
 import { Address } from "../../../enterprise/entities";
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
 import { CustomerRepository } from "../../repositories/customer-repository";
-
+import { IAddressList } from "../../../../interfaces/IAddressList";
 
 interface FindManyAddressRequest {
   customerId: string
 }
 
-type AddressUseCasesResponse = Either<ResourceNotFoundError, { address: Address[] }>
+type AddressUseCasesResponse = Either<ResourceNotFoundError, { address: IAddressList[] }>
 
 export class FindManyAddress {
   constructor(

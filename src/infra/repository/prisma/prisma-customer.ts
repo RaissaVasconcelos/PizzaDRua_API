@@ -28,7 +28,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
     const user = await prisma.customer.findUnique({
       where: { id }
     })
-
+    
     if(!user) return null
 
     return new Customer(user)

@@ -15,7 +15,7 @@ model Customer {
   id        String    @id @default(uuid())
   email     String    @unique
   name      String
-  phone     String?
+  phone     String
   password  String
   Address   Address[]
   Order     Order[]
@@ -69,26 +69,26 @@ model Product {
   status      TYPEPRODUCT @default(ACTIVE)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime?
-  
 }
 
 model ImageProduct {
-  id String  @id @default(uuid())
-  pathImage  String
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime?
+  id        String    @id @default(uuid())
+  pathImage String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
 }
 
 model Order {
-  id         String    @id @default(uuid())
-  customer   Customer  @relation(fields: [customerId], references: [id])
-  customerId String
-  status     STATUS    @default(WAITING)
-  payment    String
-  totalPrice String
-  itensOrder Json
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime?
+  id             String    @id @default(uuid())
+  customer       Customer  @relation(fields: [customerId], references: [id])
+  customerId     String
+  status         STATUS    @default(WAITING)
+  methodDelivery String
+  payment        String
+  totalPrice     String
+  itensOrder     Json
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime?
 }
 
 enum STATUS {

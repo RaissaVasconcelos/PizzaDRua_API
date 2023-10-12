@@ -6,9 +6,9 @@ import { CreatedOrderError } from "../../../../core/errors/created-order-error";
 
 export const CreateOrderController = async (request: FastifyRequest, reply: FastifyReply) => {
   const schemaOrder = z.object({
-    customerId: z.string(),
     totalPrice: z.string(),
     payment: z.string(),
+    methodDelivery: z.string(), 
     status: z.string(),
     itensOrder: z.array(
       z.object({
@@ -19,12 +19,15 @@ export const CreateOrderController = async (request: FastifyRequest, reply: Fast
     })),
   })
 
-  const { customerId, itensOrder, payment, totalPrice, status } = schemaOrder.parse(request.body)
+  const { itensOrder, payment, totalPrice, status, methodDelivery } = schemaOrder.parse(request.body)
 
   const order = makeCreateOrder()
 
+  const customerId = request.user.sign.sub
+
   const result = await order.execute(
     { customerId,
+      methodDelivery,
       itensOrder,
       payment,
       totalPrice,

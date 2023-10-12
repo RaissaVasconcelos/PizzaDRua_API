@@ -6,5 +6,5 @@ export const FindManyOrderController = async (_request: FastifyRequest, reply: F
 
   const orders = await order.execute()
 
-  return reply.code(200).send({ data: orders.value })
+  return reply.code(200).send(orders.value)
 }
