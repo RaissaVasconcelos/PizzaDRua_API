@@ -6,6 +6,9 @@ import { CustomerAlreadyExistsError } from "../../../../core/errors/customer-alr
 import { ProductRepository } from "../../repositories/product-repository";
 import { CreatedOrderError } from "../../../../core/errors/created-order-error";
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
+import { AddressRepository } from "../../repositories/address-repository";
+import { NeighborhoodRepository } from "../../repositories/neighborhood-repository";
+import { Address } from "../../../enterprise/entities";
 
 interface dataProduct {
   mode: "MIXED" | "SIMPLE" 
@@ -32,6 +35,8 @@ export class CreateOrder {
     private orderRepository: OrderRepository,
     private customeRepository: CustomerRepository,
     private productRepository: ProductRepository,
+    private addressRepository: AddressRepository,
+    private neighborhoodRepository: NeighborhoodRepository,
     ) {
       this.acumulador = 0
     }
@@ -43,9 +48,16 @@ export class CreateOrder {
         return left(new CustomerAlreadyExistsError())
       }
 
+      if(methodDelivery === 'delivery') {
+        const adresses = await this.addressRepository.find(customer.Id)
+        const doesAddressStandart = adresses.find((add: Address) => add.standard)
+        // busca a taxa do bairro
+        const taxCustomerValue = (await this.neighborhoodRepository.findById(doesAddressStandart!.neighborhoodId))?.tax
+        this.acumulador += Number(taxCustomerValue)
+      }
+
       // array com os produtos
       await Promise.all(itensOrder.map(async (product) => {
-        console.log(product)
         // se a pizza obtiver mais sabores
         if(product.mode === 'MIXED') {
           const prices = await Promise.all(product.product.map(async (productName) => {
@@ -63,10 +75,6 @@ export class CreateOrder {
         const priceProduct = Number(response?.price) 
         this.acumulador += ((product.size === 'meia' ? ( priceProduct / 2 ) : priceProduct) * Number(product.quantity));
       }));
-
-      console.log('Valor total da compra', this.acumulador.toFixed(2))
-
-
 
       const value = Number(this.acumulador.toFixed(2))
       const valueMin = Number(totalPrice) - 0.5

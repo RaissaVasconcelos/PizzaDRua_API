@@ -36,7 +36,7 @@ export class Order extends Entity<IOrderProps> {
   }
 
   get methodDelivery() {
-    return this.props.payment
+    return this.props.methodDelivery
   }
 
   get itensOrder() {
