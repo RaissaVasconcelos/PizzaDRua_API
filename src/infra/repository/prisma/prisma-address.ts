@@ -1,6 +1,7 @@
 import { AddressRepository } from "../../../domain/application/repositories/address-repository"
 import { Address } from "../../../domain/enterprise/entities"
 import { prisma } from "../../../lib/prisma"
+import { IAddressList } from "../../../interfaces/IAddressList"
 
 export class PrismaAddressRepository implements AddressRepository {
   async create(address: Address): Promise<Address> {
@@ -19,7 +20,15 @@ export class PrismaAddressRepository implements AddressRepository {
     return new Address(newAddress)
   }
 
-  async findMany(customerId: string): Promise<any[]> {
+  async find(customerId: string): Promise<Address[]> {
+    const address = await prisma.address.findMany({
+      where: { customerId }
+    })
+    console.log('address prisma', address)
+    return address!.map((adress) => new Address(adress))
+  }
+
+  async findMany(customerId: string): Promise<IAddressList[]> {
     const addresses = await prisma.address.findMany({
       where: {
         customerId,
@@ -41,7 +50,7 @@ export class PrismaAddressRepository implements AddressRepository {
         }
       }
     })
-    return addresses.map(address => new Address(address))
+    return addresses
   }
 
   async update(address: Address): Promise<void> {
