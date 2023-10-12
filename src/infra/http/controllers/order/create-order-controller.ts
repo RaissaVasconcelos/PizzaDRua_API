@@ -24,7 +24,7 @@ export const CreateOrderController = async (request: FastifyRequest, reply: Fast
   const order = makeCreateOrder()
 
   const customerId = request.user.sign.sub
-  console.log('controller', customerId)
+
   const result = await order.execute(
     { customerId,
       methodDelivery,
