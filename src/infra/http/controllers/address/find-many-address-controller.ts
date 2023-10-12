@@ -9,10 +9,9 @@ export const FindManyAddressController = async (request: FastifyRequest, reply: 
 
   const customerId = request.user.sign.sub
   const makeFindManyAddress = MakeFindManyAddress()
-
-  const result = await makeFindManyAddress.execute({
-    customerId
-  })
+  console.log(request.user);
+    
+  const result = await makeFindManyAddress.execute(customerId)
 
   if (result.isLeft()) {
     const error = result.value

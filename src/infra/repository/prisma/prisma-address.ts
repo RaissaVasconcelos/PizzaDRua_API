@@ -32,6 +32,7 @@ export class PrismaAddressRepository {
         number: true,
         phone: true,
         standard: true,
+        type: true,
         street: true,
         zipCode: true,
         neighborhood: {
