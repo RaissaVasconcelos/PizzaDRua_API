@@ -6,7 +6,7 @@ interface Neighborhood {
 
 export interface IAddressList {
   id: string
-  customerId: string
+  type: "HOME" | "WORK" | "OTHER"
   number: string
   phone: string
   standard: boolean

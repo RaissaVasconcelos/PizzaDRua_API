@@ -35,7 +35,7 @@ export class PrismaAddressRepository implements AddressRepository {
       },
       select: {
         id: true,
-        customerId: true,
+        type: true,
         number: true,
         phone: true,
         standard: true,
@@ -50,6 +50,7 @@ export class PrismaAddressRepository implements AddressRepository {
         }
       }
     })
+    
     return addresses
   }
 
