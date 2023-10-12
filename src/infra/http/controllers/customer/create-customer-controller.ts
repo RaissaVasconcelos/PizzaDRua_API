@@ -8,7 +8,7 @@ export const CreateCustomerController = async (request: FastifyRequest, reply: F
     name: z.string(),
     email: z.string().email(),
     password: z.string().min(6),
-    phone: z.string().optional(),
+    phone: z.string(),
   })
 
   const { name, email, password, phone } = createBodySchema.parse(request.body)
@@ -16,7 +16,6 @@ export const CreateCustomerController = async (request: FastifyRequest, reply: F
   const customer = makeCustomerFactorie()
 
   const result = await customer.execute({ name, email, password, phone})
-
 
   if(result.isLeft()) {
     const error = result.value
