@@ -7,9 +7,10 @@ interface UpdatedOrderUseCaseRequest {
   id: string
   customerId: string
   payment: string
+  methodDelivery: string  // 'delivery' | 'pick'
   totalPrice: string
   status: string
-  extendedOrdersData: any
+  itensOrder: any
 }
 
 type UpdatedOrderUseCaseResponse = Either<ResourceNotFoundError, {}>

@@ -13,7 +13,6 @@ type CreateNeighborhoodResponse = Either<null, {}>
 export class CreateNeighborhood {
   constructor(
     private neighborhoodRepository: NeighborhoodRepository,
-  
   ) { }
 
   async execute(neighborhood: CreateNeighborhoodUseCaseRequest): Promise<CreateNeighborhoodResponse> {

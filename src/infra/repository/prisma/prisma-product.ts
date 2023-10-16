@@ -5,6 +5,8 @@ import { IProductList } from "../../../interfaces/IProduct-list";
 
 export class PrismaProductRepository implements ProductRepository {
   async create({ name, categoryId, price, size,imageUrl, type, description, status }: Product): Promise<void> {    
+     console.log(imageUrl, 'imageUrlfgfgfgfggfgfgfg');
+      
     await prisma.product.create({
       data: { 
         name,

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.31% </span>
+                <span class="strong">76.59% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>26/47</span>
+                <span class='fraction'>36/47</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>2/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.31% </span>
+                <span class="strong">76.59% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/47</span>
+                <span class='fraction'>36/47</span>
             </div>
         
             
@@ -126,8 +126,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -147,14 +147,14 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { randomUUID } from "crypto";
 import { Entity } from "../../../core/entities/entity";
 import { Optional } from "../../../core/types/optional";
@@ -171,9 +171,9 @@ export class Category extends Entity&lt;ICategoryProps&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.props.id</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  get name() {</span>
-<span class="cstat-no" title="statement not covered" >    return this.props.name</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  get name() {
+    return this.props.name
+  }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  get createdAt() {</span>
 <span class="cstat-no" title="statement not covered" >    return this.props.createdAt</span>
@@ -192,15 +192,15 @@ export class Category extends Entity&lt;ICategoryProps&gt; {
 <span class="cstat-no" title="statement not covered" >    this.touch()</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  static <span class="fstat-no" title="function not covered" >create(props: Optional&lt;ICategoryProps, "createdAt" | "id"&gt;) {</span>
-<span class="cstat-no" title="statement not covered" >    const category = new Category({</span>
-<span class="cstat-no" title="statement not covered" >      ...props,</span>
-<span class="cstat-no" title="statement not covered" >      id: props.id ?? randomUUID(),</span>
-<span class="cstat-no" title="statement not covered" >      createdAt: props.createdAt ?? new Date(),</span>
-<span class="cstat-no" title="statement not covered" >    })</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    return category</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  static create(props: Optional&lt;ICategoryProps, "createdAt" | "id"&gt;) {
+    const category = new Category({
+      ...props,
+      id: props.id ?? randomUUID(),
+      createdAt: props.createdAt ?? new Date(),
+    })
+&nbsp;
+    return category
+  }
 } </pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -208,7 +208,7 @@ export class Category extends Entity&lt;ICategoryProps&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-09T14:04:36.508Z
+                at 2023-10-10T20:49:04.210Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

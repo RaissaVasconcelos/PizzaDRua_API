@@ -33,6 +33,9 @@ import {
 import {
   CreateNeighborhoodController,
   FindManyNeighborhoodController,
+  DeleteNeighborhoodController,
+  FindByIdNeighborhoodController,
+  UpdateNeighborhoodController,
 } from './neighborhood'
 
 import {
@@ -49,9 +52,6 @@ export const Routes = async (app: FastifyInstance) => {
   app.post('/customer', CreateCustomerController)
   app.patch('/token/refresh', RefreshTokenController)  
 
-
-
-
   /* Routes Product */
   app.get('/product/:id', FindByIdProductController)
   app.get('/product', FindManyProductController)
@@ -59,10 +59,8 @@ export const Routes = async (app: FastifyInstance) => {
   app.put('/product', UpdateProductController)
   app.delete('/product/:id', DeleteProductController)
 
-
   /* Routes Upload Image Product */
   app.post('/upload', UploadImageProductController)
-
 
   /* Routes Category */
   app.get('/category/:id', FindByIdCategoryController)
@@ -75,14 +73,17 @@ export const Routes = async (app: FastifyInstance) => {
   app.post('/pix', OAuthEfi)
 
   /** Route Order */
-  app.post('/order', CreateOrderController)
+  app.post('/order', { onRequest: [verifyJWT] }, CreateOrderController)
   app.get('/order/:id', FindByIdOrderController)
-  app.get('/order', FindManyOrderController)
-  app.put('/order', UpdateOrderController)
+  app.get('/order', { onRequest: [verifyJWT]}, FindManyOrderController)
+  app.put('/order', { onRequest: [verifyJWT] }, UpdateOrderController)
 
-  // Routes Neighborhood
-  app.get('/neighborhood', FindManyNeighborhoodController)
-  app.post('/neighborhood', CreateNeighborhoodController)
+// Routes Neighborhood
+app.get('/neighborhood', FindManyNeighborhoodController)
+app.post('/neighborhood', CreateNeighborhoodController)
+app.get('/neighborhood/:id', FindByIdNeighborhoodController)
+app.delete('/neighborhood/:id', DeleteNeighborhoodController)
+app.put('/neighborhood', UpdateNeighborhoodController)
 
   // Routes Address
   app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)

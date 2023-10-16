@@ -15,6 +15,8 @@ export const UploadImageProductController = async (request: FastifyRequest, repl
     }
   })
 
+  console.log(request.file);
+  
   if (!upload) {
     return reply.status(400).send({ message: "Invalid file" })
   }

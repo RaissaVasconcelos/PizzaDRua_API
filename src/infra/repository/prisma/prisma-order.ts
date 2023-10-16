@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { prisma } from "../../../lib/prisma";
 import { OrderRepository } from "../../../domain/application/repositories/order-repository";
 import { Order } from "../../../domain/enterprise/entities";
 
 export class PrismaOrderRepository implements OrderRepository {
-  async create({ customerId, totalPrice, itensOrder, payment, status }: Order): Promise<void> {    
+  async create({ customerId, totalPrice, itensOrder, payment, status, methodDelivery }: Order): Promise<void> {    
     await prisma.order.create({
       data: { 
         customerId,
@@ -11,6 +12,7 @@ export class PrismaOrderRepository implements OrderRepository {
         status,
         payment,
         totalPrice,
+        methodDelivery,
       }
     })
   }
@@ -25,12 +27,37 @@ export class PrismaOrderRepository implements OrderRepository {
     return new Order(order)
   }
 
-  async findMany(): Promise<Order[]> {
-    const orders = await prisma.order.findMany({})
+  async findMany(): Promise<any[]> {
+    const orders = await prisma.order.findMany({
+      include: {
+        customer: {
+          select: {
+            name: true,
+            email: true,
+            phone: true,
+            Address: {
+              select: {
+                type: true,
+                street: true,
+                number: true,
+                phone: true,
+                neighborhood: {
+                  select: { name: true, tax: true }
+                }
+              }
+            },
+          } 
+        },
+      },
+    })
 
-    const arrOrder = orders.map((order) => new Order(order))
+    const ordersWithoutCustomerId = orders.map(order => {
+      // Crie um novo objeto para cada pedido sem o campo 'customerId'
+      const { customerId, ...orderWithoutCustomerId } = order;
+      return orderWithoutCustomerId;
+    });
 
-    return arrOrder
+    return ordersWithoutCustomerId
   }
 
   async update({ id, status }: Order): Promise<void> {

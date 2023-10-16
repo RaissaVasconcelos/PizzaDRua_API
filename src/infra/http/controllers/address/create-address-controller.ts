@@ -12,7 +12,7 @@ export const CreateAddressController = async (request: FastifyRequest, reply: Fa
     zipCode: z.string(),
     standard: z.boolean().optional(),
     neighborhood: z.string(),
-    type: z.enum(['HOME', 'WORK', 'OTHER']),
+    type: z.enum(['HOME', 'WORK', 'OTHER']),  
   })
 
   const { type, street, number, phone, zipCode, standard, neighborhood } = addressBodySchema.parse(request.body)

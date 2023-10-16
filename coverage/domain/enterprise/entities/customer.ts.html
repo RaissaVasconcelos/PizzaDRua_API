@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">53.84% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>52/78</span>
+                <span class='fraction'>42/78</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">15.38% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/13</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">53.84% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>52/78</span>
+                <span class='fraction'>42/78</span>
             </div>
         
             
@@ -158,10 +158,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -192,7 +188,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -210,14 +205,19 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { randomUUID } from "crypto"
 import { Entity } from "../../../core/entities/entity"
@@ -235,9 +235,9 @@ export interface ICustomersProps {
 &nbsp;
 export class Customer extends Entity&lt;ICustomersProps&gt; {
 &nbsp;
-  get Id(){
-    return this.props.id
-  }
+<span class="fstat-no" title="function not covered" >  get Id(){</span>
+<span class="cstat-no" title="statement not covered" >    return this.props.id</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
 <span class="fstat-no" title="function not covered" >  get Name(){</span>
 <span class="cstat-no" title="statement not covered" >    return this.props.name</span>
@@ -287,15 +287,15 @@ export class Customer extends Entity&lt;ICustomersProps&gt; {
 <span class="cstat-no" title="statement not covered" >    this.touch()</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  static create(props: Optional&lt;ICustomersProps, "createdAt"| "id"&gt;) {
-    const customer = new Customer({
-      ...props,
-      id: props.id ?? randomUUID(),
-      createdAt: props.createdAt ?? new Date(),
-    })
-&nbsp;
-    return customer
-  }
+  static <span class="fstat-no" title="function not covered" >create(props: Optional&lt;ICustomersProps, "createdAt"| "id"&gt;) {</span>
+<span class="cstat-no" title="statement not covered" >    const customer = new Customer({</span>
+<span class="cstat-no" title="statement not covered" >      ...props,</span>
+<span class="cstat-no" title="statement not covered" >      id: props.id ?? randomUUID(),</span>
+<span class="cstat-no" title="statement not covered" >      createdAt: props.createdAt ?? new Date(),</span>
+<span class="cstat-no" title="statement not covered" >    })</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    return customer</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -304,7 +304,7 @@ export class Customer extends Entity&lt;ICustomersProps&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-09T14:04:36.508Z
+                at 2023-10-10T20:49:04.210Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

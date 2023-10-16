@@ -1,5 +1,6 @@
-import { MakeFindManyNeighborhood } from './../../../factory/neignborhood/make-find-many-neighborhood';
+
 import { FastifyReply, FastifyRequest } from "fastify";
+import { MakeFindManyNeighborhood } from "../../../factory/neignborhood/make-findMany-neighborhood";
 
 
 export const FindManyNeighborhoodController = async (request: FastifyRequest, reply: FastifyReply) => {

@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import * as z from 'zod'
-import { MakeCreateNeighborhood } from "../../../factory/neignborhood/make-create-neignborhood";
+import { MakeCreateNeighborhood } from "../../../factory/neignborhood/make-create-neighborhood";
 
 
 export const CreateNeighborhoodController = async (request: FastifyRequest, reply: FastifyReply) => {

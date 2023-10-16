@@ -4,7 +4,6 @@ import { prisma } from "../../../lib/prisma";
 
 export class PrismaCustomerRepository implements CustomerRepository {
   async create(customer: Customer): Promise<void> {
-    console.log('customer', customer)
     await prisma.customer.create({
       data: {
         name: customer.Name,
@@ -26,19 +25,16 @@ export class PrismaCustomerRepository implements CustomerRepository {
   }
   
   async findById(id: string): Promise<Customer | null> {
-
-    const user = await prisma.customer.findUniqueOrThrow({
+    const user = await prisma.customer.findUnique({
       where: { id }
     })
-
+    
     if(!user) return null
 
     return new Customer(user)
   }
   
   async delete(id: string): Promise<void> {
-    console.log(id)
-
     await prisma.customer.delete({ where: { id } })
   }
 }

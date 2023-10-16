@@ -11,7 +11,7 @@ export interface IProductProps {
     imageUrl : string
     description: string
     price: string
-    status: "ACTIVE" | "DISABLE"
+    status?: "ACTIVE" | "DISABLE"
     createdAt: Date
     updatedAt?: Date | null
 }

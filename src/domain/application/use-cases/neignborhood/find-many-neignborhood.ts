@@ -8,7 +8,6 @@ type CreateNeighborhoodResponse = Either<null, { neighborhoods: Neighborhood[] }
 export class FindManyNeighborhood {
   constructor(
     private neighborhoodRepository: NeighborhoodRepository,
-
   ) { }
 
   async execute(): Promise<CreateNeighborhoodResponse> {

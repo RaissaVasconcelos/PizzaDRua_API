@@ -6,11 +6,11 @@ import { ResourceNotFoundError } from "../../../../core/errors/resource-not-foun
 export const UpdateOrderController = async (request: FastifyRequest, reply: FastifyReply) => {
   const schemaOrder = z.object({
     id: z.string().uuid(),
-    customerId: z.string(),
     totalPrice: z.string(),
     payment: z.string(),
     status: z.string(),
-    extendedOrdersData: z.array(
+    methodDelivery: z.string(),
+    itensOrder: z.array(
       z.object({
         product: z.string().array(),
         size: z.string(),
@@ -18,11 +18,13 @@ export const UpdateOrderController = async (request: FastifyRequest, reply: Fast
     })),
   })
 
-  const { id, status, customerId, extendedOrdersData, payment, totalPrice } = schemaOrder.parse(request.body)
+  const { id, status, itensOrder, payment, totalPrice, methodDelivery } = schemaOrder.parse(request.body)
 
   const order = makeUpdateOrder()
 
-  const result = await order.execute({ id, status, customerId, extendedOrdersData, payment, totalPrice })
+  const customerId = request.user.sign.sub
+
+  const result = await order.execute({ id, status, customerId, payment, totalPrice, methodDelivery, itensOrder })
 
   if(result.isLeft()) {
     const erro = result.value
