@@ -8,6 +8,7 @@ export interface IProductList {
   description: string
   price: string
   size: string
+  imageUrl: string  
   type?: "TRADITIONAL" | "SPECIAL" | null
   status: "ACTIVE" | "DISABLE"
   createdAt: Date 

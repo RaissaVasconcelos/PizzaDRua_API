@@ -5,9 +5,6 @@ import { ResourceNotFoundError } from "../../../../core/errors/resource-not-foun
 import { CustomerRepository } from "../../repositories/customer-repository";
 import { IAddressList } from "../../../../interfaces/IAddressList";
 
-interface FindManyAddressRequest {
-  customerId: string
-}
 
 type AddressUseCasesResponse = Either<ResourceNotFoundError, { address: IAddressList[] }>
 
@@ -17,8 +14,9 @@ export class FindManyAddress {
     private customerRepository: CustomerRepository
   ) {}
 
-  async execute({customerId}: FindManyAddressRequest): Promise<AddressUseCasesResponse> {
-
+  async execute(customerId: string): Promise<AddressUseCasesResponse> {
+    console.log('customerId', customerId);
+    
     const customer = await this.customerRepository.findById(customerId)
 
     if (!customer) {

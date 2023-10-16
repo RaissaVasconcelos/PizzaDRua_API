@@ -6,5 +6,5 @@ export const FindManyNeighborhoodController = async (_request: FastifyRequest, r
     const makeNeighborhood = MakeFindManyNeighborhood()
     const result = await makeNeighborhood.execute()
 
-    return reply.status(200).send({ data: result.value })
+    return reply.status(200).send(result.value?.neighborhoods)
 }

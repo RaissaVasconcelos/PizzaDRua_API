@@ -50,6 +50,8 @@ export async function OAuthEfi(request: FastifyRequest, reply: FastifyReply) {
   try {
     const { devedor, valor, chave } = billingBodySchema.parse(request.body)
 
+    console.log(request.body);
+    
     const config = {
       method: "POST",
       url: "https://pix.api.efipay.com.br/oauth/token",
@@ -102,8 +104,8 @@ export async function OAuthEfi(request: FastifyRequest, reply: FastifyReply) {
       httpsAgent: agent,
     };
     const responseQrCode = await axios(configQrCode);
-    console.log('responseQrCode', responseQrCode)
-
+    console.log(responseQrCode.data);
+    
     return reply.status(200).send(responseQrCode.data)
 
   } catch (error) {

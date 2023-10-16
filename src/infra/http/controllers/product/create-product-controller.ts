@@ -12,7 +12,7 @@ export const CreateProductController = async (request: FastifyRequest, reply: Fa
       imageUrl: z.string(),
       size: z.string(),
       type: z.enum(["TRADITIONAL", "SPECIAL"]).optional(),
-      status: z.enum(["ACTIVE", "DISABLE"]),
+      status: z.enum(["ACTIVE", "DISABLE"]).optional(),
   })
 
   const { category, name, price,imageUrl, description, type, size, status } = schemaProduct.parse(request.body)

@@ -75,7 +75,7 @@ export const Routes = async (app: FastifyInstance) => {
   /** Route Order */
   app.post('/order', { onRequest: [verifyJWT] }, CreateOrderController)
   app.get('/order/:id', FindByIdOrderController)
-  app.get('/order', FindManyOrderController)
+  app.get('/order', { onRequest: [verifyJWT]}, FindManyOrderController)
   app.put('/order', { onRequest: [verifyJWT] }, UpdateOrderController)
 
 // Routes Neighborhood

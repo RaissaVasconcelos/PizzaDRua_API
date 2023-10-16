@@ -15,7 +15,7 @@ export class PrismaNeighborhoodRepository implements NeighborhoodRepository {
 
   async findMany(): Promise<Neighborhood[]> {
     const neighborhoods = await prisma.neighborhood.findMany()
-    return neighborhoods.map(neighborhood => new Neighborhood(neighborhood))
+    return neighborhoods.map((neighborhood) => new Neighborhood(neighborhood))
   }
 
   async findByName(name: string): Promise<Neighborhood | null> {
