@@ -9,6 +9,7 @@
     "start:migrate:dev": "npm run start:prisma && npm run start:dev",
     "start:": "node build/server.js",
     "build": "tsup src --out-dir build",
+    "seed": "node build/database/seeders/index.js",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "test": "vitest run",
