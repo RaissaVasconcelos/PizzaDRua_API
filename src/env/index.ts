@@ -1,6 +1,8 @@
 import 'dotenv/config'
 import { z } from 'zod'
 
+console.log(process.env.DATABASE_URL)
+
 const envSchema = z.object({
     NODE_ENV: z.enum(['dev', 'test', 'prod']).default('dev'),
     PORT: z.coerce.number().default(3001),
