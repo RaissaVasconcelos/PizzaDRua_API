@@ -1,8 +1,8 @@
 import { prisma } from '../../lib/prisma'
 
 export const addressSeeders = async () => {
-    const customer = await prisma.customer.findFirst({
-      where: { name: 'John Doe' }
+    const customer = await prisma.customer.findUnique({
+      where: { email: 'jonhdoe@gmail.com' }
     })
 
     const neighborhoodImarui = await prisma.neighborhood.findFirst({
