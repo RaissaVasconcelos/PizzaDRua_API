@@ -7,8 +7,17 @@ type OrderUsecasesRequest = Either<null, { orders: Order[] }>
 export class FindManyOrder {
   constructor(private orderRepository: OrderRepository) {}
 
-  async execute(): Promise<OrderUsecasesRequest> {
-    const orders = await this.orderRepository.findMany()
+  async execute(param: any, customerId: string): Promise<OrderUsecasesRequest> {
+    const { role } = param
+    console.log('role', role)
+
+    if (!role) {
+      const orders = await this.orderRepository.findMany()
+
+      return right({ orders }) 
+    }
+
+    const orders = await this.orderRepository.findManyCustomer(customerId)
 
     return right({ orders }) 
   }
