@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Either, left, right } from "../../../../core/either";
 import { CustomerRepository } from "../../repositories/customer-repository";
 import { OrderRepository } from "../../repositories/order-repository";
@@ -13,14 +14,15 @@ import { Address } from "../../../enterprise/entities";
 interface dataProduct {
   mode: "MIXED" | "SIMPLE" 
   product: string[]
-  size: string
-  quantity: string
+  price: string
+  size: "ENTIRE" | "HALF"
+  quantity: number
 }
 interface CreateOrderUseCaseRequest {
   customerId: string
   payment: string
   totalPrice: string
-  methodDelivery: string  // 'delivery' | 'pick'
+  methodDelivery: "DELIVERY" |  "PICKUP" // 'delivery' | 'pickup'
   status: string
   itensOrder: dataProduct[]
 }
@@ -48,11 +50,11 @@ export class CreateOrder {
         return left(new CustomerAlreadyExistsError())
       }
 
-      if(methodDelivery === 'delivery') {
+      if(methodDelivery === 'DELIVERY') {
         const adresses = await this.addressRepository.find(customer.Id)
-        const doesAddressStandart = adresses.find((add: Address) => add.standard)
+        const doesAddressStandard = adresses.find((add: Address) => add.standard)
         // busca a taxa do bairro
-        const taxCustomerValue = (await this.neighborhoodRepository.findById(doesAddressStandart!.neighborhoodId))?.tax
+        const taxCustomerValue = (await this.neighborhoodRepository.findById(doesAddressStandard!.neighborhoodId))?.tax
         this.acumulador += Number(taxCustomerValue)
       }
 
@@ -67,13 +69,13 @@ export class CreateOrder {
 
           const maxValue = Math.max(...prices)
           
-          this.acumulador += ((product.size === 'meia' ? ( maxValue / 2 ) : maxValue) * Number(product.quantity));
+          this.acumulador += ((product.size === 'HALF' ? ( maxValue / 2 ) : maxValue) * Number(product.quantity));
           return
         }
 
         const response = await this.productRepository.findByName(product.product[0])
         const priceProduct = Number(response?.price) 
-        this.acumulador += ((product.size === 'meia' ? ( priceProduct / 2 ) : priceProduct) * Number(product.quantity));
+        this.acumulador += ((product.size === 'HALF' ? ( priceProduct / 2 ) : priceProduct) * Number(product.quantity));
       }));
 
       const value = Number(this.acumulador.toFixed(2))

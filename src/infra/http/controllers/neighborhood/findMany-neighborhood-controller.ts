@@ -3,8 +3,15 @@ import { FastifyReply, FastifyRequest } from "fastify";
 
 
 export const FindManyNeighborhoodController = async (_request: FastifyRequest, reply: FastifyReply) => {
-    const makeNeighborhood = MakeFindManyNeighborhood()
-    const result = await makeNeighborhood.execute()
+  const makeNeighborhood = MakeFindManyNeighborhood()
+  const result = await makeNeighborhood.execute()
+  const neighborhoods = result.value?.neighborhoods.map((neighborhood) => {
+    return {
+      id: neighborhood.id, 
+      name: neighborhood.name, 
+      tax: neighborhood.tax
+    }
+  })
 
-    return reply.status(200).send(result.value?.neighborhoods)
+  return reply.status(200).send(neighborhoods)
 }
