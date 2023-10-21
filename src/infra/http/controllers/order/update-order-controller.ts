@@ -13,7 +13,6 @@ export const UpdateOrderController = async (request: FastifyRequest, reply: Fast
   const schemaOrder = z.object({
     id: z.string().uuid(),
     totalPrice: z.string(),
-    customerId: z.string(),
     payment: z.string(),
     status: z.enum(["WAITING", "ACCEPTED", "PREPARING", "DELIVERY", "CANCELED", "FINISHED"]),
     methodDelivery: z.string(),
@@ -25,11 +24,11 @@ export const UpdateOrderController = async (request: FastifyRequest, reply: Fast
     })),
   })
 
-  const { id, status, itensOrder,customerId, payment, totalPrice, methodDelivery } = schemaOrder.parse(request.body)
+  const { id, status, itensOrder, payment, totalPrice, methodDelivery } = schemaOrder.parse(request.body)
 
   const order = makeUpdateOrder()
 
-
+  const customerId = request.user.sign.sub
 
   const result = await order.execute({ id, status, customerId, payment, totalPrice, methodDelivery, itensOrder })
 
@@ -38,22 +37,21 @@ export const UpdateOrderController = async (request: FastifyRequest, reply: Fast
     if(erro instanceof ResourceNotFoundError) {
       return reply.code(404).send({ message: erro.message })
     }
-  }
-
-  if(result.isRight()) {
-    console.log('route order')
+  } else {   
     const orderUpdate = await orderPrisma.findManyCustomer(customerId)
+    console.log(orderUpdate)
+    // enviar o novo evento
 
-    app.io.on('connection', (socket: Socket) => {
+    app.io.on('connection', (socket) => {
       console.log('Cliente conectado', socket.id)
-
+    
       socket.emit('statusUpdate', orderUpdate);
-
+    
       socket.on('disconnect', () => {
         console.log(`O cliente com o id ${socket.id} se desconectou`)
       });
     })
-  }
 
-  return reply.code(200).send({})
+    return reply.code(200).send({})
+  }
 }

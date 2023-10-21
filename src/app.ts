@@ -51,6 +51,21 @@ app.register(fastifyExpress)
 app.register(Routes)
 
 
+app.ready((err) => {
+  if (err) throw err
+
+  app.io.on('connection', (socket) => {
+    console.log('Cliente conectado', socket.id)
+  
+    socket.emit('statusUpdate', 'hello');
+  
+    socket.on('disconnect', () => {
+      console.log(`O cliente com o id ${socket.id} se desconectou`)
+    });
+  })
+  
+})
+
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
     return reply.status(400).send({ message: 'Validation error', issues: fromZodError(error) })

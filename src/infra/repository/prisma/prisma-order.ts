@@ -94,9 +94,7 @@ export class PrismaOrderRepository implements OrderRepository {
       },
     })
 
-    const orderActive = orders.find(order => order.status !== 'FINISHED')
-
-    return orderActive
+    return orders
   }
 
   async update({ id, status }: Order): Promise<void> {
