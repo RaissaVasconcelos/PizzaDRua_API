@@ -69,6 +69,34 @@ export class PrismaOrderRepository implements OrderRepository {
     return ordersWithoutCustomerId
   }
 
+  async findManyCustomer(customerId: string): Promise<any> {
+    const orders = await prisma.order.findMany({
+      where: { customerId },
+      include: {
+        customer: {
+          select: {
+            name: true,
+            email: true,
+            phone: true,
+            Address: {
+              select: {
+                type: true,
+                street: true,
+                number: true,
+                phone: true,
+                neighborhood: {
+                  select: { name: true, tax: true }
+                }
+              }
+            },
+          } 
+        },
+      },
+    })
+
+    return orders
+  }
+
   async update({ id, status }: Order): Promise<void> {
     await prisma.order.update({
       where: { id },

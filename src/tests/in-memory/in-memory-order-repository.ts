@@ -1,5 +1,6 @@
 import { OrderRepository } from '../../domain/application/repositories/order-repository'
 import { Order } from '../../domain/enterprise/entities/order'
+import { IOrderList } from '../../interfaces/IOrderList'
 
 export class InMemoryOrderRepository implements OrderRepository{
   public order:Order[] = []
@@ -18,8 +19,12 @@ export class InMemoryOrderRepository implements OrderRepository{
     return order
   }
 
-  async findMany(): Promise<Order[] | []> {
+  async findMany(): Promise<any[]> {
     return this.order  
+  }
+
+  async findManyCustomer(customerId: string): Promise<any[]> {
+    return this.order
   }
 
   async update(orderUpdate: Order): Promise<void> {
