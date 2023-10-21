@@ -7,16 +7,17 @@ import { CreatedOrderError } from "../../../../core/errors/created-order-error";
 export const CreateOrderController = async (request: FastifyRequest, reply: FastifyReply) => {
   const schemaOrder = z.object({
     totalPrice: z.string(),
-    payment: z.string(),
-    methodDelivery: z.string(), 
-    status: z.string(),
+    payment: z.enum(["PIX", "CARD", "MONEY"]),
+    methodDelivery: z.enum(["DELIVERY", "PICKUP"]),
+    status: z.enum(["WAITING", "ACCEPTED", "PREPARING", "DELIVERY", "CANCELED", "FINISHED"]),
     itensOrder: z.array(
       z.object({
         mode: z.enum(["MIXED", "SIMPLE"]),
         product: z.string().array(),
-        size: z.string(),
-        quantity: z.string(),
-    })),
+        price: z.string(),  
+        size: z.enum(["ENTIRE", "HALF"]),
+        quantity: z.number(),
+      })),
   })
 
   const { itensOrder, payment, totalPrice, status, methodDelivery } = schemaOrder.parse(request.body)

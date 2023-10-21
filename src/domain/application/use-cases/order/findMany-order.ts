@@ -1,13 +1,13 @@
-import { OrderRepository } from "../../repositories/order-repository";
-import { Order } from "../../../enterprise/entities";
+import { OrderRepository, OrderUseCaseProps } from "../../repositories/order-repository";
 import { Either, right  } from "../../../../core/either";
 
-type OrderUsecasesRequest = Either<null, { orders: Order[] }>
+
+type OrderUseCaseResponse = Either<null, { orders: OrderUseCaseProps[] }>
 
 export class FindManyOrder {
   constructor(private orderRepository: OrderRepository) {}
 
-  async execute(param: any, customerId: string): Promise<OrderUsecasesRequest> {
+  async execute(param: any, customerId: string): Promise<OrderUseCaseResponse> {
     const { role } = param
     console.log('role', role)
 
@@ -18,7 +18,8 @@ export class FindManyOrder {
     }
 
     const orders = await this.orderRepository.findManyCustomer(customerId)
+    
+    return right({ orders })
 
-    return right({ orders }) 
   }
 }

@@ -13,8 +13,9 @@ export const UpdateOrderController = async (request: FastifyRequest, reply: Fast
   const schemaOrder = z.object({
     id: z.string().uuid(),
     totalPrice: z.string(),
+    customerId: z.string(),
     payment: z.string(),
-    status: z.string(),
+    status: z.enum(["WAITING", "ACCEPTED", "PREPARING", "DELIVERY", "CANCELED", "FINISHED"]),
     methodDelivery: z.string(),
     itensOrder: z.array(
       z.object({
@@ -24,11 +25,11 @@ export const UpdateOrderController = async (request: FastifyRequest, reply: Fast
     })),
   })
 
-  const { id, status, itensOrder, payment, totalPrice, methodDelivery } = schemaOrder.parse(request.body)
+  const { id, status, itensOrder,customerId, payment, totalPrice, methodDelivery } = schemaOrder.parse(request.body)
 
   const order = makeUpdateOrder()
 
-  const customerId = request.user.sign.sub
+
 
   const result = await order.execute({ id, status, customerId, payment, totalPrice, methodDelivery, itensOrder })
 

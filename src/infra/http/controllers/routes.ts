@@ -41,7 +41,9 @@ import {
 
 import {
   CreateAddressController,
+  DeleteAddressController,
   FindManyAddressController,
+  UpdateAddressController,
 } from './address'
 
 export const Routes = async (app: FastifyInstance) => {
@@ -49,7 +51,7 @@ export const Routes = async (app: FastifyInstance) => {
   /* Routes Customer */
   app.post('/sessions', AuthenticateController)
   app.post('/customer', CreateCustomerController)
-  app.patch('/token/refresh', RefreshTokenController)  
+  app.patch('/token/refresh', RefreshTokenController)
 
   /* Routes Product */
   app.get('/product/:id', FindByIdProductController)
@@ -88,7 +90,6 @@ export const Routes = async (app: FastifyInstance) => {
   app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)
   app.get('/address', { onRequest: [verifyJWT] }, FindManyAddressController)
 
-
   // // Define a WebSocket route
   // app.get('/websocket', { websocket: true }, (connection, req) => {
     
@@ -109,4 +110,6 @@ export const Routes = async (app: FastifyInstance) => {
   //     console.log('WebSocket connection closed');
   //   });
   // });
+  app.delete('/address/:id', { onRequest: [verifyJWT] }, DeleteAddressController)
+  app.put('/address', UpdateAddressController)
 }

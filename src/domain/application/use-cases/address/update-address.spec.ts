@@ -3,14 +3,17 @@ import { UpdateAddress } from "./update-address";
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
 import { makeCustomer } from "../../../../tests/factory";
 import { makeAddress } from "../../../../tests/factory/make-address";
+import { InMemoryNeighborhoodRepository } from "../../../../tests/in-memory/in-memory-neighborhood-repository";
 
 let inMemoryAddressRepository: InMemoryAddressRepository
+let inMemoryNeighborhoodRepository: InMemoryNeighborhoodRepository
 let sut: UpdateAddress
 
 describe('Update Address', () => {
   beforeEach(() => {
     inMemoryAddressRepository = new InMemoryAddressRepository()
-    sut = new UpdateAddress(inMemoryAddressRepository)
+    inMemoryNeighborhoodRepository = new InMemoryNeighborhoodRepository()
+    sut = new UpdateAddress(inMemoryAddressRepository, inMemoryNeighborhoodRepository)
   })
 
   it('Should be update a address', async () => {

@@ -24,6 +24,10 @@ export class InMemoryAddressRepository implements AddressRepository {
     return this.address
   }
 
+  async find(customerId: string): Promise<Address[]> {
+    return this.address.filter(add => add.customerId === customerId)
+  }
+
   async update(address: Address): Promise<void> {
     const index = this.address.findIndex(add => add.id === address.id)
     if (index >= 0) {

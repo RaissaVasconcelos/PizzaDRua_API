@@ -32,18 +32,27 @@ export class PrismaOrderRepository implements OrderRepository {
       include: {
         customer: {
           select: {
+            id: true,
             name: true,
             email: true,
             phone: true,
             Address: {
+              where: {
+                standard: true,
+              },
               select: {
-                type: true,
-                street: true,
+                id: true,
+                neighborhood: {
+                  select: {
+                    name: true,
+                    tax: true
+                  }
+                },
                 number: true,
                 phone: true,
-                neighborhood: {
-                  select: { name: true, tax: true }
-                }
+                street: true,
+                type: true,
+                zipCode: true,
               }
             },
           } 

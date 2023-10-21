@@ -1,7 +1,9 @@
 import fastify from "fastify";
 import fastifyExpress from '@fastify/express'
 import fastifyJwt from "@fastify/jwt";
+import http from 'node:http';
 import fastifyCookie from '@fastify/cookie'
+import fastifyWebsocket from "@fastify/websocket";
 import multipart from '@fastify/multipart'
 import fastifyStatic from '@fastify/static'  
 import { ZodError } from 'zod'
@@ -42,6 +44,7 @@ app.register((fastifyStatic), {
   prefix: '/uploads'  
 })
 
+app.register(fastifyWebsocket, {options: {clientTracking: true}})
 app.register(multipart)
 app.register(fastifyCookie)
 app.register(fastifyExpress)
