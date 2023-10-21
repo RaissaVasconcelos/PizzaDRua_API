@@ -39,18 +39,8 @@ export const UpdateOrderController = async (request: FastifyRequest, reply: Fast
     }
   } else {   
     const orderUpdate = await orderPrisma.findManyCustomer(customerId)
-    console.log(orderUpdate)
-    // enviar o novo evento
-
-    app.io.on('connection', (socket) => {
-      console.log('Cliente conectado', socket.id)
-    
-      socket.emit('statusUpdate', orderUpdate);
-    
-      socket.on('disconnect', () => {
-        console.log(`O cliente com o id ${socket.id} se desconectou`)
-      });
-    })
+    // enviar o novo evento pelo socket
+    app.io.emit('statusUpdate', orderUpdate);
 
     return reply.code(200).send({})
   }
