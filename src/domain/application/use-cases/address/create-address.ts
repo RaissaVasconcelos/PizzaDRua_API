@@ -16,7 +16,7 @@ interface CreateAddressUseCaseRequest {
   phone: string
 }
 
-type CreateAddressUseCaseResponse = Either<ResourceNotFoundError, {}>
+type CreateAddressUseCaseResponse = Either<ResourceNotFoundError, {address: Address}>
 
 export class CreateAddress {
   constructor(
@@ -25,9 +25,9 @@ export class CreateAddress {
     private neighborhoodRepository: NeighborhoodRepository
   ) { }
 
-  async execute(address: CreateAddressUseCaseRequest): Promise<CreateAddressUseCaseResponse> {
-    const customer = await this.customerRepository.findById(address.customerId)
-    const neighborhood = await this.neighborhoodRepository.findByName(address.neighborhood)
+  async execute(addressReq: CreateAddressUseCaseRequest): Promise<CreateAddressUseCaseResponse> {
+    const customer = await this.customerRepository.findById(addressReq.customerId)
+    const neighborhood = await this.neighborhoodRepository.findByName(addressReq.neighborhood)
     if (!customer) {
       return left(new ResourceNotFoundError())
     }
@@ -42,30 +42,31 @@ export class CreateAddress {
   
     if (addressStandardExists) {
       const newAddress = Address.create({
-        customerId: address.customerId,
+        customerId: addressReq.customerId,
         neighborhoodId: neighborhood.id,
-        number: address.number,
-        street: address.street,
-        type: address.type,
-        zipCode: address.zipCode,
+        number: addressReq.number,
+        street: addressReq.street,
+        type: addressReq.type,
+        zipCode: addressReq.zipCode,
         standard: false,
-        phone: address.phone
+        phone: addressReq.phone
       })
       await this.addressRepository.create(newAddress)
-    } else {
+      return right({address: newAddress})
+    } 
       const newAddress = Address.create({
-        customerId: address.customerId,
+        customerId: addressReq.customerId,
         neighborhoodId: neighborhood.id,
-        number: address.number,
-        street: address.street,
-        type: address.type,
-        zipCode: address.zipCode,
+        number: addressReq.number,
+        street: addressReq.street,
+        type: addressReq.type,
+        zipCode: addressReq.zipCode,
         standard: true,
-        phone: address.phone
+        phone: addressReq.phone
       })
-      await this.addressRepository.create(newAddress)
-    }
+     const address = await this.addressRepository.create(newAddress)
+    return right({address})
     
-    return right({})
+   
   }
 }
