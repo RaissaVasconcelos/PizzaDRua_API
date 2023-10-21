@@ -86,7 +86,6 @@ model Order {
   methodDelivery String
   payment        String
   totalPrice     String
-  active         String
   itensOrder     Json
   createdAt      DateTime  @default(now())
   updatedAt      DateTime?
