@@ -40,7 +40,9 @@ import {
 
 import {
   CreateAddressController,
+  DeleteAddressController,
   FindManyAddressController,
+  UpdateAddressController,
 } from './address'
 import { UploadImageProductController } from "./image-product/upload-image-product-controller";
 
@@ -50,7 +52,7 @@ export const Routes = async (app: FastifyInstance) => {
   /* Routes Customer */
   app.post('/sessions', AuthenticateController)
   app.post('/customer', CreateCustomerController)
-  app.patch('/token/refresh', RefreshTokenController)  
+  app.patch('/token/refresh', RefreshTokenController)
 
   /* Routes Product */
   app.get('/product/:id', FindByIdProductController)
@@ -75,17 +77,19 @@ export const Routes = async (app: FastifyInstance) => {
   /** Route Order */
   app.post('/order', { onRequest: [verifyJWT] }, CreateOrderController)
   app.get('/order/:id', FindByIdOrderController)
-  app.get('/order', { onRequest: [verifyJWT]}, FindManyOrderController)
-  app.put('/order', { onRequest: [verifyJWT] }, UpdateOrderController)
+  app.get('/order', FindManyOrderController)
+  app.put('/order', UpdateOrderController)
 
-// Routes Neighborhood
-app.get('/neighborhood', FindManyNeighborhoodController)
-app.post('/neighborhood', CreateNeighborhoodController)
-app.get('/neighborhood/:id', FindByIdNeighborhoodController)
-app.delete('/neighborhood/:id', DeleteNeighborhoodController)
-app.put('/neighborhood', UpdateNeighborhoodController)
+  // Routes Neighborhood
+  app.get('/neighborhood', FindManyNeighborhoodController)
+  app.post('/neighborhood', CreateNeighborhoodController)
+  app.get('/neighborhood/:id', FindByIdNeighborhoodController)
+  app.delete('/neighborhood/:id', DeleteNeighborhoodController)
+  app.put('/neighborhood', UpdateNeighborhoodController)
 
   // Routes Address
   app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)
   app.get('/address', { onRequest: [verifyJWT] }, FindManyAddressController)
+  app.delete('/address/:id', { onRequest: [verifyJWT] }, DeleteAddressController)
+  app.put('/address', UpdateAddressController)
 }

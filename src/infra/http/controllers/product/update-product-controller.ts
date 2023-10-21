@@ -9,18 +9,19 @@ export const UpdateProductController = async (request: FastifyRequest, reply: Fa
     name: z.string(),
     category: z.string(),
     description: z.string(),
-    image: z.string(),
+    imageUrl: z.string(),
     price: z.string(),
     size: z.string(),
     type: z.enum(["TRADITIONAL", "SPECIAL"]).optional(),
     status: z.enum(["ACTIVE", "DISABLE"]),
   })
-
-  const { id, name, category, price, description, image, type, size, status } = schemaUpdateProduct.parse(request.body)
+  console.log(request.body);
+  
+  const { id, name, category, price, description, imageUrl, type, size, status } = schemaUpdateProduct.parse(request.body)
 
   const updateProduct = makeUpdateProduct()
 
-  const result = await updateProduct.execute({ id, name, category, price, description, image, type, size, status })
+  const result = await updateProduct.execute({ id, name, category, price, description, imageUrl, type, size, status })
 
   if(result.isLeft()) {
     const erro = result.value

@@ -64,7 +64,7 @@ model Product {
   description String
   imageUrl    String
   price       String
-  size        String
+  size        SIZE        @default(ENTIRE)
   type        TYPEPIZZA?  @default(TRADITIONAL)
   status      TYPEPRODUCT @default(ACTIVE)
   createdAt   DateTime    @default(now())
@@ -113,4 +113,9 @@ enum TYPEADDRESS {
 enum TYPEPRODUCT {
   ACTIVE
   DISABLE
+}
+
+enum SIZE {
+  ENTIRE
+  HALF
 }
