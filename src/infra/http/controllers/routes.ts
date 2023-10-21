@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { verifyJWT } from "../../middlewares/verify-jwt";
 import { OAuthEfi } from "./efi-pay/pix";
+import { UploadImageProductController } from "./image-product/upload-image-product-controller";
 import {
   CreateCustomerController,
   AuthenticateController,
@@ -42,8 +43,6 @@ import {
   CreateAddressController,
   FindManyAddressController,
 } from './address'
-import { UploadImageProductController } from "./image-product/upload-image-product-controller";
-
 
 export const Routes = async (app: FastifyInstance) => {
 
@@ -75,17 +74,39 @@ export const Routes = async (app: FastifyInstance) => {
   /** Route Order */
   app.post('/order', { onRequest: [verifyJWT] }, CreateOrderController)
   app.get('/order/:id', FindByIdOrderController)
-  app.get('/order', { onRequest: [verifyJWT]}, FindManyOrderController)
+  app.get('/order', { onRequest: [verifyJWT] }, FindManyOrderController)
   app.put('/order', { onRequest: [verifyJWT] }, UpdateOrderController)
 
-// Routes Neighborhood
-app.get('/neighborhood', FindManyNeighborhoodController)
-app.post('/neighborhood', CreateNeighborhoodController)
-app.get('/neighborhood/:id', FindByIdNeighborhoodController)
-app.delete('/neighborhood/:id', DeleteNeighborhoodController)
-app.put('/neighborhood', UpdateNeighborhoodController)
+  // Routes Neighborhood
+  app.get('/neighborhood', FindManyNeighborhoodController)
+  app.post('/neighborhood', CreateNeighborhoodController)
+  app.get('/neighborhood/:id', FindByIdNeighborhoodController)
+  app.delete('/neighborhood/:id', DeleteNeighborhoodController)
+  app.put('/neighborhood', UpdateNeighborhoodController)
 
   // Routes Address
   app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)
   app.get('/address', { onRequest: [verifyJWT] }, FindManyAddressController)
+
+
+  // // Define a WebSocket route
+  // app.get('/websocket', { websocket: true }, (connection, req) => {
+    
+  //   connection.socket.on('message', async (message) => {
+  //     console.log('metodo server says')
+  //     console.log('message', message)
+  //     // This function will be called when the client sends a message
+  //     const status = await prismaOrder.ordersCustomer('d69ac104-a9cb-4036-88ac-6918f0ac7cea')
+  //     if (status) {
+  //       connection.socket.send(status);
+  //       return
+  //     }
+  //     connection.socket.send('Sem att');
+  //   });
+    
+  //   // Close the WebSocket connection
+  //   connection.socket.on('close', () => {
+  //     console.log('WebSocket connection closed');
+  //   });
+  // });
 }

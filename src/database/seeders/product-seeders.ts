@@ -3,11 +3,11 @@ import { prisma } from '../../lib/prisma'
 export const productSeeders = async () => {
 
     const categoryPizzas = await prisma.category.findFirst({
-        where: { name: 'pizzas' }
+        where: { name: 'pizza' }
     })
 
     const categoryBebidas = await prisma.category.findFirst({
-        where: { name: 'bebidas' }
+        where: { name: 'drink' }
     })
     
     await prisma.product.createMany({
