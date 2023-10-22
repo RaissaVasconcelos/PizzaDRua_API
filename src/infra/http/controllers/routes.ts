@@ -45,6 +45,7 @@ import {
   UpdateAddressController,
 } from './address'
 import { UploadImageProductController } from "./image-product/upload-image-product-controller";
+import { WebHookPixController } from "./efi-pay/webhook.pix";
 
 
 export const Routes = async (app: FastifyInstance) => {
@@ -73,6 +74,7 @@ export const Routes = async (app: FastifyInstance) => {
 
   /** Route pix */
   app.post('/pix', OAuthEfi)
+  app.get('/pix', WebHookPixController)
 
   /** Route Order */
   app.post('/order', { onRequest: [verifyJWT] }, CreateOrderController)

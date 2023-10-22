@@ -1,5 +1,6 @@
 import { AddressRepository } from "../../domain/application/repositories/address-repository";
 import { Address } from "../../domain/enterprise/entities/address";
+import { IAddressList } from "../../interfaces/IAddressList";
 
 
 export class InMemoryAddressRepository implements AddressRepository {
@@ -20,7 +21,7 @@ export class InMemoryAddressRepository implements AddressRepository {
     return address
   }
 
-  async findMany(): Promise<Address[]> {
+  async findMany(): Promise<IAddressList[]> {
     return this.address
   }
 

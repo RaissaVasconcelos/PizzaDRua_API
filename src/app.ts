@@ -1,18 +1,17 @@
 import fastify from "fastify";
 import fastifyExpress from '@fastify/express'
 import fastifyJwt from "@fastify/jwt";
-import http from 'node:http';
 import fastifyCookie from '@fastify/cookie'
-import fastifyWebsocket from "@fastify/websocket";
 import multipart from '@fastify/multipart'
-import fastifyStatic from '@fastify/static'  
+import fastifyStatic from '@fastify/static' 
+import socket from "fastify-socket.io"; 
 import { ZodError } from 'zod'
 import { fromZodError } from 'zod-validation-error'
 import { env } from "./env";
 import { Routes } from "./infra/http/controllers/routes";
 import cors from '@fastify/cors'
 import { resolve } from "path";
-import { Server } from 'socket.io'
+import { configureSocketIO } from "./utils/socket.io";
 
 
 export const app = fastify();
@@ -28,11 +27,12 @@ app.register(fastifyJwt, {
   }
 })
 
+
 app.register((fastifyStatic), {
   root: resolve(__dirname, '../uploads'),
   prefix: '/uploads'  
 })
-app.register(fastifyWebsocket, {options: {clientTracking: true}})
+app.register(socket)
 app.register(multipart)
 app.register(cors)
 app.register(fastifyCookie)
