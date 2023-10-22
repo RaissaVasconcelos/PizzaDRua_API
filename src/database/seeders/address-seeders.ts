@@ -10,7 +10,7 @@ export const addressSeeders = async () => {
     })
 
     const neighborhoodCordeiros = await prisma.neighborhood.findFirst({
-      where: { name: 'Imarui' },
+      where: { name: 'Cordeiros' },
     })
 
     await prisma.address.createMany({

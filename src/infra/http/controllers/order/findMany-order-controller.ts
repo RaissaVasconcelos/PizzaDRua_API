@@ -1,25 +1,16 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { makefindManyOrder } from "../../../factory/order/make-findAll-order";
-import { io } from "../../../../utils/socket.io";
-import { Server, Socket } from 'socket.io';
 
-export const FindManyOrderController = async (_request: FastifyRequest, reply: FastifyReply) => {
+
+export const FindManyOrderController = async (request: FastifyRequest, reply: FastifyReply) => {
+  const customerId = request.user.sign.sub
+  
+  const customerRole = request.query as any
+  
   const order = makefindManyOrder()
-  const result = await order.execute()
 
-  if (result.isRight()) {
-    io.on('connection', (socket: Socket) => {
-      console.log('A user connected');
+  const orders = await order.execute({ customerRole, customerId })
 
-      socket.on('disconnect', () => {
-        console.log('A user disconnected');
-      });
+  return reply.code(200).send(orders.value)
+}
 
-      // Defina outros manipuladores de eventos Socket.io, conforme necessário
-    });
-  } else {
-    reply.code(500).send({ error: 'Erro na busca de pedidos' });
-  }
-  
-  
-}       
