@@ -12,10 +12,21 @@ import { env } from "./env";
 import { Routes } from "./infra/http/controllers/routes";
 import cors from '@fastify/cors'
 import { resolve } from "path";
-import { Server } from 'socket.io'
+import fastifyIO from "fastify-socket.io";
 
+const app = fastify();
 
-export const app = fastify();
+app.register(cors, {
+  origin: 'http://localhost:5173',
+  credentials: true,
+})
+
+app.register(fastifyIO, {
+  cors: {
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST']
+  },
+})
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
@@ -32,13 +43,28 @@ app.register((fastifyStatic), {
   root: resolve(__dirname, '../uploads'),
   prefix: '/uploads'  
 })
+
 app.register(fastifyWebsocket, {options: {clientTracking: true}})
 app.register(multipart)
-app.register(cors)
 app.register(fastifyCookie)
 app.register(fastifyExpress)
 app.register(Routes)
 
+
+app.ready((err) => {
+  if (err) throw err
+
+  app.io.on('connection', (socket) => {
+    console.log('Cliente conectado', socket.id)
+  
+    socket.emit('statusUpdate', 'hello');
+  
+    socket.on('disconnect', () => {
+      console.log(`O cliente com o id ${socket.id} se desconectou`)
+    });
+  })
+  
+})
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
@@ -51,3 +77,5 @@ app.setErrorHandler((error, _, reply) => {
   }
   return reply.status(500).send({ message: 'Internal server error.' })
 })
+
+export default app

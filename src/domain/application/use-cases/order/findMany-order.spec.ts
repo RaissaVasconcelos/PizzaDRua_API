@@ -17,7 +17,9 @@ describe('FindAll Orders', () => {
 
     await inMemoryOrderRepository.create(orderFake)
 
-    const result = await sut.execute()
+    const roleUser = { customerRole: { role: 'user' }, customerId: 'customerId' }
+
+    const result = await sut.execute(roleUser)
 
     if(result.isRight()) {
       expect(result.isRight()).toBeTruthy()
