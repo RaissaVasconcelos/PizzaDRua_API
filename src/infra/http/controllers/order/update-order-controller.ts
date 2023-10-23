@@ -28,7 +28,7 @@ export const UpdateOrderController = async (request: FastifyRequest, reply: Fast
 
   const order = makeUpdateOrder()
 
-  const customerId = request.user.sign.sub
+  const customerId = request.user.sub
 
   const result = await order.execute({ id, status, customerId, payment, totalPrice, methodDelivery, itensOrder })
 

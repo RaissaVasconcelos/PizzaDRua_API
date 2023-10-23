@@ -6,8 +6,8 @@ export interface ICustomersProps {
   id: string
   name: string
   email: string
-  phone: string
-  password: string
+  phone?: string | null
+  password?: string | null 
   createdAt: Date
   updatedAt?: Date | null
 }

@@ -4,7 +4,7 @@ import fastifyJwt from "@fastify/jwt";
 import fastifyCookie from '@fastify/cookie'
 import fastifyWebsocket from "@fastify/websocket";
 import multipart from '@fastify/multipart'
-import fastifyStatic from '@fastify/static'  
+import fastifyStatic from '@fastify/static'
 import { ZodError } from 'zod'
 import { fromZodError } from 'zod-validation-error'
 import { env } from "./env";
@@ -40,10 +40,10 @@ app.register(fastifyJwt, {
 
 app.register((fastifyStatic), {
   root: resolve(__dirname, '../uploads'),
-  prefix: '/uploads'  
+  prefix: '/uploads'
 })
 
-app.register(fastifyWebsocket, {options: {clientTracking: true}})
+app.register(fastifyWebsocket, { options: { clientTracking: true } })
 app.register(multipart)
 app.register(fastifyCookie)
 app.register(fastifyExpress)
@@ -55,14 +55,14 @@ app.ready((err) => {
 
   app.io.on('connection', (socket) => {
     console.log('Cliente conectado', socket.id)
-  
+
     socket.emit('statusUpdate', 'hello');
-  
+
     socket.on('disconnect', () => {
       console.log(`O cliente com o id ${socket.id} se desconectou`)
     });
   })
-  
+
 })
 
 app.setErrorHandler((error, _, reply) => {

@@ -7,7 +7,7 @@ import { BcryptService } from "../../service/bcrypt/bcript-service"
 export interface CustomerUseCasesRequest {
   name: string
   email: string
-  phone: string
+  phone?: string
   password: string
 }
 
@@ -26,6 +26,7 @@ export class CreateCustomer{
       return left(new CustomerAlreadyExistsError)
     }
     
+
     const passwordHash = await this.bcriptyService.hashPassword(password, 6)
 
     const NewCustomer = Customer.create({ email, phone, name, password: passwordHash })

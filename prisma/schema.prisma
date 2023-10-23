@@ -15,8 +15,8 @@ model Customer {
   id        String    @id @default(uuid())
   email     String    @unique
   name      String
-  phone     String
-  password  String
+  phone     String?
+  password  String?
   Address   Address[]
   Order     Order[]
   createdAt DateTime  @default(now())

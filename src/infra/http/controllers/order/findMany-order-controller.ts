@@ -3,7 +3,7 @@ import { makefindManyOrder } from "../../../factory/order/make-findAll-order";
 
 
 export const FindManyOrderController = async (request: FastifyRequest, reply: FastifyReply) => {
-  const customerId = request.user.sign.sub
+  const customerId = request.user.sub
   
   const customerRole = request.query as any
   

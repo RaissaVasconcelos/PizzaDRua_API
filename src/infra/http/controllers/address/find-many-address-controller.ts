@@ -7,7 +7,7 @@ export const FindManyAddressController = async (request: FastifyRequest, reply: 
 
 
 
-  const customerId = request.user.sign.sub
+  const customerId = request.user.sub
   const makeFindManyAddress = MakeFindManyAddress()
   console.log(request.user);
     

@@ -6,12 +6,12 @@ export const RefreshTokenController = async (request: FastifyRequest, reply: Fas
 
     const token = await reply.jwtSign(
         {},
-        { sign: { sub: request.user.sign.sub } }
+        { sign: { sub: request.user.sub } }
     )
 
     const refreshToken = await reply.jwtSign(
         {},
-        { sign: { sub: request.user.sign.sub, expiresIn: '7d' } }
+        { sign: { sub: request.user.sub, expiresIn: '7d' } }
     )
     return reply.setCookie('refreshToken', refreshToken, {
         path: '/',

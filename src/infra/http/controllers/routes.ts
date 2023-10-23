@@ -5,7 +5,8 @@ import { UploadImageProductController } from "./image-product/upload-image-produ
 import {
   CreateCustomerController,
   AuthenticateController,
-  RefreshTokenController
+  RefreshTokenController,
+  CreateCustomerSocialAccountController
 } from "./customer";
 
 import {
@@ -45,18 +46,13 @@ import {
   FindManyAddressController,
   UpdateAddressController,
 } from './address'
-<<<<<<< HEAD
-import { UploadImageProductController } from "./image-product/upload-image-product-controller";
-import { WebHookPixController } from "./efi-pay/webhook.pix";
-
-=======
->>>>>>> b406a43ec29c4bd6983b3f2cbbc023335adc4867
 
 export const Routes = async (app: FastifyInstance) => {
 
   /* Routes Customer */
   app.post('/sessions', AuthenticateController)
   app.post('/customer', CreateCustomerController)
+  app.post('/sessions/social-login', CreateCustomerSocialAccountController)
   app.patch('/token/refresh', RefreshTokenController)
 
   /* Routes Product */
@@ -78,7 +74,7 @@ export const Routes = async (app: FastifyInstance) => {
 
   /** Route pix */
   app.post('/pix', OAuthEfi)
-  app.get('/pix', WebHookPixController)
+
 
   /** Route Order */
   app.post('/order', { onRequest: [verifyJWT] }, CreateOrderController)
@@ -96,6 +92,8 @@ export const Routes = async (app: FastifyInstance) => {
   // Routes Address
   app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)
   app.get('/address', { onRequest: [verifyJWT] }, FindManyAddressController)
+  app.delete('/address/:id', { onRequest: [verifyJWT] }, DeleteAddressController)
+  app.put('/address', UpdateAddressController)
 
   // // Define a WebSocket route
   // app.get('/websocket', { websocket: true }, (connection, req) => {
@@ -117,6 +115,4 @@ export const Routes = async (app: FastifyInstance) => {
   //     console.log('WebSocket connection closed');
   //   });
   // });
-  app.delete('/address/:id', { onRequest: [verifyJWT] }, DeleteAddressController)
-  app.put('/address', UpdateAddressController)
 }

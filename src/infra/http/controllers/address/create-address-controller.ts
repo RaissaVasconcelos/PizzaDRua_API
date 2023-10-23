@@ -16,9 +16,10 @@ export const CreateAddressController = async (request: FastifyRequest, reply: Fa
   })
 
   const { type, street, number, phone, zipCode, standard, neighborhood } = addressBodySchema.parse(request.body)
-  const customerId = request.user.sign.sub
+  const customerId = request.user.sub
   const makeCreateAddress = MakeCreateAddress()
-
+  console.log(customerId);
+  
   const { value, isLeft } = await makeCreateAddress.execute({ 
     type,
     zipCode,
