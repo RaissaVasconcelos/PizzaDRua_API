@@ -3,7 +3,6 @@ import { makeUpdateOrder } from "../../../factory/order/make-update-order";
 import * as z from 'zod'
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
 import app from "../../../../app";
-import { Socket } from "socket.io";
 
 // refatorar
 import { PrismaOrderRepository } from "../../../repository/prisma/prisma-order";
@@ -18,10 +17,12 @@ export const UpdateOrderController = async (request: FastifyRequest, reply: Fast
     methodDelivery: z.string(),
     itensOrder: z.array(
       z.object({
+        mode: z.enum(["MIXED", "SIMPLE"]),
         product: z.string().array(),
-        size: z.string(),
-        quantity: z.string(),
-    })),
+        price: z.string(),  
+        size: z.enum(["ENTIRE", "HALF"]).optional(),
+        quantity: z.number(),
+      })),
   })
 
   const { id, status, itensOrder, payment, totalPrice, methodDelivery } = schemaOrder.parse(request.body)
@@ -39,18 +40,8 @@ export const UpdateOrderController = async (request: FastifyRequest, reply: Fast
     }
   } else {   
     const orderUpdate = await orderPrisma.findManyCustomer(customerId)
-    console.log(orderUpdate)
-    // enviar o novo evento
-
-    app.io.on('connection', (socket) => {
-      console.log('Cliente conectado', socket.id)
-    
-      socket.emit('statusUpdate', orderUpdate);
-    
-      socket.on('disconnect', () => {
-        console.log(`O cliente com o id ${socket.id} se desconectou`)
-      });
-    })
+    // enviar o evento pelo socket
+    app.io.emit('statusUpdate', orderUpdate);
 
     return reply.code(200).send({})
   }

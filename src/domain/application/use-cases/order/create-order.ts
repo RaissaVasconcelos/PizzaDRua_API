@@ -15,7 +15,7 @@ interface dataProduct {
   mode: "MIXED" | "SIMPLE" 
   product: string[]
   price: string
-  size: "ENTIRE" | "HALF"
+  size: "ENTIRE" | "HALF" | undefined
   quantity: number
 }
 interface CreateOrderUseCaseRequest {
