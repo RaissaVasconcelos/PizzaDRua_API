@@ -40,7 +40,7 @@ export const UpdateOrderController = async (request: FastifyRequest, reply: Fast
     }
   } else {   
     const orderUpdate = await orderPrisma.findManyCustomer(customerId)
-    // enviar o evento pelo socket atualizado
+    // enviar o evento pelo socket
     app.io.emit('statusUpdate', orderUpdate);
 
     return reply.code(200).send({})
