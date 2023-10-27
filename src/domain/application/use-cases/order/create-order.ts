@@ -12,10 +12,11 @@ import { NeighborhoodRepository } from "../../repositories/neighborhood-reposito
 import { Address } from "../../../enterprise/entities";
 
 interface dataProduct {
-  mode: "MIXED" | "SIMPLE" 
+  mode: "MIXED" | "SIMPLE"
+  image_url: string  
   product: string[]
   price: string
-  size: "ENTIRE" | "HALF"
+  size: "ENTIRE" | "HALF" | undefined
   quantity: number
 }
 interface CreateOrderUseCaseRequest {
@@ -28,7 +29,7 @@ interface CreateOrderUseCaseRequest {
 }
 
 type CreateOrderUseCaseResponse = Either<
-  CustomerAlreadyExistsError | CreatedOrderError | ResourceNotFoundError, {}>
+  CustomerAlreadyExistsError | CreatedOrderError | ResourceNotFoundError, {order: Order}>
 
 export class CreateOrder {
   private acumulador: number
@@ -93,8 +94,8 @@ export class CreateOrder {
           methodDelivery,
         })
   
-        this.orderRepository.create(newOrder)
-        return right({})
+        const order = await this.orderRepository.create(newOrder)
+        return right({ order })
       }
       
       return left(new CreatedOrderError())

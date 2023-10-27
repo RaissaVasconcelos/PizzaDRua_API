@@ -21,5 +21,5 @@ export const FindByIdOrderController = async (request: FastifyRequest, reply: Fa
     }
   }
 
-  return reply.code(200).send({ data: result.value })
+  return reply.code(200).send(result.value)
 }

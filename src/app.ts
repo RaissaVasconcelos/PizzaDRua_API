@@ -56,13 +56,10 @@ app.ready((err) => {
   app.io.on('connection', (socket) => {
     console.log('Cliente conectado', socket.id)
 
-    socket.emit('statusUpdate', 'hello');
-
     socket.on('disconnect', () => {
       console.log(`O cliente com o id ${socket.id} se desconectou`)
     });
   })
-
 })
 
 app.setErrorHandler((error, _, reply) => {

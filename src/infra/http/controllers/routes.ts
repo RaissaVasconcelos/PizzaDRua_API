@@ -77,10 +77,10 @@ export const Routes = async (app: FastifyInstance) => {
 
 
   /** Route Order */
-  app.post('/order', { onRequest: [verifyJWT] }, CreateOrderController)
+  app.post('/order', CreateOrderController)
   app.get('/order/:id', FindByIdOrderController)
-  app.get('/order', { onRequest: [verifyJWT] }, FindManyOrderController)
-  app.put('/order', { onRequest: [verifyJWT] }, UpdateOrderController)
+  app.get('/order', FindManyOrderController)
+  app.put('/order',  UpdateOrderController)
 
   // Routes Neighborhood
   app.get('/neighborhood', FindManyNeighborhoodController)
@@ -90,8 +90,8 @@ export const Routes = async (app: FastifyInstance) => {
   app.put('/neighborhood', UpdateNeighborhoodController)
 
   // Routes Address
-  app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)
-  app.get('/address', { onRequest: [verifyJWT] }, FindManyAddressController)
+  app.post('/address', CreateAddressController)
+  app.get('/address', FindManyAddressController)
   app.delete('/address/:id', { onRequest: [verifyJWT] }, DeleteAddressController)
   app.put('/address', UpdateAddressController)
 

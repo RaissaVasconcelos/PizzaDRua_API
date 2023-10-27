@@ -4,8 +4,8 @@ import { OrderRepository } from "../../../domain/application/repositories/order-
 import { Order } from "../../../domain/enterprise/entities";
 
 export class PrismaOrderRepository implements OrderRepository {
-  async create({ customerId, totalPrice, itensOrder, payment, status, methodDelivery }: Order): Promise<void> {    
-    await prisma.order.create({
+  async create({ customerId, totalPrice, itensOrder, payment, status, methodDelivery }: Order): Promise<Order> {    
+    const order =  await prisma.order.create({
       data: { 
         customerId,
         itensOrder,
@@ -15,16 +15,53 @@ export class PrismaOrderRepository implements OrderRepository {
         methodDelivery,
       }
     })
+
+    return new Order(order)
   }
 
-  async findById(id: string): Promise<Order | null> {
+  async findById(id: string): Promise<any | null> {
     const order = await prisma.order.findUnique({
-      where: { id }
+      where: { id }, select: {
+        customer: {
+          select: {
+            Address: {
+              where: {
+                standard: true,
+              },
+              select: {
+                id: true,
+                neighborhood: {
+                  select: {
+                    name: true,
+                    tax: true
+                  }
+                },
+                number: true,
+                phone: true,
+                street: true,
+                type: true,
+                zipCode: true,
+              }
+            },
+            email: true,
+            name: true,
+            phone: true,  
+            id: true,
+          }
+
+        },
+        itensOrder:true,
+        id: true,
+        methodDelivery: true,
+        payment: true,
+        status: true,
+        totalPrice: true
+      }
     })
 
     if(!order) return null
 
-    return new Order(order)
+    return order
   }
 
   async findMany(): Promise<any[]> {
@@ -56,8 +93,11 @@ export class PrismaOrderRepository implements OrderRepository {
               }
             },
           } 
-        },
+        }
       },
+      orderBy: {
+        createdAt: 'desc'
+      }
     })
 
     const ordersWithoutCustomerId = orders.map(order => {

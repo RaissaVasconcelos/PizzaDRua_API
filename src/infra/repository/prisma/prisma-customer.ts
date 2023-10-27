@@ -9,7 +9,6 @@ export class PrismaCustomerRepository implements CustomerRepository {
         id: customer.Id,
         name: customer.Name,
         email: customer.Email,
-        phone: customer.Phone,
         password: customer.Password
       }
     })
