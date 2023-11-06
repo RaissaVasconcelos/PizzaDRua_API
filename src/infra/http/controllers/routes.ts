@@ -46,6 +46,7 @@ import {
   FindManyAddressController,
   UpdateAddressController,
 } from './address'
+import { WebHookPixController } from "./efi-pay/webhook.pix";
 
 export const Routes = async (app: FastifyInstance) => {
 
@@ -74,6 +75,7 @@ export const Routes = async (app: FastifyInstance) => {
 
   /** Route pix */
   app.post('/pix', OAuthEfi)
+  app.get('/webhook', WebHookPixController)
 
 
   /** Route Order */
@@ -92,7 +94,7 @@ export const Routes = async (app: FastifyInstance) => {
   // Routes Address
   app.post('/address', CreateAddressController)
   app.get('/address', FindManyAddressController)
-  app.delete('/address/:id', { onRequest: [verifyJWT] }, DeleteAddressController)
+  app.delete('/address/:id', DeleteAddressController)
   app.put('/address', UpdateAddressController)
 
   // // Define a WebSocket route

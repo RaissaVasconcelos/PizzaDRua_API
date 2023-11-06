@@ -16,7 +16,7 @@ interface dataProduct {
   image_url: string  
   product: string[]
   price: string
-  size: "ENTIRE" | "HALF" | undefined
+  size?: string 
   quantity: number
 }
 interface CreateOrderUseCaseRequest {

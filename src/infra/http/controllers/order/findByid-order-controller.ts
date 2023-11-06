@@ -2,6 +2,7 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { makeFindByIdOrder } from "../../../factory/order/make-findById-order";
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found-error";
 import * as z from 'zod'
+import app from "../../../../app";
 
 export const FindByIdOrderController = async (request: FastifyRequest, reply: FastifyReply) => {
   const schemaFindByIdProduct = z.object({
@@ -20,6 +21,6 @@ export const FindByIdOrderController = async (request: FastifyRequest, reply: Fa
       return reply.code(404).send({ message: erro.message })
     }
   }
-
+  
   return reply.code(200).send(result.value)
 }

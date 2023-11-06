@@ -10,8 +10,8 @@ export const CreateProductController = async (request: FastifyRequest, reply: Fa
       description: z.string(),
       price: z.string(),
       imageUrl: z.string(),
-      size: z.string(),
-      type: z.enum(["TRADITIONAL", "SPECIAL"]).optional(),
+      size: z.string().optional(),
+    type: z.string().optional(),
       status: z.enum(["ACTIVE", "DISABLE"]).optional(),
   })
   

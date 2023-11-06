@@ -12,8 +12,10 @@ import { Routes } from "./infra/http/controllers/routes";
 import cors from '@fastify/cors'
 import { resolve } from "path";
 import fastifyIO from "fastify-socket.io";
+import { OrderCustomer } from "./@types";
 
 const app = fastify();
+export const socketToOrderMap: OrderCustomer[] = [];
 
 app.register(cors, {
   origin: 'http://localhost:5173',
@@ -55,10 +57,27 @@ app.ready((err) => {
 
   app.io.on('connection', (socket) => {
     console.log('Cliente conectado', socket.id)
+    socket.on('newOrder', (data) => {
+      const { orderRoom } = data
+      socket.join(orderRoom)     
+      const userOrder = socketToOrderMap.find(user => user.orderRoom === orderRoom)
+      if (userOrder) {
+        userOrder.socketId = socket.id
+      }else {
+        socketToOrderMap.push({ socketId: socket.id,  orderRoom })
+      }
+      
+    });
+    
+    socket.on('statusUpdate', (data) => {
+      const { orderId } = data
+      socket.to(orderId).emit('statusUpdate', data)
+    })
 
     socket.on('disconnect', () => {
       console.log(`O cliente com o id ${socket.id} se desconectou`)
-    });
+     
+      });
   })
 })
 

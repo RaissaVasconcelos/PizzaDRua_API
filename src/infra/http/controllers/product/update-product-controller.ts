@@ -12,7 +12,7 @@ export const UpdateProductController = async (request: FastifyRequest, reply: Fa
     imageUrl: z.string(),
     price: z.string(),
     size: z.string(),
-    type: z.enum(["TRADITIONAL", "SPECIAL"]).optional(),
+    type: z.string().optional(),
     status: z.enum(["ACTIVE", "DISABLE"]),
   })
   console.log(request.body);

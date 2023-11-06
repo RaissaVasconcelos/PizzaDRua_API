@@ -5,11 +5,11 @@ import { ResourceNotFoundError } from "../../../../core/errors/resource-not-foun
 
 interface UpdatedOrderUseCaseRequest {
   id: string
-  customerId: string
   payment: string
   methodDelivery: string  // 'delivery' | 'pick'
   totalPrice: string
   status: string
+  customerId: string
   itensOrder: any
 }
 
@@ -19,9 +19,10 @@ export class UpdateOrder {
   constructor(private orderRepository: OrderRepository) {}
 
   async execute(orderUpdate: UpdatedOrderUseCaseRequest): Promise<UpdatedOrderUseCaseResponse> {
-
+   
+    
     const orderId = await this.orderRepository.findById(orderUpdate.id)
-
+   
     if(!orderId) {
       return left(new ResourceNotFoundError())
     }

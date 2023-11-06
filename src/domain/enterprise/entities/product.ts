@@ -6,8 +6,8 @@ export interface IProductProps {
     id: string
     categoryId: string
     name: string
-    type?: "TRADITIONAL" | "SPECIAL" | null
-    size: string
+    type?: string | null
+    size?: string | null
     imageUrl : string
     description: string
     price: string
@@ -88,7 +88,7 @@ export class Product extends Entity<IProductProps> {
         this.touch()
     }    
 
-    changeType(type: "TRADITIONAL" | "SPECIAL") {
+    changeType(type: string) {
         this.props.type = type
         this.touch()
     }

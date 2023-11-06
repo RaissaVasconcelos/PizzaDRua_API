@@ -4,19 +4,17 @@ import { makefindManyOrder } from "../../../factory/order/make-findAll-order";
 export const FindManyOrderController = async (request: FastifyRequest, reply: FastifyReply) => {
   const token = request.headers.authorization;
 
-  if (!token) {
-    return reply.status(401).send({ message: 'Token not found' })
+  const order = makefindManyOrder()
+  if (token) {
+    const decodedToken = await request.jwtDecode<{ sub: string }>()
+    const customerId = decodedToken.sub
+    const orders = await order.execute({ customerId })
+    return reply.code(200).send(orders.value?.orders)
   }
 
-  const decodedToken = await request.jwtDecode<{ sub: string }>()
-  const customerId = decodedToken.sub
-  
-  const customerRole = request.query as any
-  
-  const order = makefindManyOrder()
 
-  const orders = await order.execute({ customerRole, customerId })
-
+  const orders = await order.execute({})
   return reply.code(200).send(orders.value?.orders)
+
 }
 

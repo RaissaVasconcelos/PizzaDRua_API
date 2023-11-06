@@ -15,3 +15,8 @@ declare module 'fastify' {
     io: Server;
   }
 }
+
+export interface OrderCustomer {
+  socketId: string
+  orderRoom: string
+}

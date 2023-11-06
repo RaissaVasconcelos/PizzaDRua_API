@@ -18,7 +18,7 @@ export const CreateOrderController = async (request: FastifyRequest, reply: Fast
         product: z.string().array(),
         image_url: z.string(),
         price: z.string(),
-        size: z.enum(["ENTIRE", "HALF"]),
+        size: z.string().optional(),
         quantity: z.number(),
       })),
   })
@@ -61,6 +61,7 @@ export const CreateOrderController = async (request: FastifyRequest, reply: Fast
   if (result.isRight()) {
     const findOrderById = await orders.execute(result.value.order.id)
     if (findOrderById.isRight()) {
+      console.log('aqui', findOrderById.value.order);
       
       app.io.emit('newOrder', findOrderById.value.order);
     }
