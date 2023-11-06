@@ -8,12 +8,12 @@ export const UpdateNeighborhoodController = async (request: FastifyRequest, repl
       id: z.string().uuid(),
       name: z.string(),
       tax: z.string(),
+      status: z.enum(["ACTIVE", "DISABLE"]),
     })
-
-    const { id, name, tax } = schemaNeighborhood.parse(request.params)
-  
+    
+    const { id, name, tax, status } = schemaNeighborhood.parse(request.body)
     const makeNeighborhood = MakeUpdateNeighborhood()
-    const result = await makeNeighborhood.execute({ id, name, tax })
+    const result = await makeNeighborhood.execute({ id, name, tax, status })
 
     if(result.isLeft()) {
       const erro = result.value

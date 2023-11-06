@@ -7,6 +7,7 @@ export interface INeighborhoodProps {
   id: string
   name: string
   tax: string
+  status ?: 'ACTIVE' | 'DISABLE'
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -23,6 +24,10 @@ export class Neighborhood extends Entity<INeighborhoodProps> {
 
   get tax () {
     return this.props.tax
+  }
+
+  get status () {
+    return this.props.status
   }
 
   get createdAt() {
@@ -45,6 +50,11 @@ export class Neighborhood extends Entity<INeighborhoodProps> {
 
   changeTax(tax: string) {
     this.props.tax = tax
+    this.touch()
+  }
+
+  chanceStatus(status: 'ACTIVE' | 'DISABLE') {
+    this.props.status = status
     this.touch()
   }
 

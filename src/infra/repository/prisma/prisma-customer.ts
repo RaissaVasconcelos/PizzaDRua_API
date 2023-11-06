@@ -6,10 +6,20 @@ export class PrismaCustomerRepository implements CustomerRepository {
   async create(customer: Customer): Promise<void> {
     await prisma.customer.create({
       data: {
+        id: customer.Id,
         name: customer.Name,
         email: customer.Email,
-        phone: customer.Phone,
         password: customer.Password
+      }
+    })
+  }
+
+  async createSocialAccount(customer: Customer): Promise<void> {
+    await prisma.customer.create({
+      data: {
+        id: customer.Id,
+        name: customer.Name,
+        email: customer.Email,
       }
     })
   }

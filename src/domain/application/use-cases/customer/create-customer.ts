@@ -5,9 +5,10 @@ import { CustomerRepository } from "../../repositories/customer-repository"
 import { BcryptService } from "../../service/bcrypt/bcript-service"
 
 export interface CustomerUseCasesRequest {
+  id: string  
   name: string
   email: string
-  phone: string
+  phone?: string
   password: string
 }
 
@@ -19,16 +20,17 @@ export class CreateCustomer{
     private bcriptyService: BcryptService
     ) {}
 
-  async execute({ email, phone, name, password }: CustomerUseCasesRequest): Promise<CustomerUseCasesResponse> {
+  async execute({ email, id, name, password }: CustomerUseCasesRequest): Promise<CustomerUseCasesResponse> {
     const customerAlreadyExists = await this.customerRepository.findByEmail(email)
     
     if (customerAlreadyExists) {
       return left(new CustomerAlreadyExistsError)
     }
     
+
     const passwordHash = await this.bcriptyService.hashPassword(password, 6)
 
-    const NewCustomer = Customer.create({ email, phone, name, password: passwordHash })
+    const NewCustomer = Customer.create({ email, id, name, password: passwordHash })
     
     await this.customerRepository.create(NewCustomer)
 

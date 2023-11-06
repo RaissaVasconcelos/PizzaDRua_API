@@ -15,8 +15,8 @@ model Customer {
   id        String    @id @default(uuid())
   email     String    @unique
   name      String
-  phone     String
-  password  String
+  phone     String?
+  password  String?
   Address   Address[]
   Order     Order[]
   createdAt DateTime  @default(now())
@@ -43,6 +43,7 @@ model Neighborhood {
   id        String    @id @default(uuid())
   name      String    @unique
   tax       String
+  status    NEIGHBORHOOD  @default(ACTIVE)
   Address   Address[]
   createdAt DateTime  @default(now())
   updatedAt DateTime?
@@ -64,8 +65,8 @@ model Product {
   description String
   imageUrl    String
   price       String
-  size        SIZE        @default(ENTIRE)
-  type        TYPEPIZZA?  @default(TRADITIONAL)
+  size        String?
+  type        String?
   status      TYPEPRODUCT @default(ACTIVE)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime?
@@ -97,12 +98,9 @@ enum STATUS {
   PREPARING
   DELIVERY
   FINISHED
+  CANCELED
 }
 
-enum TYPEPIZZA {
-  TRADITIONAL
-  SPECIAL
-}
 
 enum TYPEADDRESS {
   HOME
@@ -115,7 +113,9 @@ enum TYPEPRODUCT {
   DISABLE
 }
 
-enum SIZE {
-  ENTIRE
-  HALF
+enum NEIGHBORHOOD {
+  ACTIVE
+  DISABLE
 }
+
+

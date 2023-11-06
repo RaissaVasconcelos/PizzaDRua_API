@@ -3,6 +3,8 @@ import { makeCreateOrder } from "../../../factory/order/make-create-order";
 import * as z from 'zod'
 import { CustomerAlreadyExistsError } from "../../../../core/errors/customer-alreaty-exists";
 import { CreatedOrderError } from "../../../../core/errors/created-order-error";
+import app from "../../../../app";
+import { makeFindByIdOrder } from "../../../factory/order/make-findById-order";
 
 export const CreateOrderController = async (request: FastifyRequest, reply: FastifyReply) => {
   const schemaOrder = z.object({
@@ -14,8 +16,9 @@ export const CreateOrderController = async (request: FastifyRequest, reply: Fast
       z.object({
         mode: z.enum(["MIXED", "SIMPLE"]),
         product: z.string().array(),
-        price: z.string(),  
-        size: z.enum(["ENTIRE", "HALF"]),
+        image_url: z.string(),
+        price: z.string(),
+        size: z.string().optional(),
         quantity: z.number(),
       })),
   })
@@ -24,26 +27,46 @@ export const CreateOrderController = async (request: FastifyRequest, reply: Fast
 
   const order = makeCreateOrder()
 
-  const customerId = request.user.sign.sub
+  const token = request.headers.authorization;
+
+  if (!token) {
+    return reply.status(401).send({ message: 'Token not found' })
+  }
+
+  const decodedToken = await request.jwtDecode<{ sub: string }>()
+  const customerId = decodedToken.sub
 
   const result = await order.execute(
-    { customerId,
+    {
+      customerId,
       methodDelivery,
       itensOrder,
       payment,
       totalPrice,
-      status })
-  
-  if(result.isLeft()) {
+      status
+    })
+
+  if (result.isLeft()) {
     const erro = result.value
 
-    if(erro instanceof CustomerAlreadyExistsError){
+    if (erro instanceof CustomerAlreadyExistsError) {
       return reply.code(400).send({ message: erro.message })
     }
-    if(erro instanceof CreatedOrderError){
+    if (erro instanceof CreatedOrderError) {
       return reply.code(400).send({ message: erro.message })
-    }  
+    }
   }
+
+  const orders = makeFindByIdOrder()
+  if (result.isRight()) {
+    const findOrderById = await orders.execute(result.value.order.id)
+    if (findOrderById.isRight()) {
+      console.log('aqui', findOrderById.value.order);
+      
+      app.io.emit('newOrder', findOrderById.value.order);
+    }
+  }
+
 
   return reply.code(201).send()
 }

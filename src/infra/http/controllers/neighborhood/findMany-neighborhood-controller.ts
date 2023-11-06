@@ -9,7 +9,8 @@ export const FindManyNeighborhoodController = async (_request: FastifyRequest, r
     return {
       id: neighborhood.id, 
       name: neighborhood.name, 
-      tax: neighborhood.tax
+      tax: neighborhood.tax,
+      status: neighborhood.status
     }
   })
 

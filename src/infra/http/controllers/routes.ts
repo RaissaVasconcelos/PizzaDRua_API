@@ -5,7 +5,8 @@ import { UploadImageProductController } from "./image-product/upload-image-produ
 import {
   CreateCustomerController,
   AuthenticateController,
-  RefreshTokenController
+  RefreshTokenController,
+  CreateCustomerSocialAccountController
 } from "./customer";
 
 import {
@@ -45,12 +46,14 @@ import {
   FindManyAddressController,
   UpdateAddressController,
 } from './address'
+import { WebHookPixController } from "./efi-pay/webhook.pix";
 
 export const Routes = async (app: FastifyInstance) => {
 
   /* Routes Customer */
   app.post('/sessions', AuthenticateController)
   app.post('/customer', CreateCustomerController)
+  app.post('/sessions/social-login', CreateCustomerSocialAccountController)
   app.patch('/token/refresh', RefreshTokenController)
 
   /* Routes Product */
@@ -72,12 +75,14 @@ export const Routes = async (app: FastifyInstance) => {
 
   /** Route pix */
   app.post('/pix', OAuthEfi)
+  app.get('/webhook', WebHookPixController)
+
 
   /** Route Order */
-  app.post('/order', { onRequest: [verifyJWT] }, CreateOrderController)
+  app.post('/order', CreateOrderController)
   app.get('/order/:id', FindByIdOrderController)
-  app.get('/order', { onRequest: [verifyJWT] }, FindManyOrderController)
-  app.put('/order', { onRequest: [verifyJWT] }, UpdateOrderController)
+  app.get('/order', FindManyOrderController)
+  app.put('/order',  UpdateOrderController)
 
   // Routes Neighborhood
   app.get('/neighborhood', FindManyNeighborhoodController)
@@ -87,8 +92,10 @@ export const Routes = async (app: FastifyInstance) => {
   app.put('/neighborhood', UpdateNeighborhoodController)
 
   // Routes Address
-  app.post('/address', { onRequest: [verifyJWT] }, CreateAddressController)
-  app.get('/address', { onRequest: [verifyJWT] }, FindManyAddressController)
+  app.post('/address', CreateAddressController)
+  app.get('/address', FindManyAddressController)
+  app.delete('/address/:id', DeleteAddressController)
+  app.put('/address', UpdateAddressController)
 
   // // Define a WebSocket route
   // app.get('/websocket', { websocket: true }, (connection, req) => {
@@ -110,6 +117,4 @@ export const Routes = async (app: FastifyInstance) => {
   //     console.log('WebSocket connection closed');
   //   });
   // });
-  app.delete('/address/:id', { onRequest: [verifyJWT] }, DeleteAddressController)
-  app.put('/address', UpdateAddressController)
 }

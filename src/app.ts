@@ -1,11 +1,10 @@
 import fastify from "fastify";
 import fastifyExpress from '@fastify/express'
 import fastifyJwt from "@fastify/jwt";
-import http from 'node:http';
 import fastifyCookie from '@fastify/cookie'
 import fastifyWebsocket from "@fastify/websocket";
 import multipart from '@fastify/multipart'
-import fastifyStatic from '@fastify/static'  
+import fastifyStatic from '@fastify/static'
 import { ZodError } from 'zod'
 import { fromZodError } from 'zod-validation-error'
 import { env } from "./env";
@@ -13,8 +12,10 @@ import { Routes } from "./infra/http/controllers/routes";
 import cors from '@fastify/cors'
 import { resolve } from "path";
 import fastifyIO from "fastify-socket.io";
+import { OrderCustomer } from "./@types";
 
 const app = fastify();
+export const socketToOrderMap: OrderCustomer[] = [];
 
 app.register(cors, {
   origin: 'http://localhost:5173',
@@ -41,10 +42,10 @@ app.register(fastifyJwt, {
 
 app.register((fastifyStatic), {
   root: resolve(__dirname, '../uploads'),
-  prefix: '/uploads'  
+  prefix: '/uploads'
 })
 
-app.register(fastifyWebsocket, {options: {clientTracking: true}})
+app.register(fastifyWebsocket, { options: { clientTracking: true } })
 app.register(multipart)
 app.register(fastifyCookie)
 app.register(fastifyExpress)
@@ -56,10 +57,27 @@ app.ready((err) => {
 
   app.io.on('connection', (socket) => {
     console.log('Cliente conectado', socket.id)
+    socket.on('newOrder', (data) => {
+      const { orderRoom } = data
+      socket.join(orderRoom)     
+      const userOrder = socketToOrderMap.find(user => user.orderRoom === orderRoom)
+      if (userOrder) {
+        userOrder.socketId = socket.id
+      }else {
+        socketToOrderMap.push({ socketId: socket.id,  orderRoom })
+      }
+      
+    });
+    
+    socket.on('statusUpdate', (data) => {
+      const { orderId } = data
+      socket.to(orderId).emit('statusUpdate', data)
+    })
 
     socket.on('disconnect', () => {
       console.log(`O cliente com o id ${socket.id} se desconectou`)
-    });
+     
+      });
   })
 })
 

@@ -7,8 +7,8 @@ import { CategoryNotFoundError } from "../../../../core/errors/category-not-foun
 export interface ProductUseCaseRequest {
   name: string
   category: string
-  type?: "TRADITIONAL" | "SPECIAL" | null
-  size: string
+  type?: string
+  size?: string
   imageUrl: string
   description: string
   price: string

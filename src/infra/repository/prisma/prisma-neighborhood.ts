@@ -48,6 +48,7 @@ export class PrismaNeighborhoodRepository implements NeighborhoodRepository {
       data: { 
         name: neighborhood.name,
         tax: neighborhood.tax,
+        status: neighborhood.status,  
         updatedAt: new Date(),
        }
     })

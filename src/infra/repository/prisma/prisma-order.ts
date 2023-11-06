@@ -4,8 +4,8 @@ import { OrderRepository } from "../../../domain/application/repositories/order-
 import { Order } from "../../../domain/enterprise/entities";
 
 export class PrismaOrderRepository implements OrderRepository {
-  async create({ customerId, totalPrice, itensOrder, payment, status, methodDelivery }: Order): Promise<void> {    
-    await prisma.order.create({
+  async create({ customerId, totalPrice, itensOrder, payment, status, methodDelivery }: Order): Promise<Order> {    
+    const order =  await prisma.order.create({
       data: { 
         customerId,
         itensOrder,
@@ -15,19 +15,57 @@ export class PrismaOrderRepository implements OrderRepository {
         methodDelivery,
       }
     })
-  }
-
-  async findById(id: string): Promise<Order | null> {
-    const order = await prisma.order.findUnique({
-      where: { id }
-    })
-
-    if(!order) return null
 
     return new Order(order)
   }
 
+  async findById(id: string): Promise<any | null> {
+    const order = await prisma.order.findUnique({
+      where: { id }, select: {
+        customer: {
+          select: {
+            Address: {
+              where: {
+                standard: true,
+              },
+              select: {
+                id: true,
+                neighborhood: {
+                  select: {
+                    name: true,
+                    tax: true
+                  }
+                },
+                number: true,
+                phone: true,
+                street: true,
+                type: true,
+                zipCode: true,
+              }
+            },
+            email: true,
+            name: true,
+            phone: true,  
+            id: true,
+          }
+
+        },
+        itensOrder:true,
+        id: true,
+        methodDelivery: true,
+        payment: true,
+        status: true,
+        totalPrice: true
+      }
+    })
+
+    if(!order) return null
+
+    return order
+  }
+
   async findMany(): Promise<any[]> {
+    console.log('findMany');
     const orders = await prisma.order.findMany({
       include: {
         customer: {
@@ -56,8 +94,11 @@ export class PrismaOrderRepository implements OrderRepository {
               }
             },
           } 
-        },
+        }
       },
+      orderBy: {
+        createdAt: 'desc'
+      }
     })
 
     const ordersWithoutCustomerId = orders.map(order => {
@@ -70,28 +111,42 @@ export class PrismaOrderRepository implements OrderRepository {
   }
 
   async findManyCustomer(customerId: string): Promise<any> {
+    console.log('findManyCustomer', customerId);
+    
     const orders = await prisma.order.findMany({
       where: { customerId },
       include: {
         customer: {
           select: {
+            id: true,
             name: true,
             email: true,
             phone: true,
             Address: {
+              where: {
+                standard: true,
+              },
               select: {
-                type: true,
-                street: true,
+                id: true,
+                neighborhood: {
+                  select: {
+                    name: true,
+                    tax: true
+                  }
+                },
                 number: true,
                 phone: true,
-                neighborhood: {
-                  select: { name: true, tax: true }
-                }
+                street: true,
+                type: true,
+                zipCode: true,
               }
             },
-          } 
-        },
+          }
+        }
       },
+      orderBy: {
+        createdAt: 'desc'
+      }
     })
 
     return orders

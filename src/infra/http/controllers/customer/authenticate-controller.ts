@@ -24,9 +24,9 @@ export const AuthenticateController = async (request: FastifyRequest, reply: Fas
 
   if(result.isRight()){
     const customerId = result.value.customer.Id
-    const token = await reply.jwtSign({ sign: { sub: customerId } })
+    const token = await reply.jwtSign( { sub: customerId } )
     const refreshToken = await reply.jwtSign(
-      { sign: { sub: customerId, expiresIn: '7d' } }
+      { user: { sub: customerId, expiresIn: '7d' } }
     )
 
     return reply.setCookie('refreshToken', refreshToken, {

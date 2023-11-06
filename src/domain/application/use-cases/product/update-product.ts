@@ -8,9 +8,9 @@ interface productUseCaseRequest {
   id: string,
   name: string
   category: string
-  type?: "TRADITIONAL" | "SPECIAL" | null
+  type?: string
   imageUrl: string
-  size: string
+  size?: string
   description: string
   price: string
   status: "ACTIVE" | "DISABLE"

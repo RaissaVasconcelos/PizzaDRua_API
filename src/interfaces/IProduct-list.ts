@@ -7,10 +7,10 @@ export interface IProductList {
   }
   description: string
   price: string
-  size: string
+  size?: string | null
   imageUrl: string  
-  type?: "TRADITIONAL" | "SPECIAL" | null
+  type?: string | null
   status: "ACTIVE" | "DISABLE"
   createdAt: Date 
-  updatedAt?: Date | null
+  updatedAt?: Date  | null
 }
