@@ -12,15 +12,16 @@ datasource db {
 }
 
 model Customer {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  name      String
-  phone     String?
-  password  String?
-  Address   Address[]
-  Order     Order[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime?
+  id             String    @id @default(uuid())
+  email          String    @unique
+  name           String
+  withdrawalName String?
+  phone          String?
+  password       String?
+  Address        Address[]
+  Order          Order[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime?
 }
 
 model Address {
@@ -40,12 +41,12 @@ model Address {
 }
 
 model Neighborhood {
-  id        String    @id @default(uuid())
-  name      String    @unique
+  id        String       @id @default(uuid())
+  name      String       @unique
   tax       String
-  status    NEIGHBORHOOD  @default(ACTIVE)
+  status    NEIGHBORHOOD @default(ACTIVE)
   Address   Address[]
-  createdAt DateTime  @default(now())
+  createdAt DateTime     @default(now())
   updatedAt DateTime?
 }
 
@@ -99,8 +100,8 @@ enum STATUS {
   DELIVERY
   FINISHED
   CANCELED
+  AWAITING_WITHDRAWAL
 }
-
 
 enum TYPEADDRESS {
   HOME
@@ -117,5 +118,3 @@ enum NEIGHBORHOOD {
   ACTIVE
   DISABLE
 }
-
-

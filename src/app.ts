@@ -14,6 +14,7 @@ import { resolve } from "path";
 import fastifyIO from "fastify-socket.io";
 import { OrderCustomer } from "./@types";
 
+
 const app = fastify();
 export const socketToOrderMap: OrderCustomer[] = [];
 

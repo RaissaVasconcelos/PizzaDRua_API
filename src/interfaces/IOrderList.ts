@@ -27,3 +27,32 @@ export interface IOrderList {
     size: "ENTIRE" | "HALF"
   }[]
 }
+
+export interface OrderData {
+  orderId: string;
+  customerId: string;
+  status: string;
+  methodDelivery: string;
+  payment: string;
+  totalPrice: string;
+  itensOrder: any; // Defina o tipo apropriado para "itensOrder"
+  orderCreatedAt: Date;
+  customer: {
+    customerId: string;
+    customerName: string;
+    customerEmail: string;
+    customerPhone: string;
+    address: {
+      addressId: string;
+      addressNumber: string;
+      addressPhone: string;
+      addressStreet: string;
+      addressType: string;
+      addressZipCode: string;
+      neighborhood: {
+        neighborhoodName: string;
+        neighborhoodTax: string;
+      };
+    };
+  };
+}

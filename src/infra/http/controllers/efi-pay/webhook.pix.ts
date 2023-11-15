@@ -1,8 +1,12 @@
 import { FastifyReply, FastifyRequest } from "fastify";
+import * as tls from 'tls';
 
 export const WebHookPixController = async (request: FastifyRequest, reply: FastifyReply) => {
 
-    await new Promise(resolve => setTimeout(resolve, 5000)) 
+    if (request.socket.authorized) {
+        reply.code(200).send();
+    } else {
+        reply.code(401).send();
+    }
 
-    return reply.status(200).send('ok')
 }
