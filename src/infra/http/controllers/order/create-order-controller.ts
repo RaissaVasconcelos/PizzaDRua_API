@@ -16,7 +16,7 @@ export const CreateOrderController = async (request: FastifyRequest, reply: Fast
       z.object({
         mode: z.enum(["MIXED", "SIMPLE"]),
         product: z.string().array(),
-        image_url: z.string(),
+        image_url: z.string().optional(),
         price: z.string(),
         size: z.string().optional(),
         quantity: z.number(),

@@ -23,27 +23,37 @@ export class PrismaCustomerRepository implements CustomerRepository {
       }
     })
   }
-  
+
   async findByEmail(email: string): Promise<Customer | null> {
     const user = await prisma.customer.findUnique({
       where: { email },
     })
 
-    if(!user) return null
+    if (!user) return null
 
     return new Customer(user)
   }
-  
+
   async findById(id: string): Promise<Customer | null> {
     const user = await prisma.customer.findUnique({
       where: { id }
     })
-    
-    if(!user) return null
+
+    if (!user) return null
 
     return new Customer(user)
   }
-  
+
+  async update(id: string, withdrawalName: string, phone: string): Promise<void> {
+    await prisma.customer.update({
+      where: { id },
+      data: {
+        withdrawalName,
+        phone
+      }
+    })
+  }
+
   async delete(id: string): Promise<void> {
     await prisma.customer.delete({ where: { id } })
   }

@@ -1,12 +1,13 @@
 import { FastifyInstance } from "fastify";
-import { verifyJWT } from "../../middlewares/verify-jwt";
+// import { verifyJWT } from "../../middlewares/verify-jwt";
 import { OAuthEfi } from "./efi-pay/pix";
 import { UploadImageProductController } from "./image-product/upload-image-product-controller";
 import {
   CreateCustomerController,
   AuthenticateController,
   RefreshTokenController,
-  CreateCustomerSocialAccountController
+  CreateCustomerSocialAccountController,
+  UpdateCustomerController
 } from "./customer";
 
 import {
@@ -46,7 +47,9 @@ import {
   FindManyAddressController,
   UpdateAddressController,
 } from './address'
+
 import { WebHookPixController } from "./efi-pay/webhook.pix";
+import { FindManyDateOrderController } from "./order/find-many-date-orders-controller";
 
 export const Routes = async (app: FastifyInstance) => {
 
@@ -55,6 +58,7 @@ export const Routes = async (app: FastifyInstance) => {
   app.post('/customer', CreateCustomerController)
   app.post('/sessions/social-login', CreateCustomerSocialAccountController)
   app.patch('/token/refresh', RefreshTokenController)
+  app.patch('/customer', UpdateCustomerController)
 
   /* Routes Product */
   app.get('/product/:id', FindByIdProductController)
@@ -75,13 +79,13 @@ export const Routes = async (app: FastifyInstance) => {
 
   /** Route pix */
   app.post('/pix', OAuthEfi)
-  app.get('/webhook', WebHookPixController)
-
+  app.post('/webhook/pix', WebHookPixController)
 
   /** Route Order */
   app.post('/order', CreateOrderController)
   app.get('/order/:id', FindByIdOrderController)
   app.get('/order', FindManyOrderController)
+  app.post('/date-order', FindManyDateOrderController)  
   app.put('/order',  UpdateOrderController)
 
   // Routes Neighborhood

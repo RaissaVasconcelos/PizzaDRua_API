@@ -13,7 +13,7 @@ import { Address } from "../../../enterprise/entities";
 
 interface dataProduct {
   mode: "MIXED" | "SIMPLE"
-  image_url: string  
+  image_url?: string  
   product: string[]
   price: string
   size?: string 

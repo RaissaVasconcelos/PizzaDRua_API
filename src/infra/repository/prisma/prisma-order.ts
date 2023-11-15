@@ -2,6 +2,7 @@
 import { prisma } from "../../../lib/prisma";
 import { OrderRepository } from "../../../domain/application/repositories/order-repository";
 import { Order } from "../../../domain/enterprise/entities";
+import { OrderData } from "../../../interfaces/IOrderList";
 
 export class PrismaOrderRepository implements OrderRepository {
   async create({ customerId, totalPrice, itensOrder, payment, status, methodDelivery }: Order): Promise<Order> {    
@@ -101,6 +102,8 @@ export class PrismaOrderRepository implements OrderRepository {
       }
     })
 
+  
+
     const ordersWithoutCustomerId = orders.map(order => {
       // Crie um novo objeto para cada pedido sem o campo 'customerId'
       const { customerId, ...orderWithoutCustomerId } = order;
@@ -110,8 +113,42 @@ export class PrismaOrderRepository implements OrderRepository {
     return ordersWithoutCustomerId
   }
 
+  async findManyData(date: string): Promise<OrderData[]> {
+   const formattedDate = date.split('T')[0];
+    
+   const orders: OrderData[] = await prisma.$queryRaw`
+    SELECT
+      o.id as "orderId",
+      o."customerId",
+      o.status,
+      o."methodDelivery",
+      o.payment,
+      o."totalPrice",
+      o."itensOrder",
+      o."createdAt" as "orderCreatedAt",
+      c.id as "customerId",
+      c.name as "customerName",
+      c.email as "customerEmail",
+      c.phone as "customerPhone",
+      a.id as "addressId",
+      a.number as "addressNumber",
+      a.phone as "addressPhone",
+      a.street as "addressStreet",
+      a.type as "addressType",
+      a."zipCode" as "addressZipCode",
+      n.name as "neighborhoodName",
+      n.tax as "neighborhoodTax"
+    FROM "Order" o
+    JOIN "Customer" c ON o."customerId" = c.id
+    LEFT JOIN "Address" a ON c.id = a."customerId" AND a.standard = true
+    LEFT JOIN "Neighborhood" n ON a."neighborhoodId" = n.id
+    WHERE DATE(o."createdAt") = to_date(${formattedDate}, 'YYYY-MM-DD')
+  `;
+
+   return orders;
+ }
+   
   async findManyCustomer(customerId: string): Promise<any> {
-    console.log('findManyCustomer', customerId);
     
     const orders = await prisma.order.findMany({
       where: { customerId },
