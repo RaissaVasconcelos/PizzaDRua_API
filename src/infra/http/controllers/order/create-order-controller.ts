@@ -7,23 +7,37 @@ import app from "../../../../app";
 import { makeFindByIdOrder } from "../../../factory/order/make-findById-order";
 
 export const CreateOrderController = async (request: FastifyRequest, reply: FastifyReply) => {
+  console.log(request.body);
   const schemaOrder = z.object({
     totalPrice: z.string(),
-    payment: z.enum(["PIX", "CARD", "MONEY"]),
+    payment: z.object({
+      methodPayment: z.string(),
+      flag: z.string().optional(),
+      typeCard: z.string().optional(),
+    }),
+    address: z.object({
+      phone: z.string().optional(),
+      cep: z.string().optional(),
+      street: z.string().optional(),
+      number: z.string().optional(),
+      tax: z.string().optional(),
+      neighborhood: z.string().optional(),
+    }).optional(),
+    observation: z.string().optional(),
     methodDelivery: z.enum(["DELIVERY", "PICKUP"]),
-    status: z.enum(["WAITING", "ACCEPTED", "PREPARING", "DELIVERY", "CANCELED", "FINISHED"]),
+    status: z.enum(["WAITING", "ACCEPTED", "AWAITING_WITHDRAWAL", "PREPARING", "DELIVERY", "CANCELED", "FINISHED"]),
     itensOrder: z.array(
       z.object({
         mode: z.enum(["MIXED", "SIMPLE"]),
         product: z.string().array(),
-        image_url: z.string().optional(),
+        image_url: z.string(),
         price: z.string(),
         size: z.string().optional(),
         quantity: z.number(),
       })),
   })
 
-  const { itensOrder, payment, totalPrice, status, methodDelivery } = schemaOrder.parse(request.body)
+  const { itensOrder, payment, observation, address, totalPrice, status, methodDelivery } = schemaOrder.parse(request.body)
 
   const order = makeCreateOrder()
 
@@ -42,6 +56,8 @@ export const CreateOrderController = async (request: FastifyRequest, reply: Fast
       methodDelivery,
       itensOrder,
       payment,
+      address,
+      observation,
       totalPrice,
       status
     })
@@ -61,12 +77,12 @@ export const CreateOrderController = async (request: FastifyRequest, reply: Fast
   if (result.isRight()) {
     const findOrderById = await orders.execute(result.value.order.id)
     if (findOrderById.isRight()) {
-      console.log('aqui', findOrderById.value.order);
-      
-      app.io.emit('newOrder', findOrderById.value.order);
+
+      app.io.emit('OrderRoom', findOrderById.value.order);
     }
   }
 
-
-  return reply.code(201).send()
+  if (result.isRight()) {
+    return reply.code(201).send(result.value.order)
+  }
 }

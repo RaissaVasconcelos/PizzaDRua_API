@@ -29,11 +29,12 @@ const billingBodySchema = z.object({
   }),
   chave: z.string(),
   solicitacaoPagador: z.string(),
+
 })
 
 const certification = fs.readFileSync(
-  path.resolve(__dirname, `../../../../../certs/${env.EFIPAY_CERT}`)
-  )
+  path.resolve(__dirname, `./certs/${env.EFIPAY_CERT}`)
+)
 
 const data = JSON.stringify({ grant_type: 'client_credentials' })
 
@@ -48,10 +49,8 @@ const agent = new https.Agent({
 
 export async function OAuthEfi(request: FastifyRequest, reply: FastifyReply) {
   try {
-    const { devedor, valor, chave } = billingBodySchema.parse(request.body)
+    const { devedor, valor, chave, solicitacaoPagador } = billingBodySchema.parse(request.body)
 
-    console.log(request.body);
-    
     const config = {
       method: "POST",
       url: "https://pix.api.efipay.com.br/oauth/token",
@@ -76,7 +75,8 @@ export async function OAuthEfi(request: FastifyRequest, reply: FastifyReply) {
         "original": valor.original
       },
       chave,
-      "solicitacaoPagador": "Informe o número ou identificador do pedido."
+      solicitacaoPagador,
+
     })
 
     const configPut = {
@@ -104,8 +104,7 @@ export async function OAuthEfi(request: FastifyRequest, reply: FastifyReply) {
       httpsAgent: agent,
     };
     const responseQrCode = await axios(configQrCode);
-    console.log(responseQrCode.data);
-    
+
     return reply.status(200).send(responseQrCode.data)
 
   } catch (error) {

@@ -84,9 +84,10 @@ model Order {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime?
   status         STATUS    @default(WAITING)
-  payment        String
   observation    String?
   totalPrice     String
+  payment        Json
+  address        Json?
   itensOrder     Json
   methodDelivery String
   customer       Customer  @relation(fields: [customerId], references: [id])

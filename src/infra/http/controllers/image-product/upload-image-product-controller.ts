@@ -1,44 +1,40 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { randomUUID } from "node:crypto";
-import { createWriteStream } from "node:fs";
-import { pipeline } from "node:stream";
-import { promisify } from "node:util";
-import { extname, resolve } from "node:path";
-
-const pump = promisify(pipeline)
+import { extname } from "node:path";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage, streamToUint8Array } from "../../../../utils/firebase";
 
 export const UploadImageProductController = async (request: FastifyRequest, reply: FastifyReply) => {
-
   const upload = await request.file({
     limits: {
       fileSize: 5_242_880, // 5MB
     }
-  })
+  });
 
-  console.log(request.file);
-  
   if (!upload) {
-    return reply.status(400).send({ message: "Invalid file" })
+    return reply.status(400).send({ message: "Invalid file" });
   }
 
-  const mimeTypeRegex = /^image\/(jpeg|png)$/
-  const isValidMimeType = mimeTypeRegex.test(upload.mimetype)
+  try {
+    const mimeTypeRegex = /^image\/(jpeg|png)$/;
+    const isValidMimeType = mimeTypeRegex.test(upload.mimetype);
+    if (!isValidMimeType) {
+      return reply.status(400).send({ message: "Invalid file type" });
+    }
 
-  if (!isValidMimeType) {
-    return reply.status(400).send({ message: "Invalid file type" })
+    const fileId = randomUUID();
+    const extension = extname(upload.filename);
+    const fileName = fileId.concat(extension);
+
+    const storageRef = ref(storage, `images/${fileName}`);
+
+    const uploadTask = uploadBytesResumable(storageRef, await streamToUint8Array(upload.file));
+    await uploadTask;
+    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+    reply.status(200).send(downloadURL);
+
+  } catch (error) {
+    console.log(error);
+    reply.status(500).send({ message: "Internal server error" });
   }
-
-  const fileId = randomUUID()
-  const extension = extname(upload.filename)
-  const fileName = fileId.concat(extension)
-  const writeStream = createWriteStream(
-    resolve(__dirname, '../../../../../uploads', fileName)
-  )
-
-  await pump(upload.file, writeStream)   
-  
-  const fullUrl = request.protocol.concat("://").concat(request.hostname)
-  const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString()
-
-  return reply.status(201).send(fileUrl)
-}
+};

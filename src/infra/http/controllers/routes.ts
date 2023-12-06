@@ -28,7 +28,8 @@ import {
 import {
   CreateOrderController,
   FindByIdOrderController,
-  FindManyOrderController,
+  FindManyCustomerIdOrderController,
+  FetchOrdersController,
   UpdateOrderController
 } from './order'
 
@@ -62,15 +63,15 @@ export const Routes = async (app: FastifyInstance) => {
   app.post('/sessions/social-login', CreateCustomerSocialAccountController)
   app.patch('/customer', UpdateCustomerController)
   app.patch('/token/refresh', RefreshTokenController)
-  
+
 
 
   /* Routes Product */
   app.get('/product/:id', FindByIdProductController)
   app.get('/product', FindManyProductController)
-  app.post('/product', CreateProductController)
-  app.put('/product' ,UpdateProductController)
-  app.delete('/product/:id', DeleteProductController)
+  app.post('/product', { onRequest: [verifyJWT, verifyUserRole('ADMIN')] }, CreateProductController)
+  app.put('/product', { onRequest: [verifyJWT, verifyUserRole('ADMIN')] }, UpdateProductController)
+  app.delete('/product/:id', { onRequest: [verifyJWT, verifyUserRole('ADMIN')] }, DeleteProductController)
 
   /* Routes Upload Image Product */
   app.post('/upload', UploadImageProductController)
@@ -79,29 +80,30 @@ export const Routes = async (app: FastifyInstance) => {
   app.get('/category/:id', FindByIdCategoryController)
   app.get('/category', FindManyCategoryController)
   app.post('/category', CreateCategoryController)
-  app.put('/category', UpdateCategoryController)
-  app.delete('/category/:id', DeleteCategoryController)
+  app.put('/category', { onRequest: [verifyJWT, verifyUserRole('ADMIN')] }, UpdateCategoryController)
+  app.delete('/category/:id', { onRequest: [verifyJWT, verifyUserRole('ADMIN')] }, DeleteCategoryController)
 
   /** Route pix */
   app.post('/pix', OAuthEfi)
   app.post('/webhook', WebHookPixController)
   app.post('/config-webhook', WebHookVerifyCertificateController)
-  app.post('/pix-confirmation', PixConfirmationController) 
-  app.get('/fetch-pix', FetchPixController)
+  app.post('/pix-confirmation', PixConfirmationController)
+  app.get('/fetch-pix', { onRequest: [verifyJWT, verifyUserRole('ADMIN')] }, FetchPixController)
 
   /** Route Order */
   app.post('/order', CreateOrderController)
   app.get('/order/:id', FindByIdOrderController)
-  app.post('/date-order', FindManyDateOrderController)  
-  app.get('/order', FindManyOrderController)
-  app.put('/order',  UpdateOrderController)
+  app.post('/date-order', { onRequest: [verifyJWT, verifyUserRole('ADMIN')] }, FindManyDateOrderController)
+  app.get('/order', FindManyCustomerIdOrderController)
+  app.get('/fetch-orders', { onRequest: [verifyJWT, verifyUserRole('ADMIN')] }, FetchOrdersController)
+  app.put('/order', UpdateOrderController)
 
   // Routes Neighborhood
   app.get('/neighborhood', FindManyNeighborhoodController)
-  app.post('/neighborhood', CreateNeighborhoodController)
+  app.post('/neighborhood', { onRequest: [verifyJWT, verifyUserRole('ADMIN')] }, CreateNeighborhoodController)
   app.get('/neighborhood/:id', FindByIdNeighborhoodController)
   app.delete('/neighborhood/:id', { onRequest: [verifyJWT, verifyUserRole('ADMIN')] }, DeleteNeighborhoodController)
-  app.put('/neighborhood', UpdateNeighborhoodController)
+  app.put('/neighborhood', { onRequest: [verifyJWT, verifyUserRole('ADMIN')] }, UpdateNeighborhoodController)
 
   // Routes Address
   app.post('/address', CreateAddressController)
@@ -109,24 +111,4 @@ export const Routes = async (app: FastifyInstance) => {
   app.delete('/address/:id', DeleteAddressController)
   app.put('/address', UpdateAddressController)
 
-  // // Define a WebSocket route
-  // app.get('/websocket', { websocket: true }, (connection, req) => {
-    
-  //   connection.socket.on('message', async (message) => {
-  //     console.log('metodo server says')
-  //     console.log('message', message)
-  //     // This function will be called when the client sends a message
-  //     const status = await prismaOrder.ordersCustomer('d69ac104-a9cb-4036-88ac-6918f0ac7cea')
-  //     if (status) {
-  //       connection.socket.send(status);
-  //       return
-  //     }
-  //     connection.socket.send('Sem att');
-  //   });
-    
-  //   // Close the WebSocket connection
-  //   connection.socket.on('close', () => {
-  //     console.log('WebSocket connection closed');
-  //   });
-  // });
 }
