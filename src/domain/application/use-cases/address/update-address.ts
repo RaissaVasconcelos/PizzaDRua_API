@@ -25,29 +25,33 @@ export class UpdateAddress {
   ) { }
 
   async execute(addressUpdate: AddressUseCaseRequest): Promise<AddressUseCasesResponse> {
-    const address = await this.addressRepository.find(addressUpdate.customerId)
 
+    const address = await this.addressRepository.findById(addressUpdate.id)
+    const addresses = await this.addressRepository.find(addressUpdate.customerId)
     const neighborhood = await this.neighborhood.findByName(addressUpdate.neighborhood)
-    console.log(neighborhood);
+
     if (!address || !neighborhood) {
       return left(new ResourceNotFoundError())
     }
 
-    const addressDefault = address.find(address => address.standard)
+    const existingDefaultAddress = addresses.find(address => address.standard)
 
-    if (addressDefault?.standard) {
+
+    if (existingDefaultAddress) {
+
       const addressUpdated = Address.create({
-        customerId: addressDefault.customerId,
-        type: addressDefault.type,
-        street: addressDefault.street,
+        customerId: existingDefaultAddress.customerId,
+        type: existingDefaultAddress.type,
+        street: existingDefaultAddress.street,
         standard: false,
-        number: addressDefault.number,
+        number: existingDefaultAddress.number,
         neighborhoodId: neighborhood.id,
-        zipCode: addressDefault.zipCode,
-        phone: addressDefault.phone,
-        id: addressDefault.id
+        zipCode: existingDefaultAddress.zipCode,
+        phone: existingDefaultAddress.phone,
+        id: existingDefaultAddress.id
       })
       await this.addressRepository.update(addressUpdated)
+
     }
 
     const addressUpdated = Address.create({

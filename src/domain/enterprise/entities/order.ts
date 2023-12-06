@@ -6,7 +6,20 @@ export interface IOrderProps {
   id: string
   customerId: string
   itensOrder: any
-  payment: string
+  payment: {
+    methodPayment: string
+    flag?: string
+    typeCard?: string
+  },
+  address?: {
+    phone?: string
+    cep?: string
+    street?: string
+    number?: string
+    tax?: string
+    neighborhood?: string
+  },
+  observation?: string | null
   methodDelivery: string
   totalPrice: string
   status: any
@@ -22,17 +35,25 @@ export class Order extends Entity<IOrderProps> {
   get customerId() {
     return this.props.customerId
   }
-  
+
   get status() {
     return this.props.status
   }
-  
+
   get totalPrice() {
     return this.props.totalPrice
   }
 
   get payment() {
     return this.props.payment
+  }
+
+  get address() {
+    return this.props.address
+  }
+
+  get observation() {
+    return this.props.observation
   }
 
   get methodDelivery() {
@@ -68,5 +89,5 @@ export class Order extends Entity<IOrderProps> {
     })
 
     return order
-  } 
+  }
 }

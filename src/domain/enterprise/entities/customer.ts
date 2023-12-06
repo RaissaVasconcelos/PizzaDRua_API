@@ -6,39 +6,49 @@ export interface ICustomersProps {
   id: string
   name: string
   email: string
+  withdrawalName?: string | null
   phone?: string | null
-  password?: string | null 
+  role?: 'ADMIN' | 'CUSTOMER'
+  password?: string | null
   createdAt: Date
   updatedAt?: Date | null
 }
 
 export class Customer extends Entity<ICustomersProps> {
 
-  get Id(){
+  get Id() {
     return this.props.id
   }
 
-  get Name(){
+  get Name() {
     return this.props.name
   }
 
-  get Email(){
+  get WithdrawalName() {
+    return this.props.withdrawalName
+  }
+
+  get Email() {
     return this.props.email
   }
 
-  get Phone(){
+  get Phone() {
     return this.props.phone
   }
 
-  get Password(){
+  get Role() {
+    return this.props.role
+  }
+
+  get Password() {
     return this.props.password
   }
 
-  get CreateAt(){
+  get CreateAt() {
     return this.props.createdAt
   }
 
-  get UpdatedAt(){
+  get UpdatedAt() {
     return this.props.updatedAt
   }
 
@@ -48,6 +58,11 @@ export class Customer extends Entity<ICustomersProps> {
 
   changeName(name: string) {
     this.props.name = name
+    this.touch()
+  }
+
+  changeWithdrawalName(withdrawalName: string) {
+    this.props.withdrawalName = withdrawalName
     this.touch()
   }
 
@@ -61,12 +76,17 @@ export class Customer extends Entity<ICustomersProps> {
     this.touch()
   }
 
+  changeRole(role: 'ADMIN' | 'CUSTOMER') {
+    this.props.role = role
+    this.touch()
+  }
+
   changePassword(password: string) {
     this.props.password = password
     this.touch()
   }
 
-  static create(props: Optional<ICustomersProps, "createdAt"| "id">) {
+  static create(props: Optional<ICustomersProps, "createdAt" | "id">) {
     const customer = new Customer({
       ...props,
       id: props.id ?? randomUUID(),

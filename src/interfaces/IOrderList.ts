@@ -56,3 +56,8 @@ export interface OrderData {
     };
   };
 }
+
+export interface IOrderUpdate {
+  id: string
+  status: 'WAITING' | 'ACCEPTED' | 'AWAITING_WITHDRAWAL' | 'PREPARING' | 'DELIVERY' | 'CANCELED' | 'FINISHED'
+}

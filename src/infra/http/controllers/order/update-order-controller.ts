@@ -8,41 +8,35 @@ import { makeFindByIdOrder } from "../../../factory/order/make-findById-order";
 export const UpdateOrderController = async (request: FastifyRequest, reply: FastifyReply) => {
   const schemaOrder = z.object({
     id: z.string().uuid(),
-    totalPrice: z.string(),
-    payment: z.string(),
-    customerId: z.string(),
-    status: z.enum(["WAITING", "ACCEPTED", "PREPARING", "DELIVERY", "CANCELED", "FINISHED"]),
-    methodDelivery: z.string(),
-    itensOrder: z.array(
-      z.object({
-        mode: z.enum(["MIXED", "SIMPLE"]),
-        product: z.string().array(),
-        price: z.string(),  
-        size: z.enum(["ENTIRE", "HALF"]).optional(),
-        quantity: z.number(),
-      })),
+    status: z.enum(["WAITING", "ACCEPTED", "AWAITING_WITHDRAWAL", "PREPARING", "DELIVERY", "CANCELED", "FINISHED"]),
   })
 
-  const { id, status, customerId, itensOrder, payment, totalPrice, methodDelivery } = schemaOrder.parse(request.body)
+  const token = request.headers.authorization;
+
+  if (!token) {
+    return reply.status(401).send({ message: 'Token not found' })
+  }
+
+  const { id, status, } = schemaOrder.parse(request.body)
 
   const order = makeUpdateOrder()
-  const orderById = makeFindByIdOrder()  
+  const orderById = makeFindByIdOrder()
 
+  const result = await order.execute({ id, status })
 
-  const result = await order.execute({ id, status, payment, totalPrice, customerId, methodDelivery, itensOrder })
-
-
-  if(result.isLeft()) {
+  if (result.isLeft()) {
     const erro = result.value
-    if(erro instanceof ResourceNotFoundError) {
+    if (erro instanceof ResourceNotFoundError) {
       return reply.code(404).send({ message: erro.message })
     }
-  } 
-    const orderUpdate = await orderById.execute(id)
-    if (orderUpdate.isRight()) {
-      app.io.emit('newOrder', orderUpdate.value.order);
-    }
+  }
+  const orderUpdate = await orderById.execute(id)
 
-  
-    return reply.code(200).send({})
+
+  if (orderUpdate.isRight()) {
+    app.io.emit('OrderRoom', orderUpdate.value.order);
+  }
+
+
+  return reply.code(200).send({})
 }
